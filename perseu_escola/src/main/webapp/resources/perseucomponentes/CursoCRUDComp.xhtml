@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<head>
+<title>Not present in rendered output</title>
+</head>
+<body>
+<composite:interface>
+<composite:attribute name="curso" type="com.htcursos.model.entity.Curso"></composite:attribute>
+
+</composite:interface>
+<composite:implementation>
+
+<h:form id="frmCurso">
+			<p:growl id="mensagens" />
+			<p:accordionPanel multiple="true">
+				<p:tab title="Dados do Curso">
+					<h:panelGrid columns="3" id="panelEntity">
+
+						<h:outputLabel for="id" value="Id:" />
+						<p:inputText readonly="true" size="3" id="id"
+							value="#{cursoController.curso.id}">
+							<f:converter converterId="javax.faces.Integer" />
+							<p:ajax event="blur" update="idMsg" />
+						</p:inputText>
+						<p:message id="idMsg" for="id" display="icon" />
+
+							<h:outputLabel for="titulo" value="Titulo:" />
+							<p:inputText id="titulo" value="#{cursoController.curso.titulo}"
+								size="30" >
+								<f:validateLength minimum="3" />
+								<p:ajax event="blur" update="tituloMsg" />
+							</p:inputText>
+							<p:message id="tituloMsg" for="titulo" display="icon" />
+
+						<h:outputLabel for="texto" value="Texto:" />
+						<p:inputTextarea rows="10" cols="50"  id="texto" value="#{cursoController.curso.texto}">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="textoMsg" />
+						</p:inputTextarea>
+						<p:message id="textoMsg" for="texto" display="icon" />
+
+						<h:outputLabel for="ordem" value="Ordem:" />
+							<p:spinner id="ordem" value="#{cursoController.curso.ordem}" >
+						
+							<p:ajax event="blur" update="ordemMsg" />
+							
+						</p:spinner>
+						<p:message id="ordemMsg" for="ordem" display="icon" />
+
+						<h:outputLabel for="conteudo" value="Conteudo:" />
+						<p:inputTextarea rows="10" cols="50"  id="conteudo"
+							value="#{cursoController.curso.conteudo}" size="20">
+							<f:validateLength minimum="1" maximum="30" />
+							<p:ajax event="blur" update="conteudoMsg" />
+						</p:inputTextarea>
+						<p:message id="conteudoMsg" for="ordem" display="icon" />
+
+							<h:outputLabel for="icone" value="Icone:" />
+							<p:inputText id="icone" value="#{cursoController.curso.icone}"
+								size="18">
+								<f:validateLength minimum="1" />
+								<p:ajax event="blur" update="iconeMsg" />
+							</p:inputText>
+							<p:message id="iconeMsg" for="icone" display="icon" />
+
+						<h:outputLabel for="sigla" value="Sigla:" />
+						<p:inputText id="sigla" value="#{cursoController.curso.sigla}"
+							size="18">
+							<f:validateLength minimum="1" />
+							<p:ajax event="blur" update="siglaMsg" />
+						</p:inputText>
+						<p:message id="siglaMsg" for="sigla" display="icon" />
+
+							<h:outputLabel for="objetivo" value="Objetivo:" />
+							<p:inputTextarea rows="10" cols="50"  id="objetivo"
+								value="#{cursoController.curso.objetivo}" size="18">
+								<f:validateLength minimum="1" />
+								<p:ajax event="blur" update="objetivoMsg" />
+							</p:inputTextarea>
+							<p:message id="objetivoMsg" for="objetivo" display="icon" />
+
+						<h:outputLabel for="publicoalvo" value="Publico:" />
+						<p:inputTextarea rows="10" cols="50"  id="publicoalvo"
+							value="#{cursoController.curso.publicoalvo}" size="18">
+							<f:validateLength minimum="1" />
+							<p:ajax event="blur" update="publicoalvoMsg" />
+						</p:inputTextarea>
+						<p:message id="publicoalvoMsg" for="publicoalvo" display="icon" />
+
+							<h:outputLabel for="prerequisito" value="Pré Requisitos:"
+								size="18" />
+							<p:inputText id="prerequisito"
+								value="#{cursoController.curso.prerequisito}" size="18">
+								<f:validateLength minimum="3" maximum="10" />
+								<p:ajax event="blur" update="prerequisitoMsg" />
+							</p:inputText>
+							<p:message id="prerequisitoMsg" for="prerequisito" display="icon" />
+
+						<h:outputLabel for="cargahoraria" value="Carga Horaria:" size="15" />
+						<p:spinner id="cargahoraria" maxlength="999" min="1"
+							value="#{cursoController.curso.cargahoraria}" size="10">
+							<p:ajax event="blur" update="cargahorariaMsg" />
+						</p:spinner>
+						<p:message id="cargahorariaMsg" for="cargahoraria" display="icon" />
+
+							<h:outputLabel for="resumo" value="Resumo:" />
+							<p:inputTextarea rows="10" cols="50"  id="resumo" value="#{cursoController.curso.resumo}"
+								size="18">
+								<f:validateLength minimum="1" />
+								<p:ajax event="blur" update="resumoMsg" />
+							</p:inputTextarea>
+							<p:message id="resumoMsg" for="resumo" display="icon" />
+
+						<h:outputLabel for="programacao" value="Programação:" />
+						
+						<p:selectBooleanCheckbox id="programacao"
+							value="#{cursoController.curso.programacao}" size="18">
+							<f:converter converterId="javax.faces.Boolean" />
+							
+							<p:ajax event="blur" update="programacaoMsg" />
+						</p:selectBooleanCheckbox>
+						<p:message id="programacaoMsg" for="programacao" display="icon" />
+
+							<h:outputLabel for="videoUrl" value="Video Url:" />
+							<p:inputText id="videoUrl"
+								value="#{cursoController.curso.videoUrl}" size="30">
+								<f:validateLength minimum="1" />
+								<p:ajax event="blur" update="videoUrlMsg" />
+							</p:inputText>
+							<p:message id="videoUrlMsg" for="videoUrl" display="icon" />
+
+						<h:outputLabel for="valor" value="Valor:" size="15" />
+						<p:inputText id="valor" value="#{cursoController.curso.valor}"
+							size="10">
+							<f:converter converterId="javax.faces.BigDecimal" />
+							<f:validateLength minimum="2" maximum="10" />
+							<p:ajax event="blur" update="valorMsg" />
+						</p:inputText>
+						<p:message id="valorMsg" for="valor" display="icon" />
+
+						
+					</h:panelGrid>
+					
+					<p:commandButton value="Salvar" action="#{cursoController.salvar}"
+							update="@form" />
+
+						<p:commandButton value="Cancelar"
+							rendered="#{cursoController.curso.id != null}"
+							action="#{cursoController.cancelar}" update="@form" />
+				</p:tab>
+
+				<p:tab title="Lista de Cursos">
+
+					<h:outputText value="Cursos"></h:outputText>
+					<p:dataTable id="dtCursos" var="curso" rows="13"
+						paginatorAlwaysVisible="false"
+						value="#{cursoController.cursoList}" style="width: 10%"
+						paginator="true">
+
+						<p:column sortBy="#{curso.id}" headerText="ID">
+							<h:outputText value="#{curso.id}" />
+						</p:column>
+
+						<p:column headerText="Titulo" width="100">
+							<h:outputText value="#{curso.titulo}" />
+						</p:column>
+
+						<p:column headerText="Texto" width="50">
+							<h:outputText value="#{curso.texto}" />
+						</p:column>
+
+						<p:column headerText="Ordem" width="100">
+							<h:outputText value="#{curso.ordem}" />
+						</p:column>
+
+						<p:column headerText="Conteudo" width="100">
+							<h:outputText value="#{curso.conteudo}" />
+						</p:column>
+
+						<p:column headerText="Sigla" width="100">
+							<h:outputText value="#{curso.sigla}" />
+						</p:column>
+
+						<p:column headerText="Carga Horaria" width="100">
+							<h:outputText value="#{curso.cargahoraria}" />
+						</p:column>
+
+						<p:column headerText="Resumo" width="100">
+							<h:outputText value="#{curso.resumo}" />
+						</p:column>
+
+
+						<p:column headerText="Valor" width="100">
+							<h:outputText value="#{curso.valor}" />
+						</p:column>
+
+
+						<p:column headerText="Ações" width="60">
+							<p:commandButton icon="ui-icon-trash" alt="Excluir curso"
+								title="Excluir Curso" oncomplete="confirmacao.show()">
+								<f:setPropertyActionListener
+									target="#{cursoController.cursoExcluir}" value="#{curso}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-pencil" alt="Editar Curso" process="@this"
+								title="Editar curso" action="#{cursoController.editar(curso)}"
+								update="@form">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+
+			<p:confirmDialog message="Deseja realmente remover este Curso!!!?"
+				position="center" header="Aviso" id="confirmacaoId" severity="alert"
+				widgetVar="confirmacao" closable="true" appendToBody="false">
+
+				<p:commandButton id="btnSim" value="Sim"
+					actionListener="#{cursoController.excluir}"
+					oncomplete="confirmacao.hide();" update="@form" />
+				<p:commandButton id="btnNao" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+
+</composite:implementation>
+</body>
+</html>

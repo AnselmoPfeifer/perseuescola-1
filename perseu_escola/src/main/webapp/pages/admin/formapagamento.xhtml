@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/comum/templates.xhtml">
+	<ui:define name="content">
+		<h:form id="frmFormaPagamento">
+			<p:growl id="mensagens" />
+			<p:accordionPanel multiple="true">
+				<p:tab title="Dados do FormaPagamento">
+					<h:panelGrid columns="25" id="panelEntity">
+
+						<h:outputLabel for="id" value="Id:" />
+						<p:inputText readonly="true" size="3" id="id"
+							value="#{formaPagamentoController.formaPagamento.id}">
+							<f:converter converterId="javax.faces.Integer" />
+							<p:ajax event="blur" update="idMsg" />
+						</p:inputText>
+						<p:message id="idMsg" for="id" display="icon" />
+
+						<h:outputLabel for="descricao" value="Descricao:" />
+						<p:inputText id="descricao"
+							value="#{formaPagamentoController.formaPagamento.descricao}"
+							size="25">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="descricaoMsg" />
+						</p:inputText>
+						<p:message id="descricaoMsg" for="descricao" display="icon" />
+
+						<h:outputLabel value="Conta:" />
+						<p:selectOneMenu value="#{formaPagamentoController.formaPagamento.conta}"
+							converter="#{contaConverter}" required="true">
+							<f:selectItem itemLabel="Selecione uma opção" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{contaController.contaList}"
+								var="conta" itemLabel="#{conta.descricao}" itemValue="#{conta}" />
+						</p:selectOneMenu>
+
+
+						<p:commandButton value="Salvar"
+							action="#{formaPagamentoController.salvar}" update="@form" />
+
+						<p:commandButton value="Cancelar"
+							rendered="#{formaPagamentoController.formaPagamento.id != null}"
+							action="#{formaPagamentoController.cancelar}" update="@form" />
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab title="Lista de Formas de Pagamentos">
+
+					<h:outputText value="Formas de Pagamentos"></h:outputText>
+					<p:dataTable id="dtFormaPagamento" var="u" rows="13"
+						paginatorAlwaysVisible="false"
+						value="#{formaPagamentoController.formaPagamentoList}"
+						style="width: 10%" paginator="true">
+
+						<p:column sortBy="#{u.id}" headerText="ID">
+							<h:outputText value="#{u.id}" />
+						</p:column>
+
+						<p:column headerText="Descricao" width="100">
+							<h:outputText value="#{u.descricao}" />
+						</p:column>
+
+						<p:column headerText="Conta" width="100">
+							<h:outputText value="#{u.conta.contaFmt}" />
+						</p:column>
+
+
+						<p:column headerText="Ações" width="60">
+							<p:commandButton icon="ui-icon-trash"
+								alt="Excluir formaPagamento" title="Excluir formaPagamento"
+								oncomplete="confirmacao.show()">
+								<f:setPropertyActionListener
+									target="#{formaPagamentoController.formaPagamentoExcluir}"
+									value="#{u}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-pencil"
+								alt="Editar formaPagamento" title="Editar formaPagamento"
+								action="#{formaPagamentoController.editar(u)}" update="@form">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+
+			<p:confirmDialog
+				message="Deseja realmente remover este FormaPagamento!!!?"
+				position="center" header="Aviso" id="confirmacaoId" severity="alert"
+				widgetVar="confirmacao" closable="true" appendToBody="false">
+
+				<p:commandButton id="btnSim" value="Sim"
+					actionListener="#{formaPagamentoController.excluir}"
+					oncomplete="confirmacao.hide();" update="@form" />
+				<p:commandButton id="btnNao" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

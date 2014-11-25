@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/comum/templates.xhtml">
+	<ui:define name="content">
+		<h:form id="frmCalendario">
+			<p:growl id="mensagens" />
+			<p:accordionPanel multiple="true">
+				<p:tab title="Dados do Calendario">
+					<h:panelGrid columns="25" id="panelEntity">
+
+						<h:outputLabel for="id" value="Id:" />
+						<p:inputText readonly="true" size="3" id="id"
+							value="#{calendarioController.calendario.id}">
+							<f:converter converterId="javax.faces.Integer" />
+							<p:ajax event="blur" update="idMsg" />
+						</p:inputText>
+						<p:message id="idMsg" for="id" display="icon" />
+
+						<h:outputLabel value="Curso:" />
+						<p:selectOneMenu value="#{calendarioController.calendario.curso}"
+							converter="#{cursoConverter}" effect="fade" required="true">
+							<f:selectItem itemLabel="Selecione uma opção" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{cursoController.cursoList}" var="curso"
+								itemLabel="#{curso.titulo}" itemValue="#{curso}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Professor:" />
+						<p:selectOneMenu
+							value="#{calendarioController.calendario.professor}"
+							converter="#{professorConverter}" required="true">
+							<f:selectItem itemLabel="Selecione uma opção" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{professorController.professorList}"
+								var="professor" itemLabel="#{professor.nome}"
+								itemValue="#{professor}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel for="datainicio" value="Data Inicio:" size="4" />
+						<p:calendar value="#{calendarioController.calendario.datainicio}"
+							id="datainiciocal" />
+						<p:dialog header="Selected Dates" widgetVar="dialog"
+							showEffect="fade" hideEffect="fade">
+							<h:outputText
+								value="#{calendarioController.calendario.datainicio}"
+								id="datainicio">
+								<f:convertDateTime pattern="d/M/yyyy" />
+							</h:outputText>
+						</p:dialog>
+
+						<h:outputLabel for="datafim" value="Data Fim:" size="4" />
+						<p:calendar value="#{calendarioController.calendario.datafim}"
+							id="datafimcal" />
+						<p:dialog header="Selecione a Data" widgetVar="dialog"
+							showEffect="fade" hideEffect="fade">
+							<h:outputText value="#{calendarioController.calendario.datafim}"
+								id="datafim">
+								<f:convertDateTime pattern="d/M/yyyy" />
+							</h:outputText>
+						</p:dialog>
+
+						<p:commandButton value="Salvar"
+							action="#{calendarioController.salvar}" update="@form" />
+
+						<p:commandButton value="Cancelar"
+							rendered="#{calendarioController.calendario.id != null}"
+							action="#{calendarioController.cancelar}" update="@form" />
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab title="Lista de Calendarios">
+
+					<h:outputText value="Calendarios"></h:outputText>
+					<p:dataTable id="dtCalendarios" var="u" rows="13"
+						paginatorAlwaysVisible="false"
+						value="#{calendarioController.calendarioList}" style="width: 10%"
+						paginator="true">
+
+						<p:column sortBy="#{u.id}" headerText="ID">
+							<h:outputText value="#{u.id}" />
+						</p:column>
+
+						<p:column headerText="Curso" width="60">
+							<h:outputText value="#{u.curso.titulo}"  />
+						</p:column>
+
+						<p:column headerText="Professor" width="60">
+							<h:outputText value="#{u.professor.nome}"/>
+						</p:column>
+
+						<p:column headerText="Data Inicio" width="200">
+							<h:outputText value="#{u.datainicio}" />
+						</p:column>
+
+						<p:column headerText="Data Fim" width="200">
+							<h:outputText value="#{u.datafim}" />
+						</p:column>
+
+
+						<p:column headerText="Ações" width="60">
+							<p:commandButton icon="ui-icon-trash" alt="Excluir calendario"
+								title="Excluir calendario" oncomplete="confirmacao.show()">
+								<f:setPropertyActionListener
+									target="#{calendarioController.calendarioExcluir}" value="#{u}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-pencil" alt="Editar calendario"
+								title="Editar calendario"
+								action="#{calendarioController.editar(u)}" update="@form">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+
+			<p:confirmDialog
+				message="Deseja realmente remover este Calendario!!!?"
+				position="center" header="Aviso" id="confirmacaoId" severity="alert"
+				widgetVar="confirmacao" closable="true" appendToBody="false">
+
+				<p:commandButton id="btnSim" value="Sim"
+					actionListener="#{calendarioController.excluir}"
+					oncomplete="confirmacao.hide();" update="@form" />
+				<p:commandButton id="btnNao" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

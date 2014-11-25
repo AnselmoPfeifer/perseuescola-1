@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.o-rg/ui">
+
+<f:view contentType="text/html">
+
+	<h:head>
+
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{request.contextPath}/images/favicon.ico" />
+		<f:facet name="first">
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+			<title>Perseu Escola</title>
+		</f:facet>
+
+		<link type="text/css" rel="stylesheet"
+			href="#{request.contextPath}/css/default.css" />
+		<link type="text/css" rel="stylesheet"
+			href="#{request.contextPath}/css/syntaxhighlighter/syntaxhighlighter.css" />
+
+		<ui:insert name="head"></ui:insert>
+
+		<script type="text/javascript">
+			$(function() {
+				$('.sidebar a').hover(function() {
+					$(this).toggleClass('ui-state-hover');
+				})
+			});
+		</script>
+
+		<script type="text/javascript">
+		PrimeFaces.locales['pt_BR'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Começo',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 1,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só Horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			currentText : 'Data Atual',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo Dia'
+		};
+	  </script>
+	</h:head>
+
+	<h:body>
+
+		<div id="header" class="ui-widget ui-widget-header">
+			<div id="logo">
+				<img src="#{request.contextPath}/images/logo.png" alt="Logo" />
+			</div>
+
+			<div id="user">
+				<ul id="main">
+					<li>Usuário Logado</li>
+					<li class="separador"><a>|</a></li>
+					<!-- 					<li><a href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">logout</a></li> -->
+				</ul>
+			</div>
+		</div>
+
+		<div id="menu" class="ui-widget">
+			<ui:include src="/comum/menu.xhtml" />
+		</div>
+
+		<div id="content">
+			<div class="post">
+				<ui:insert name="content">
+				</ui:insert>
+			</div>
+		</div>
+
+		<div style="clear: both;">&nbsp;</div>
+
+
+		<div id="footer" class="ui-widget ui-widget-header ui-corner-all">
+			<p class="copyright">Hightech Cursos - Perseu Escola 2.0 beta</p>
+		</div>
+
+
+	</h:body>
+
+	<ui:insert name="highlight">
+		<script language="javascript"
+			src="#{request.contextPath}/syntaxhighlighter/scripts/sh.js"></script>
+		<script language="javascript">
+			dp.SyntaxHighlighter.ClipboardSwf = '#{request.contextPath}/syntaxhighlighter/scripts/clipboard.swf';
+			dp.SyntaxHighlighter.HighlightAll('code');
+		</script>
+	</ui:insert>
+
+</f:view>
+</html>

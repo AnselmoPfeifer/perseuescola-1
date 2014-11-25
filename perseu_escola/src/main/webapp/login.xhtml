@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="shortcut icon" type="image/x-icon"
+			href="#{request.contextPath}/images/favicon.ico" />
+	<!-- 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> -->
+	<title>Login - Perseu Escola</title>
+	<!-- 	<link type="text/css" rel="stylesheet" href="dot-luv/skin.css" /> -->
+
+</h:head>
+<h:body
+	style="background-image:url(images/logo.png); background-position: 50% 200px;background-repeat: no-repeat; width: 780px; height: 193px">
+	<p:dialog header="Login" visible="true" closable="false"
+		draggable="false" resizable="false">
+		<center>
+			<h:outputText value="Usuário ou senha incorretos!"
+				rendered="#{param.erro}" style="color: darkred" />
+		</center>
+		<form action="#{facesContext.externalContext.requestContextPath}/j_spring_security_check" method="post">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="j_username" value="Usuário: *" />
+				<h:inputText id="j_username" required="true" />
+				<h:outputLabel for="j_password" value="Senha: * " />
+				<h:inputSecret id="j_password" required="true" />
+				<h:commandButton value="Login"  />
+			</h:panelGrid>
+		</form>
+	</p:dialog>
+</h:body>
+</html>

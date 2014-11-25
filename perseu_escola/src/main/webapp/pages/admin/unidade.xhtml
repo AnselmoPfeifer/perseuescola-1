@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/comum/templates.xhtml">
+	<ui:define name="content">
+<ui:include src="/pages/admin/endereco.xhtml" >
+</ui:include>	
+	
+		<h:form id="frmUnidade">
+			<p:growl id="mensagens" />
+			<p:accordionPanel multiple="true">
+				<p:tab title="Dados do Unidade">
+				
+				
+					<h:panelGrid columns="25" id="panelEntity">
+
+						<h:outputLabel for="id" value="Id:" />
+							<p:inputText readonly="true" size="3" id="id"
+							value="#{unidadeController.unidade.id}">
+							<f:converter converterId="javax.faces.Integer" />
+							<p:ajax event="blur" update="idMsg" />
+						</p:inputText>
+						<p:message id="idMsg" for="id" display="icon" />
+
+						<h:outputLabel for="nome" value="Nome:" />
+						<p:inputText id="nome" value="#{unidadeController.unidade.nome}"
+							size="25">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="nomeMsg" />
+						</p:inputText>
+						<p:message id="nomeMsg" for="nome" display="icon" />
+
+
+						<p:commandButton id="modalDialogButton" value="Endereco"
+							onclick="cepDialog.show();" type="button" update=":frmUnidade"
+							process="@this"
+							
+							 >
+							<f:setPropertyActionListener value="#{unidadeController.unidade.endereco}"  target="#{enderecoController.enderecoEditar}" />   
+							</p:commandButton>
+
+
+						<p:commandButton value="Salvar"
+							action="#{unidadeController.salvar}" update=":frmUnidade" />
+
+						<p:commandButton value="Cancelar"
+							rendered="#{unidadeController.unidade.id != null}"
+							action="#{unidadeController.cancelar}" update=":frmUnidade" />
+					</h:panelGrid>
+
+					
+				</p:tab>
+
+				<p:tab title="Lista de Unidades">
+
+					<h:outputText value="Unidades"></h:outputText>
+					<p:dataTable id="dtUnidades" var="u" rows="13"
+						paginatorAlwaysVisible="false"
+						value="#{unidadeController.unidadeList}" style="width: 10%"
+						paginator="true">
+
+						<p:column sortBy="#{u.id}" headerText="ID">
+							<h:outputText value="#{u.id}" />
+						</p:column>
+
+						<p:column headerText="Nome" width="100">
+							<h:outputText value="#{u.nome}" />
+						</p:column>
+
+
+						<p:column headerText="Ações" width="60">
+							<p:commandButton icon="ui-icon-trash" alt="Excluir unidade"
+								title="Excluir unidade" oncomplete="confirmacao.show()">
+								<f:setPropertyActionListener
+									target="#{unidadeController.unidadeExcluir}" value="#{u}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-pencil" alt="Editar unidade"
+								title="Editar unidade" action="#{unidadeController.editar(u)}"
+								update="@form">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+
+			<p:confirmDialog message="Deseja realmente remover este Unidade!!!?"
+				position="center" header="Aviso" id="confirmacaoId" severity="alert"
+				widgetVar="confirmacao" closable="true" appendToBody="false">
+
+				<p:commandButton id="btnSim" value="Sim"
+					actionListener="#{unidadeController.excluir}"
+					oncomplete="confirmacao.hide();" update="@form" />
+				<p:commandButton id="btnNao" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

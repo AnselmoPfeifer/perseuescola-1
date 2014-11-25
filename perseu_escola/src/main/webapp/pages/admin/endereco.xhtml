@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:outputPanel id="panelCep">
+				
+				<p:dialog appendToBody="true" closable="true" draggable="false"
+						header="Web Service CEP" modal="true" showEffect="explode"
+						hideEffect="bounce" position="center" resizable="false"
+						widgetVar="cepDialog" id="modalDialog">
+
+						<h:form id="frmBusca">
+							<h:panelGrid id="pnCEP" columns="3">
+								<h:outputText value="CEP: " />
+								<p:inputMask mask="99999-999"
+									value="#{enderecoController.endereco.cep}" />
+
+								<p:commandButton value="Pesquisar" icon="ui-icon-pencil"
+									action="#{enderecoController.encontraCEP}"
+									update=":frmResultado" />
+							</h:panelGrid>
+						</h:form>
+
+						<h:form id="frmResultado">
+							<h:panelGrid id="pnResultado" columns="2">
+								<h:outputLabel value="UF: "
+									style="font-weight:bold; padding-right: 5px; float: right;" />
+								<p:inputText size="5"
+									value="#{enderecoController.endereco.cidade.uf.descricao}" />
+
+								<h:outputLabel value="Logradouro: "
+									style="font-weight:bold; padding-right: 5px; float: right;" />
+								<p:inputText size="50"
+									value="#{enderecoController.endereco.logradouro}" />
+
+								<h:outputLabel value="Cidade: "
+									style="font-weight:bold; padding-right: 5px; float: right;" />
+								<p:inputText size="50"
+									value="#{enderecoController.endereco.cidade.descricao}" />
+
+								<h:outputLabel value="Bairro: "
+									style="font-weight:bold; padding-right: 5px; float: right;" />
+								<p:inputText size="25"
+									value="#{enderecoController.endereco.bairro}" />
+							</h:panelGrid>
+<p:commandButton value="Saida" onclick="cepDialog.hide();" type="button"/> 							
+						</h:form>
+					</p:dialog>
+				
+				</p:outputPanel>
+
+
+</html>

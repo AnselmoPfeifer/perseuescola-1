@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:menubar style="border: 0px">
+	<p:submenu label="Cadastro" icon="ui-icon-clipboard">
+		<p:menuitem value="Usuário"
+			url="#{request.contextPath}/../pages/admin/usuario.xhtml"></p:menuitem>
+		<p:menuitem value="Professor"
+			url="#{request.contextPath}/../pages/admin/professor.xhtml"></p:menuitem>
+		<p:menuitem value="Sala"
+			url="#{request.contextPath}/../pages/admin/sala.xhtml"></p:menuitem>
+		<p:menuitem value="Grupo"
+			url="#{request.contextPath}/../pages/admin/grupo.xhtml"></p:menuitem>
+		<p:menuitem value="Cartao"
+			url="#{request.contextPath}/../pages/admin/cartao.xhtml"></p:menuitem>
+		<p:menuitem value="Conta"
+			url="#{request.contextPath}/../pages/admin/conta.xhtml"></p:menuitem>
+		<p:menuitem value="Unidade"
+			url="#{request.contextPath}/../pages/admin/unidade.xhtml"></p:menuitem>
+		<p:menuitem value="Cliente"
+			url="#{request.contextPath}/../pages/admin/cliente.xhtml"></p:menuitem>
+		<p:menuitem value="Curso"
+			url="#{request.contextPath}/../pages/admin/curso.xhtml"></p:menuitem>
+		<p:menuitem value="Contato"
+			url="#{request.contextPath}/../pages/admin/contato.xhtml"></p:menuitem>
+		<p:menuitem value="Tipo Contato"
+			url="#{request.contextPath}/../pages/admin/tipoContato.xhtml"></p:menuitem>
+		<p:menuitem value="Matricula"
+			url="#{request.contextPath}/../pages/admin/matricula.xhtml"></p:menuitem>
+		<p:menuitem value="Calendario"
+			url="#{request.contextPath}/../pages/admin/calendario.xhtml"></p:menuitem>
+		<p:menuitem value="Formas de Pagamentos"
+			url="#{request.contextPath}/../pages/admin/formapagamento.xhtml"></p:menuitem>
+		<p:menuitem value="Grupo"
+			url="#{request.contextPath}/../pages/admin/Grupo2.xhtml"></p:menuitem>
+	</p:submenu>
+	<p:submenu label="Matrícula">
+		<p:menuitem value="Nova"
+			url="#{request.contextPath}/../pages/admin/matricula.xhtml"></p:menuitem>
+	</p:submenu>
+	<p:submenu label="Financeiro">
+	
+	<p:menuitem value="Contas a REceber"
+			url="#{request.contextPath}/../pages/admin/ContasAReceber.xhtml"></p:menuitem>
+	
+	</p:submenu>
+	
+		<p:menuitem value="Sair"
+					url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" />
+			
+			
+			
+	
+</p:menubar>
+
+</html>

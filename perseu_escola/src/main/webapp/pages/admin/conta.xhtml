@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/comum/templates.xhtml">
+	<ui:define name="content">
+		<h:form id="frmConta">
+			<p:growl id="mensagens" />
+			<p:accordionPanel multiple="true">
+				<p:tab title="Dados da Conta">
+					<h:panelGrid columns="25" id="panelEntity">
+
+						<h:outputLabel for="id" value="Id:" />
+						<p:inputText readonly="true" id="id"
+							value="#{contaController.conta.id}" size="3">
+							<f:converter converterId="javax.faces.Integer" />
+							<p:ajax event="blur" update="idMsg" />
+						</p:inputText>
+						<p:message id="idMsg" for="id" display="icon" />
+
+						<h:outputLabel for="classificacao" value="Classificação:" />
+						<p:inputText id="classificacao"
+							value="#{contaController.conta.classificacao}" size="14">
+							<f:validateLength minimum="1" />
+							<p:ajax event="blur" update="classificacaoMsg" />
+						</p:inputText>
+						<p:message id="classificacaoMsg" for="classificacao"
+							display="icon" />
+
+						<h:outputLabel for="codigoReduzido" value="Codigo:" />
+						<p:inputText id="codigoReduzido"
+							value="#{contaController.conta.codigoReduzido}" size="7">
+							<f:validateLength minimum="1" />
+							<p:ajax event="blur" update="codigoReduzidoMsg" />
+						</p:inputText>
+						<p:message id="codigoReduzidoMsg" for="codigoReduzido"
+							display="icon" />
+
+						<h:outputLabel for="descricao" value="Descrição:" />
+						<p:inputText id="descricao"
+							value="#{contaController.conta.descricao}" size="20">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="descricaoMsg" />
+						</p:inputText>
+						<p:message id="descricaoMsg" for="descricao" display="icon" />
+
+						<h:outputLabel for="grau" value="Grau:" size="4" />
+						<p:inputText id="grau" value="#{contaController.conta.grau}"
+							size="3">
+							<f:validateLength minimum="1" />
+							<p:ajax event="blur" update="grauMsg" />
+						</p:inputText>
+						<p:message id="grauMsg" for="grau" display="icon" />
+
+						<h:outputText value="Ativo: " />
+						<p:selectBooleanCheckbox value="#{contaController.conta.ativo}" />
+
+						<p:commandButton value="Salvar" action="#{contaController.salvar}"
+							update="@form" />
+
+						<p:commandButton value="Cancelar"
+							rendered="#{contaController.conta.id != null}"
+							action="#{contaController.cancelar}" update="@form" />
+					</h:panelGrid>
+				</p:tab>
+			</p:accordionPanel>
+
+			<p:accordionPanel>
+				<p:tab id="arvore" title="Plano de Contas">
+
+					<p:dataTable var="v" value="#{contaController.contaList}">
+						
+						<p:column headerText="Classificação">
+							<h:outputText value="#{v.classificacao}" />
+						</p:column>
+						
+						<p:column headerText="Descrição">
+							<h:outputText value="#{v.descricao}" />
+						</p:column>
+						
+						<p:column headerText="Codigo Reduzido">
+							<h:outputText value="#{v.codigoReduzido}" />
+						</p:column>
+						
+						<p:column headerText="Grau">
+							<h:outputText value="#{v.grau}" />
+						</p:column>
+						
+					</p:dataTable>
+
+				</p:tab>
+			</p:accordionPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

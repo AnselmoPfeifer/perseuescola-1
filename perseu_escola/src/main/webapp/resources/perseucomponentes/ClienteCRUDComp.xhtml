@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>Cadastro de Cliente</title>
+</head>
+<body>
+	<composite:interface>
+		<composite:attribute name="cliente"
+			type="com.htcursos.model.entity.Cliente" />
+
+	</composite:interface>
+	<composite:implementation>
+
+
+
+
+		<h:form id="frmCliente">
+
+			<p:growl id="mensagens" />
+			<p:tabView id="tabView">
+				<p:tab title="Cadastro do Cliente">
+
+
+					<p:panel header="Dados do Cliente">
+
+						<p:panelGrid columns="4" id="panelCliente">
+
+							<h:outputLabel for="id" value="Id:" />
+							<p:inputText readonly="true" size="5" id="id"
+								value="#{clienteController.cliente.id}">
+								<f:converter converterId="javax.faces.Integer" />
+								<p:ajax event="blur" />
+							</p:inputText>
+
+							<h:outputLabel for="nome" value="Nome:" />
+							<p:inputText id="nome" value="#{clienteController.cliente.nome}"
+								size="50">
+								<f:validateLength minimum="3" />
+								<p:ajax event="blur" />
+							</p:inputText>
+
+
+							<h:outputLabel for="email" value="E-mail:" />
+							<p:inputText id="email"
+								value="#{clienteController.cliente.email}" size="50">
+								<f:validateLength minimum="3" />
+								<p:ajax event="blur" />
+							</p:inputText>
+
+							<h:outputLabel value="Unidade:" />
+							<p:selectOneMenu id="unidade"
+								value="#{clienteController.cliente.unidade}"
+								converter="#{unidadeConverter}">
+								<f:selectItem itemLabel="Selecione" itemValue="0"
+									noSelectionOption="true" />
+								<f:selectItems value="#{unidadeController.unidadeList}"
+									var="unidade" itemLabel="#{unidade.nome}"
+									itemValue="#{unidade}" />
+							</p:selectOneMenu>
+
+							<h:outputLabel value="Data Nasc:" size="4" />
+							<p:calendar value="#{clienteController.cliente.pfDatanascimento}"
+								id="popupButtonCal" pattern="dd/MM/yyyy" locale="pt_BR" />
+
+							<h:outputLabel for="tipoClienteEnum" value="Tipo:" />
+							<h:selectOneMenu id="tipoClienteEnum"
+								value="#{clienteController.cliente.tipo}">
+								<f:selectItems value="#{clienteController.tipoClienteValor}"
+									var="t" itemValue="#{t}" itemLabel="#{t.label}" />
+							</h:selectOneMenu>
+
+							<h:outputLabel for="pfCpf" value="Cpf:" />
+							<p:inputMask id="pfCpf" mask="999.999.999-99"
+								value="#{clienteController.cliente.pfCpf}" size="14">
+								<f:validateLength minimum="1" />
+								<p:ajax event="blur" />
+							</p:inputMask>
+
+							<h:outputLabel for="pfRg" value="Rg:" />
+							<p:inputText id="pfRg" value="#{clienteController.cliente.pfRg}"
+								size="18">
+								<f:validateLength minimum="1" />
+								<p:ajax event="blur" />
+							</p:inputText>
+
+							<h:outputLabel value="Sexo:" />
+							<h:selectOneMenu id="tipoSexoEnum"
+								value="#{clienteController.cliente.sexo}">
+								<f:selectItems value="#{clienteController.tipoSexoValues}"
+									var="s" itemValue="#{s}" itemLabel="#{s.label}" />
+							</h:selectOneMenu>
+
+							<h:outputLabel value="Camiseta" />
+							<p:selectOneMenu id="camiseta"
+								value="#{clienteController.cliente.camiseta}">
+								<f:selectItem itemLabel="PP" itemValue="PP" />
+								<f:selectItem itemLabel="P" itemValue="P" />
+								<f:selectItem itemLabel="M" itemValue="M" />
+								<f:selectItem itemLabel="G" itemValue="G" />
+								<f:selectItem itemLabel="GG" itemValue="GG" />
+								<f:selectItem itemLabel="Ultra G" itemValue="Ultra G" />
+							</p:selectOneMenu>
+
+
+							<h:outputLabel for="origem"
+								value="Origem (Como fico sabendo de nós?):" size="18" />
+							<p:inputText id="origem"
+								value="#{clienteController.cliente.origem}" size="18">
+								<f:validateLength minimum="3" maximum="10" />
+								<p:ajax event="blur" />
+							</p:inputText>
+
+							<!-- 						<h:outputLabel for="senha" value="Senha:" size="15" /> -->
+							<!-- 						<p:password id="senha" value="#{clienteController.cliente.senha}" -->
+							<!-- 							size="18"> -->
+							<!-- 							<f:validateLength minimum="2" maximum="10" /> -->
+							<!-- 							<p:ajax event="blur" /> -->
+							<!-- 						</p:password> -->
+
+						</p:panelGrid>
+
+					</p:panel>
+					<br />
+					<p:panel header="Dados de Endereco">
+
+						<h:panelGrid id="pnCEP" columns="3">
+							<h:outputText value="CEP: " />
+							<p:inputMask mask="99999-999"
+								value="#{clienteController.cliente.endereco.cep}" />
+
+							<p:commandButton value="Pesquisar CEP" icon="ui-icon-pencil"
+								action="#{clienteController.encontraCEP}" update="pnEndereco" />
+						</h:panelGrid>
+
+						<br />
+						<p:panelGrid id="pnEndereco" columns="4">
+
+
+
+
+							<h:outputLabel value="Tipo Logradouro (Ex: Rua, Avenida):  " />
+							<p:inputText size="30"
+								value="#{clienteController.cliente.endereco.tipo_logradouro}" />
+
+							<h:outputLabel value="Logradouro: " />
+							<p:inputText size="30"
+								value="#{clienteController.cliente.endereco.logradouro}" />
+
+							<h:outputLabel value="Número: " />
+
+							<p:inputText size="30"
+								value="#{clienteController.cliente.endereco.numero}" />
+
+							<h:outputLabel value="Bairro: " />
+							<p:inputText size="30"
+								value="#{clienteController.cliente.endereco.bairro}" />
+
+							<h:outputLabel value="Cidade: " />
+							<p:inputText size="30"
+								value="#{clienteController.cliente.endereco.cidade}" />
+
+							<h:outputLabel value="UF: " />
+							<p:inputText size="30"
+								value="#{clienteController.cliente.endereco.estado}" />
+
+							<h:outputLabel value="Complemento " />
+							<p:inputText size="30"
+								value="#{clienteController.cliente.endereco.complemento}" />
+
+						</p:panelGrid>
+						<br />
+
+					</p:panel>
+
+					<br />
+
+					<p:panel header="Dados de Contato">
+						<p:messages id="idMsg" display="icon" />
+						<p:panelGrid columns="2">
+
+
+							<p:panelGrid columns="25" id="panelContato">
+
+
+
+								<h:outputLabel value="Tipo:" />
+								<p:selectOneMenu
+									value="#{clienteController.contato.tipoContato}"
+									converter="#{tipoContatoConverter}" effect="fade">
+									<f:selectItem itemLabel="Selecione" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{tipoContatoController.tipoContatoList}"
+										var="tipoContato" itemLabel="#{tipoContato.descricao}"
+										itemValue="#{TipoContato}" />
+								</p:selectOneMenu>
+
+							
+								<p:inputText id="dado" value="#{clienteController.contato.dado}"
+									size="25">
+								</p:inputText>
+								
+
+								<p:commandButton value="Adicionar Contato"
+									action="#{clienteController.adicionarContato}"
+									update="dtContatos" process="@form" />
+
+							</p:panelGrid>
+
+							<p:dataTable id="dtContatos" var="c" rows="13"
+								paginatorAlwaysVisible="false"
+								value="#{clienteController.cliente.contatoList}"
+								style="width: 10%" paginator="true">
+
+								<p:column headerText="Dado" width="100">
+									<h:outputText value="#{c.dado}" />
+								</p:column>
+
+								<p:column headerText="Tipo">
+									<h:outputText value="#{c.tipoContato.descricao}" />
+								</p:column>
+
+
+								<p:column headerText="Ações" width="60">
+									<p:commandButton icon="ui-icon-trash" alt="Excluir contato"
+										title="Excluir contato" oncomplete="confirmacaoContato.show()">
+										<f:setPropertyActionListener
+											target="#{clienteController.contato}" value="#{c}" />
+									</p:commandButton>
+
+									<!-- 								<p:commandButton icon="ui-icon-pencil" alt="Editar contato" -->
+									<!-- 									title="Editar contato" -->
+									<!-- 									action="#{clienteController.editarContato(c)}" update="@form"> -->
+									<!-- 								</p:commandButton> -->
+								</p:column>
+							</p:dataTable>
+
+						</p:panelGrid>
+
+						<p:confirmDialog message="Deseja realmente remover este Contato?"
+							position="center" header="Aviso" id="confirmacaoContatoId"
+							severity="alert" widgetVar="confirmacaoContato" closable="true"
+							appendToBody="false">
+
+							<p:commandButton id="btnSim" value="Sim"
+								actionListener="#{clienteController.excluirContato}"
+								oncomplete="confirmacaoContato.hide();" update="@form" />
+							<p:commandButton id="btnNao" value="Não"
+								onclick="confirmacaoContato.hide();" />
+						</p:confirmDialog>
+
+					</p:panel>
+
+					<p:commandButton value="Salvar"
+						action="#{clienteController.salvar}" update="@form">
+					</p:commandButton>
+
+					<p:commandButton value="Cancelar"
+						action="#{clienteController.cancelar}" update="@form" />
+
+					<p:dialog header="Selected Dates" widgetVar="dialog"
+						showEffect="fade" hideEffect="fade">
+						<h:outputText
+							value="#{clienteController.cliente.pfDatanascimento}"
+							id="pfDatanascimento">
+						</h:outputText>
+					</p:dialog>
+
+
+				</p:tab>
+
+				<p:tab title="Lista de Clientes">
+
+					<p:dataTable id="dtClientes" var="c" rows="13"
+						paginatorAlwaysVisible="false"
+						value="#{clienteController.clienteList}" paginator="true">
+
+						<p:column sortBy="#{c.id}" headerText="ID" style="width: 10%">
+							<h:outputText value="#{c.id}" />
+						</p:column>
+
+						<p:column headerText="Nome" width="100" filterBy="#{c.nome}">
+							<h:outputText value="#{c.nome}" />
+						</p:column>
+
+						<p:column headerText="CPF/CNPJ" width="100">
+							<h:outputText value="#{c.CPFCNPJStr}" />
+						</p:column>
+
+						<p:column headerText="Data Nasc." width="100">
+							<h:outputText value="#{c.pfDatanascimentoFmt}" />
+						</p:column>
+
+						<p:column headerText="Ações" width="60">
+
+							<!-- 							<p:commandButton icon="ui-icon-arrow-1-e" alt="Selecionar"  -->
+							<!-- 								title="Selecionar cliente"  oncomplete="PrimeFaces.ab({formId:$(this).closest('form').attr('id'),source:this.id,process:'@all',update:myTable.id});return false;" >  -->
+							<!-- 								<f:setPropertyActionListener target="#{cc.attrs.cliente}" -->
+							<!-- 									value="#{c}" /> -->
+							<!-- 							</p:commandButton> -->
+
+
+							<p:commandButton icon="ui-icon-trash" alt="Excluir cliente"
+								title="Excluir cliente" oncomplete="confirmacao.show()">
+								<f:setPropertyActionListener
+									target="#{clienteController.clienteExcluir}" value="#{c}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-pencil" alt="Editar cliente"
+								title="Editar cliente" action="#{clienteController.editar(c)}"
+								update="@form">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:tabView>
+			<p:confirmDialog message="Deseja realmente remover este Cliente!!!?"
+				position="center" header="Aviso" id="confirmacaoId" severity="alert"
+				widgetVar="confirmacao" closable="true" appendToBody="false">
+
+				<p:commandButton id="btnSim" value="Sim"
+					actionListener="#{clienteController.excluir}"
+					oncomplete="confirmacao.hide();" update="@form" />
+				<p:commandButton id="btnNao" value="Não"
+					onclick="confirmacao.hide();" />
+			</p:confirmDialog>
+		</h:form>
+
+
+	</composite:implementation>
+
+</body>
+</html>

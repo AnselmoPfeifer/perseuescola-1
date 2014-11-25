@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:component-scan base-package="com.htcursos" />
+
+
+	<!-- Security configuration for REST services. --> 
+<!-- 	<security:http pattern="/rest/MatriculaService/getMatriculaList/**" -->
+<!-- 		authentication-manager-ref="authenticationManager" entry-point-ref="restServicesEntryPoint" -->
+<!-- 		create-session="stateless"> -->
+<!-- 		<security:custom-filter ref="restServicesFilter" -->
+<!-- 			before="PRE_AUTH_FILTER" /> -->
+<!-- 	</security:http> -->
+
+	<!-- Entry point for REST service. --> 
+<!-- 	<bean id="restServicesEntryPoint" class="com.htcursos.webservice.rest.spring.RestAuthenticationEntryPoint" /> -->
+	
+ 	<!-- Filter for REST services. --> 
+<!-- 	<bean id="restServicesFilter" -->
+<!-- 		class="com.htcursos.webservice.rest.spring.RestUsernamePasswordAuthenticationFilter"> -->
+<!-- 		<property name="postOnly" value="false" /> -->
+<!-- 		<property name="authenticationManager" ref="authenticationManager" /> -->
+<!-- 		<property name="authenticationSuccessHandler" ref="restServicesSuccessHandler" /> -->
+<!-- 	</bean> -->
+ 	<!-- A handler for successful REST service authentication. --> 
+<!-- 	<bean id="restServicesSuccessHandler" class="com.htcursos.webservice.rest.spring.RestAuthenticationSuccessHandler" /> -->
+	
+<!-- 	<security:global-method-security -->
+<!-- 		secured-annotations="enabled" jsr250-annotations="enabled" -->
+<!-- 		pre-post-annotations="enabled"> -->
+<!-- 	</security:global-method-security> -->
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider>
+			<security:jdbc-user-service
+				data-source-ref="dataSource"
+				users-by-username-query="SELECT username, password, enable FROM Usuario WHERE username=?"
+				authorities-by-username-query="SELECT u.username, a.authority FROM Usuario u, Autorizacao a, Usuario_Autorizacao ua WHERE u.id = ua.usuario_id AND a.id = ua.autorizacoes_id AND u.username = ?" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http auto-config="true" use-expressions="true" create-session="always">
+
+		<security:intercept-url pattern="/pages/*"
+			access="isAuthenticated()" />
+
+		<security:intercept-url pattern="/pages/admin/**"
+			access="hasRole('ROLE_ADMIN')" />
+
+		<security:form-login authentication-failure-url="/login.xhtml?erro=true"
+			default-target-url="/pages/admin/index.xhtml" login-page="/login.xhtml" />
+
+		<security:access-denied-handler
+			error-page="/pages/error/errorPage.xhtml?erro=true" />
+
+	</security:http>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:app.properties" />
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="${hibernate.generate_ddl}" />
+				<property name="showSql" value="${hibernate.show_sql}" />
+				<property name="databasePlatform" value="${hibernate.dialect}"></property>
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="jsfJpa" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+
+	<!-- View scope -->
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="com.htcursos.controller.util.faces.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+</beans>

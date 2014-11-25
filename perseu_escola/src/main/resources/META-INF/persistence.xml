@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="jsfJpa" >
+		<class>com.htcursos.model.entity.Autorizacao</class>
+		<class>com.htcursos.model.entity.Calendario</class>
+		<class>com.htcursos.model.entity.Cartao</class>
+		<class>com.htcursos.model.entity.Cidade</class>
+		<class>com.htcursos.model.entity.Cliente</class>
+		<class>com.htcursos.model.entity.ClienteMatricula</class>
+		<class>com.htcursos.model.entity.ClienteMatriculaCalendario</class>
+		<class>com.htcursos.model.entity.Conta</class>
+		<class>com.htcursos.model.entity.Contato</class>
+		<class>com.htcursos.model.entity.Curso</class>
+		<class>com.htcursos.model.entity.CursoMatricula</class>
+		<class>com.htcursos.model.entity.Endereco</class>
+		<class>com.htcursos.model.entity.FormaPagamento</class>
+		<class>com.htcursos.model.entity.Grupo</class>
+		<class>com.htcursos.model.entity.Lancamento</class>
+		<class>com.htcursos.model.entity.Matricula</class>
+		<class>com.htcursos.model.entity.Pagamento</class>
+		<class>com.htcursos.model.entity.Parcela</class>
+		<class>com.htcursos.model.entity.Professor</class>
+		<class>com.htcursos.model.entity.Sala</class>
+		<class>com.htcursos.model.entity.TipoContato</class>
+		<class>com.htcursos.model.entity.Uf</class>
+		<class>com.htcursos.model.entity.Unidade</class>
+		<class>com.htcursos.model.entity.Usuario</class>
+<!-- 	<class>com.htcursos.Usuario</class> -->
+	</persistence-unit>
+</persistence>

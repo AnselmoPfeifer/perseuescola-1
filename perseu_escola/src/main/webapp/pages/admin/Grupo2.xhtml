@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/comum/templates.xhtml">
+	<ui:define name="content">
+<h:form id="frmUnidade">
+		<pe:masterDetail id="masterDetail" selectLevelListener="#{selectLevelListener.handleNavigation}" showAllBreadcrumbItems="true">
+    <f:facet name="header">
+        <p:messages showDetail="false" showSummary="true"/>
+    </f:facet>
+
+    <pe:masterDetailLevel level="1">
+       
+<h:form id="tables">
+       <p:dataTable id="dtGrupos" 
+       var="u" 
+       rows="13" 
+       paginatorAlwaysVisible="false"
+	   style="width: 10%"
+	   paginator="true"
+	   emptyMessage="Nao foram localizados dados para o filtro"
+	   filteredValue="#{grupoController.filteredGrupos}"
+	   widgetVar="grupoTable"
+	   value="#{grupoController.grupoList}" 
+>  
+ 
+ <f:facet name="header">  
+        <p:outputPanel>  
+<h:outputText value="Search all fields:" />  
+<p:inputText id="globalFilter" onkeyup="grupoTable.filter()" style="width:150px" />  
+</p:outputPanel> 
+        </f:facet>
+
+            <p:column sortBy="#{u.id}" headerText="ID" >
+						<p:commandLink value="#{u.id}" >
+						<pe:selectDetailLevel contextValue="#{u}"/>
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Descricao"
+						filterMatchMode="contains">  
+						<h:outputText value="#{u.descricao}" />
+					</p:column>
+					
+        </p:dataTable>
+        </h:form>
+        <p:commandButton value="Adicionar">
+						<pe:selectDetailLevel level="2"/>
+						</p:commandButton>
+    </pe:masterDetailLevel>
+
+    <pe:masterDetailLevel level="2" contextVar="u" levelLabel="Detalhes do grupo">
+        <h:panelGrid columns="14" id="panelEntity">
+				
+					<h:outputLabel for="id" value="Id:" />
+						<p:inputText readonly="true" size="3" id="id" value="#{u.id}">
+						<f:converter converterId="javax.faces.Integer" />
+						<p:ajax event="blur" update="idMsg" />
+						</p:inputText>
+						<p:message id="idMsg" for="id" display="icon" />
+
+					<h:outputLabel for="descricao" value="Nome:" />
+						<p:inputText id="descricao" value="#{u.descricao}">
+						<f:validateLength minimum="3" />
+						<p:ajax event="blur" update="descricaoMsg" />
+						</p:inputText>
+						<p:message id="descricaoMsg" for="descricao" display="icon" />
+						
+					<p:commandButton value="Salvar"
+						action="#{grupoController.salvar}" update="@form" >
+						<pe:selectDetailLevel level="1"/>
+						</p:commandButton>
+
+					<p:commandButton value="Cancelar"
+						rendered="#{u.id != null}"
+						action="#{grupoController.cancelar}" update="@form" >
+						<pe:selectDetailLevel level="1"/>
+						</p:commandButton>	
+							
+						<p:commandButton icon="ui-icon-trash" alt="Excluir grupo"
+							title="Excluir grupo" oncomplete="confirmacao.show()">
+							<f:setPropertyActionListener
+								target="#{grupoController.grupoExcluir}" value="#{u}" />
+						</p:commandButton>
+				</h:panelGrid>
+			<p:confirmDialog message="Deseja realmente remover este Grupo!!!?"
+			position="center" header="Aviso" id="confirmacaoId" severity="alert"
+			widgetVar="confirmacao" closable="true" appendToBody="false">
+
+			<p:commandButton id="btnSim" value="Sim"
+				actionListener="#{grupoController.excluir}"
+				oncomplete="confirmacao.hide();" update="@form"  />
+			<p:commandButton id="btnNao" value="Não"
+				onclick="confirmacao.hide();" />
+		</p:confirmDialog>	
+    </pe:masterDetailLevel>
+
+    
+</pe:masterDetail>
+            
+
+
+</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

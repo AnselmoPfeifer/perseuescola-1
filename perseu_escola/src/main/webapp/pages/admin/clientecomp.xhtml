@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite">
+
+ <!-- INTERFACE -->
+    <cc:interface>
+    
+    <cc:interface name="cliente" type="com.htcursos.model.entity.Cliente"></cc:interface>
+    </cc:interface>
+    
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+	<h:form id="frmCliente">
+		<p:growl id="mensagens" />
+		<p:accordionPanel multiple="true">
+			<p:tab title="Dados do Cliente">
+				<h:panelGrid columns="6" id="panelCliente">
+
+					<h:outputLabel for="id" value="Id:" />
+					<p:inputText readonly="true" size="5" id="id"
+						value="#{clienteController.cliente.id}">
+						<f:converter converterId="javax.faces.Integer" />
+						<p:ajax event="blur" />
+					</p:inputText>
+
+					<h:outputLabel for="nome" value="Nome:" />
+					<p:inputText id="nome" value="#{clienteController.cliente.nome}"
+						size="50">
+						<f:validateLength minimum="3" />
+						<p:ajax event="blur" />
+					</p:inputText>
+
+
+					<h:outputLabel value="Unidade:" />
+					<p:selectOneMenu id="unidade"
+						value="#{clienteController.cliente.unidade}"
+						converter="#{unidadeConverter}">
+						<f:selectItem itemLabel="Selecione" itemValue="0"
+							noSelectionOption="true" />
+						<f:selectItems value="#{unidadeController.unidadeList}"
+							var="unidade" itemLabel="#{unidade.nome}" itemValue="#{unidade}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Data Nasc:" size="4" />
+					<p:calendar value="#{clienteController.cliente.pfDatanascimento}"
+						id="popupButtonCal" pattern="dd/MM/yyyy" locale="pt_BR" />
+
+					<h:outputLabel for="tipoClienteEnum" value="Tipo:" />
+					<h:selectOneMenu id="tipoClienteEnum"
+						value="#{clienteController.cliente.tipo}">
+						<f:selectItems value="#{clienteController.tipoClienteValor}"
+							var="t" itemValue="#{t}" itemLabel="#{t.label}" />
+					</h:selectOneMenu>
+
+					<h:outputLabel for="pfCpf" value="Cpf:" />
+					<p:inputMask id="pfCpf" mask="999.999.999-99"
+						value="#{clienteController.cliente.pfCpf}" size="14">
+						<f:validateLength minimum="1" />
+						<p:ajax event="blur" />
+					</p:inputMask>
+
+					<h:outputLabel for="pfRg" value="Rg:" />
+					<p:inputText id="pfRg" value="#{clienteController.cliente.pfRg}"
+						size="18">
+						<f:validateLength minimum="1" />
+						<p:ajax event="blur" />
+					</p:inputText>
+
+					<h:outputLabel value="Sexo:" />
+					<h:selectOneMenu id="tipoSexoEnum"
+						value="#{clienteController.cliente.sexo}">
+						<f:selectItems value="#{clienteController.tipoSexoValues}" var="s"
+							itemValue="#{s}" itemLabel="#{s.label}" />
+					</h:selectOneMenu>
+
+
+					<h:outputLabel for="origem" value="Origem:" size="18" />
+					<p:inputText id="origem"
+						value="#{clienteController.cliente.origem}" size="18">
+						<f:validateLength minimum="3" maximum="10" />
+						<p:ajax event="blur" />
+					</p:inputText>
+
+					<h:outputLabel for="senha" value="Senha:" size="15" />
+					<p:password id="senha" value="#{clienteController.cliente.senha}"
+						size="18">
+						<f:validateLength minimum="2" maximum="10" />
+						<p:ajax event="blur" />
+					</p:password>
+
+				</h:panelGrid>
+
+				<p:tab title="Dados do Contato">
+					<h:panelGrid columns="25" id="panelContato">
+
+						<!-- 								<h:outputLabel value="Id:" /> -->
+						<!-- 								<p:inputText readonly="true" size="3" -->
+						<!-- 									value="#{clienteController.contato.id}"> -->
+						<!-- 								</p:inputText> -->
+						<p:message id="idMsg" for="id" display="icon" />
+
+						<h:outputLabel value="Tipo:" />
+						<p:selectOneMenu value="#{clienteController.contato.tipoContato}"
+							converter="#{tipoContatoConverter}" effect="fade">
+							<f:selectItem itemLabel="Selecione" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{tipoContatoController.tipoContatoList}"
+								var="tipoContato" itemLabel="#{tipoContato.descricao}"
+								itemValue="#{TipoContato}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel for="dado" value="Dado:" />
+						<p:inputText id="dado" value="#{clienteController.contato.dado}"
+							size="25">
+							<f:validateLength minimum="3" />
+							<p:ajax event="blur" update="dadoMsg" />
+						</p:inputText>
+						<p:message id="dadoMsg" for="dado" display="icon" />
+
+						<p:commandButton value="Adicionar Contato"
+							action="#{clienteController.adicionarContato}"
+							update="dtContatos" process="@form" />
+
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab title="Lista de Contatos">
+
+					<h:outputText value="Contatos"></h:outputText>
+					<p:dataTable id="dtContatos" var="c" rows="13"
+						paginatorAlwaysVisible="false"
+						value="#{clienteController.cliente.contatoList}"
+						style="width: 10%" paginator="true">
+
+						<p:column headerText="Dado" width="100">
+							<h:outputText value="#{c.dado}" />
+						</p:column>
+
+						<p:column headerText="Tipo" width="100">
+							<h:outputText value="#{c.tipoContato.descricao}" />
+						</p:column>
+
+
+						<p:column headerText="Ações" width="60">
+							<p:commandButton icon="ui-icon-trash" alt="Excluir contato"
+								title="Excluir contato" oncomplete="confirmacaoContato.show()">
+								<f:setPropertyActionListener
+									target="#{clienteController.contato}" value="#{c}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-pencil" alt="Editar contato"
+								title="Editar contato"
+								action="#{clienteController.editarContato(c)}" update="@form">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<p:confirmDialog message="Deseja realmente remover este Contato?"
+						position="center" header="Aviso" id="confirmacaoContatoId"
+						severity="alert" widgetVar="confirmacaoContato" closable="true"
+						appendToBody="false">
+
+						<p:commandButton id="btnSim" value="Sim"
+							actionListener="#{clienteController.excluirContato}"
+							oncomplete="confirmacaoContato.hide();" update="@form" />
+						<p:commandButton id="btnNao" value="Não"
+							onclick="confirmacaoContato.hide();" />
+					</p:confirmDialog>
+
+				</p:tab>
+
+				<p:commandButton value="Salvar" action="#{clienteController.salvar}"
+					update="@form" />
+
+				<p:commandButton value="Cancelar"
+					action="#{clienteController.cancelar}" update="@form" />
+
+				<p:dialog header="Selected Dates" widgetVar="dialog"
+					showEffect="fade" hideEffect="fade">
+					<h:outputText value="#{clienteController.cliente.pfDatanascimento}"
+						id="pfDatanascimento">
+					</h:outputText>
+				</p:dialog>
+
+
+			</p:tab>
+
+			<p:tab title="Lista de Clientes">
+
+				<h:outputText value="Clientes"></h:outputText>
+				<p:dataTable id="dtClientes" var="c" rows="13"
+					paginatorAlwaysVisible="false"
+					value="#{clienteController.clienteList}" paginator="true">
+
+					<p:column sortBy="#{c.id}" headerText="ID" style="width: 10%">
+						<h:outputText value="#{c.id}" />
+					</p:column>
+
+					<p:column headerText="Nome" width="100" filterBy="#{c.nome}">
+						<h:outputText value="#{c.nome}" />
+					</p:column>
+
+					<p:column headerText="CPF/CNPJ" width="100">
+						<h:outputText value="#{c.CPFCNPJStr}" />
+					</p:column>
+
+					<p:column headerText="Data Nasc." width="100">
+						<h:outputText value="#{c.pfDatanascimentoFmt}" />
+					</p:column>
+
+					<p:column headerText="Ações" width="60">
+						<p:commandButton icon="ui-icon-trash" alt="Excluir cliente"
+							title="Excluir cliente" oncomplete="confirmacao.show()">
+							<f:setPropertyActionListener
+								target="#{clienteController.clienteExcluir}" value="#{c}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil" alt="Editar cliente"
+							title="Editar cliente" action="#{clienteController.editar(c)}"
+							update="@form">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:tab>
+		</p:accordionPanel>
+
+		<p:confirmDialog message="Deseja realmente remover este Cliente!!!?"
+			position="center" header="Aviso" id="confirmacaoId" severity="alert"
+			widgetVar="confirmacao" closable="true" appendToBody="false">
+
+			<p:commandButton id="btnSim" value="Sim"
+				actionListener="#{clienteController.excluir}"
+				oncomplete="confirmacao.hide();" update="@form" />
+			<p:commandButton id="btnNao" value="Não"
+				onclick="confirmacao.hide();" />
+		</p:confirmDialog>
+	</h:form>
+	
+	</cc:implementation>
+	
+	
+</html>
