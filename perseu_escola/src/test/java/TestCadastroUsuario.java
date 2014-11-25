@@ -28,7 +28,7 @@ public class TestCadastroUsuario {
 	//@Rollback(value=true)
 	public void testCadastroUsuario() {
 		Usuario usuario =  new Usuario();
-		usuario.setUsername("Administrador");
+		usuario.setNome("Administrador");
 		usuario.setUsername("admin");
 		usuario.setPassword("123");
 		usuario.setEnable(true);
