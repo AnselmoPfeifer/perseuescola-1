@@ -23,7 +23,7 @@
 
 						<h:outputLabel for="dado" value="Dado:" />
 						<p:inputText id="dado" value="#{contatoController.contato.dado}"
-							size="25">
+							required="true" size="25">
 							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="dadoMsg" />
 						</p:inputText>
@@ -55,8 +55,11 @@
 							action="#{contatoController.cancelar}" update="@form" />
 					</h:panelGrid>
 				</p:tab>
-
-				<p:tab title="Lista de Contatos">
+		
+		
+		
+<!-- 		LISTA DE CONTATOS -->
+				<p:tab title="Lista de Contatos" id="listaContatos">
 
 					<h:outputText value="Contatos"></h:outputText>
 					<p:dataTable id="dtContatos" var="u" rows="13"
@@ -82,26 +85,28 @@
 
 
 						<p:column headerText="Ações" width="60">
-							<p:commandButton icon="ui-icon-trash" alt="Excluir contato"
+							<p:commandButton icon="ui-icon-trash" process="@this" alt="Excluir contato"
 								title="Excluir contato" oncomplete="confirmacao.show()">
 								<f:setPropertyActionListener
 									target="#{contatoController.contatoExcluir}" value="#{u}" />
 							</p:commandButton>
 
 							<p:commandButton icon="ui-icon-pencil" alt="Editar contato"
-								title="Editar contato" action="#{contatoController.editar(u)}"
+								title="Editar contato" process="@this" action="#{contatoController.editar(u)}"
 								update="@form">
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
 				</p:tab>
+				
 			</p:accordionPanel>
 
-			<p:confirmDialog message="Deseja realmente remover este Contato!!!?"
+			<p:confirmDialog message="Deseja realmente remover este Contato?"
 				position="center" header="Aviso" id="confirmacaoId" severity="alert"
 				widgetVar="confirmacao" closable="true" appendToBody="false">
 
 				<p:commandButton id="btnSim" value="Sim"
+				    process="@this"
 					actionListener="#{contatoController.excluir}"
 					oncomplete="confirmacao.hide();" update="@form" />
 				<p:commandButton id="btnNao" value="Não"

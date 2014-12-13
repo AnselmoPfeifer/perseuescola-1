@@ -25,6 +25,7 @@ public class Contato implements Serializable, Modelo<Integer> {
 	@JoinColumn
 	@ManyToOne
 	private TipoContato tipoContato;
+	
 	@JoinColumn
 	@ManyToOne
 	private Cliente cliente;

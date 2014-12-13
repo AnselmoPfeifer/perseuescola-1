@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -67,7 +66,6 @@ public class ContatoController implements Serializable {
 		contatoList.remove(contatoExcluir);
 		contatoExcluir = null;
 		JsfMessages.adicionaMensagemInfo("Contato removido");
-
 	}
 
 	public void cancelar() {
