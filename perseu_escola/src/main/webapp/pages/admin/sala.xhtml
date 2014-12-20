@@ -10,7 +10,7 @@
 			<p:growl id="mensagens" />
 			<p:accordionPanel multiple="true">
 				<p:tab title="Dados do Sala">
-					<h:panelGrid columns="14" id="panelEntity">
+					<h:panelGrid columns="15" id="panelEntity">
 
 						<h:outputLabel for="id" value="Id:" />
 						<p:inputText readonly="true" size="3" id="id"
@@ -95,7 +95,7 @@
 									target="#{salaController.salaExcluir}" value="#{u}" />
 							</p:commandButton>
 
-							<p:commandButton icon="ui-icon-pencil" alt="Editar sala"
+							<p:commandButton icon="ui-icon-pencil" alt="Editar sala" process="@this"
 								title="Editar sala" action="#{salaController.editar(u)}"
 								update="@form">
 							</p:commandButton>
