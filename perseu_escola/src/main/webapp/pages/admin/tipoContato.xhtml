@@ -10,7 +10,7 @@
 	<h:form id="frmTipoContato">
 		<p:growl id="mensagens" />
 		<p:accordionPanel multiple="true">
-			<p:tab title="Dados do TipoContato">
+			<p:tab title="Dados do Tipo de Contato">
 				<h:panelGrid columns="25" id="panelEntity">
 				
 					<h:outputLabel for="id" value="Id:" />
@@ -21,7 +21,7 @@
 						<p:message id="idMsg" for="id" display="icon" />
 
 					<h:outputLabel for="descricao" value="Nome:" />
-						<p:inputText id="descricao" value="#{tipoContatoController.tipoContato.descricao}" size="25">
+						<p:inputText id="descricao" required="true" requiredMessage="Campo descrição obrigatório." value="#{tipoContatoController.tipoContato.descricao}" size="25">
 						<f:validateLength minimum="3" />
 						<p:ajax event="blur" update="descricaoMsg" />
 						</p:inputText>
@@ -36,7 +36,7 @@
 				</h:panelGrid>
 			</p:tab>
 
-		<p:tab title="Lista de TipoContatos">
+		<p:tab title="Lista de Tipo de Contatos">
 
 				<h:outputText value="TipoContatos"></h:outputText>
 					<p:dataTable id="dtTipoContatos" var="u" rows="13"
@@ -59,7 +59,7 @@
 								target="#{tipoContatoController.tipoContatoExcluir}" value="#{u}" />
 						</p:commandButton>
 
-						<p:commandButton icon="ui-icon-pencil" alt="Editar tipoContato"
+						<p:commandButton icon="ui-icon-pencil" alt="Editar tipoContato" process="@this"
 							title="Editar tipoContato" action="#{tipoContatoController.editar(u)}"
 							update="@form">
 						</p:commandButton>
@@ -68,7 +68,7 @@
 			</p:tab>
 		</p:accordionPanel>
 		
-			<p:confirmDialog message="Deseja realmente remover este TipoTipoTipoTipoTipoContato!!!?"
+			<p:confirmDialog message="Deseja realmente remover este tipo de Contato!!!?"
 			position="center" header="Aviso" id="confirmacaoId" severity="alert"
 			widgetVar="confirmacao" closable="true" appendToBody="false">
 
