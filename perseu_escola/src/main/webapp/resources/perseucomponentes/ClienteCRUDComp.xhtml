@@ -24,23 +24,26 @@
 
 			<p:growl id="mensagens" />
 			<p:tabView id="tabView">
-				<p:tab title="Cadastro do Cliente">
+				<p:tab title="Cadastro do Cliente" id="cadClientes">
 
 
 					<p:panel header="Dados do Cliente">
 
+							
 						<p:panelGrid columns="4" id="panelCliente">
-
-							<h:outputLabel for="id" value="Id:" />
-							<p:inputText readonly="true" size="5" id="id"
+							
+							<h:outputLabel for="id" value="Id:"  />
+							<p:inputText readonly="true" size="5" id="id" disabled="true"
 								value="#{clienteController.cliente.id}">
 								<f:converter converterId="javax.faces.Integer" />
 								<p:ajax event="blur" />
 							</p:inputText>
 
+
 							<h:outputLabel for="nome" value="Nome:" />
 							<p:inputText id="nome" value="#{clienteController.cliente.nome}"
-								size="50">
+								size="50"
+								required="true">
 								<f:validateLength minimum="3" />
 								<p:ajax event="blur" />
 							</p:inputText>
@@ -68,47 +71,83 @@
 							<p:calendar value="#{clienteController.cliente.pfDatanascimento}"
 								id="popupButtonCal" pattern="dd/MM/yyyy" locale="pt_BR" />
 
-							<h:outputLabel for="tipoClienteEnum" value="Tipo:" />
-							<h:selectOneMenu id="tipoClienteEnum"
-								value="#{clienteController.cliente.tipo}">
+							<p:outputLabel for="tipoClienteEnum" value="Tipo:"/>
+							
+							<p:selectOneRadio id="tipoClienteEnum" value="#{clienteController.cliente.tipo}" >
 								<f:selectItems value="#{clienteController.tipoClienteValor}"
-									var="t" itemValue="#{t}" itemLabel="#{t.label}" />
-							</h:selectOneMenu>
+									var="t" itemValue="#{t}" itemLabel="#{t.label}"/>
+								<p:ajax update="panelCliente" event="change"/>
+							</p:selectOneRadio>
+                             
+<!-- 							Dados caso seja Pessoa Física -->
 
-							<h:outputLabel for="pfCpf" value="Cpf:" />
+
+
+<!-- 						</p:panelGrid> -->
+						
+<!--                              <p:panelGrid id="panelPFCliente" columns="4" > -->
+							<h:outputLabel id="cpfLabel" for="pfCpf" value="CPF: " rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"/>
 							<p:inputMask id="pfCpf" mask="999.999.999-99"
+							    rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"
+							    required="true"
+							    requiredMessage="É Necessário Informar o CPF"
+							    onblur="validarCPF(this.value)"
+								onkeypress="mascara(this, cpf_mask)"
 								value="#{clienteController.cliente.pfCpf}" size="14">
 								<f:validateLength minimum="1" />
-								<p:ajax event="blur" />
+							
 							</p:inputMask>
-
-							<h:outputLabel for="pfRg" value="Rg:" />
+                             
+							<h:outputLabel id="rgLabel" for="pfRg" value="Rg:" rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"/>
 							<p:inputText id="pfRg" value="#{clienteController.cliente.pfRg}"
+							    rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"
 								size="18">
 								<f:validateLength minimum="1" />
 								<p:ajax event="blur" />
 							</p:inputText>
+							                         
 
-							<h:outputLabel value="Sexo:" />
-							<h:selectOneMenu id="tipoSexoEnum"
+
+							<h:outputLabel value="Sexo:" rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"/>
+							<p:selectOneMenu id="tipoSexoEnum"
+							    rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"
 								value="#{clienteController.cliente.sexo}">
 								<f:selectItems value="#{clienteController.tipoSexoValues}"
 									var="s" itemValue="#{s}" itemLabel="#{s.label}" />
-							</h:selectOneMenu>
-
-							<h:outputLabel value="Camiseta" />
-							<p:selectOneMenu id="camiseta"
-								value="#{clienteController.cliente.camiseta}">
-								<f:selectItem itemLabel="PP" itemValue="PP" />
-								<f:selectItem itemLabel="P" itemValue="P" />
-								<f:selectItem itemLabel="M" itemValue="M" />
-								<f:selectItem itemLabel="G" itemValue="G" />
-								<f:selectItem itemLabel="GG" itemValue="GG" />
-								<f:selectItem itemLabel="Ultra G" itemValue="Ultra G" />
 							</p:selectOneMenu>
+   
+							<h:outputLabel value="Camiseta" rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"/>
+							<p:selectOneMenu id="camiseta"
+							  rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"
+								value="#{clienteController.cliente.camiseta}">
+								<f:selectItems value="#{clienteController.camisetas}"/>								
+							</p:selectOneMenu>
+<!--                             </p:panelGrid> -->
+                        
+<!--                         Pessoa Juridica -->
+<!--                          <p:panelGrid id="panelPJCliente" columns="4"> -->
+							<h:outputLabel id="cnpjLabel" for="pjCnpj" value="CNPJ: " rendered="#{clienteController.cliente.tipo == 'PJ' ? true : false}"/>
+							<p:inputMask id="pjCnpj" mask="99.999.999/9999-99"
+							    rendered="#{clienteController.cliente.tipo == 'PJ' ? true : false}"
+							    required="true"
+							    requiredMessage="É Necessário Informar o CNPJ"
+							    onblur="validarCPF(this.value)"
+								onkeypress="mascara(this, cpf_mask)"
+								value="#{clienteController.cliente.pjCnpj}" size="18">
+								<f:validateLength minimum="1" />
+							
+							</p:inputMask>
+                             
+							<h:outputLabel id="rsLabel" for="pjRs" value="Razão Social:" rendered="#{clienteController.cliente.tipo == 'PJ' ? true : false}"/>
+							<p:inputText id="pjRs" value="#{clienteController.cliente.pjRazaoSocial}"
+							    rendered="#{clienteController.cliente.tipo == 'PJ' ? true : false}"
+								size="40">
+								<f:validateLength minimum="1" />
+								<p:ajax event="blur" />
+							</p:inputText>
+							                         
 
-
-							<h:outputLabel for="origem"
+                            <h:outputLabel for="origem"
 								value="Origem (Como fico sabendo de nós?):" size="18" />
 							<p:inputText id="origem"
 								value="#{clienteController.cliente.origem}" size="18">
@@ -116,15 +155,8 @@
 								<p:ajax event="blur" />
 							</p:inputText>
 
-							<!-- 						<h:outputLabel for="senha" value="Senha:" size="15" /> -->
-							<!-- 						<p:password id="senha" value="#{clienteController.cliente.senha}" -->
-							<!-- 							size="18"> -->
-							<!-- 							<f:validateLength minimum="2" maximum="10" /> -->
-							<!-- 							<p:ajax event="blur" /> -->
-							<!-- 						</p:password> -->
-
-						</p:panelGrid>
-
+                            </p:panelGrid>
+                        
 					</p:panel>
 					<br />
 					<p:panel header="Dados de Endereco">
@@ -274,7 +306,7 @@
 
 				</p:tab>
 
-				<p:tab title="Lista de Clientes">
+				<p:tab title="Lista de Clientes" id="lista_clientes">
 
 					<p:dataTable id="dtClientes" var="c" rows="13"
 						paginatorAlwaysVisible="false"
@@ -306,26 +338,32 @@
 
 
 							<p:commandButton icon="ui-icon-trash" alt="Excluir cliente"
-								title="Excluir cliente" oncomplete="confirmacao.show()">
+								title="Excluir cliente" oncomplete="confirmacao.show()"
+								process="@this">
 								<f:setPropertyActionListener
 									target="#{clienteController.clienteExcluir}" value="#{c}" />
 							</p:commandButton>
 
 							<p:commandButton icon="ui-icon-pencil" alt="Editar cliente"
 								title="Editar cliente" action="#{clienteController.editar(c)}"
+								process="@this"
 								update="@form">
 							</p:commandButton>
+				             
 						</p:column>
 					</p:dataTable>
 				</p:tab>
 			</p:tabView>
-			<p:confirmDialog message="Deseja realmente remover este Cliente!!!?"
+			<p:confirmDialog message="Deseja realmente remover este Cliente ?"
 				position="center" header="Aviso" id="confirmacaoId" severity="alert"
-				widgetVar="confirmacao" closable="true" appendToBody="false">
+				widgetVar="confirmacao" closable="true" appendToBody="false"
+				
+				>
 
 				<p:commandButton id="btnSim" value="Sim"
 					actionListener="#{clienteController.excluir}"
-					oncomplete="confirmacao.hide();" update="@form" />
+					process="@this"
+					oncomplete="confirmacao.hide();" update="@form"/>
 				<p:commandButton id="btnNao" value="Não"
 					onclick="confirmacao.hide();" />
 			</p:confirmDialog>
