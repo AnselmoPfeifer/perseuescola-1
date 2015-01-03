@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -10,7 +11,7 @@
 			<p:growl id="mensagens" />
 			<p:accordionPanel multiple="true">
 				<p:tab title="Dados do Sala">
-					<h:panelGrid columns="14" id="panelEntity">
+					<h:panelGrid columns="15" id="panelEntity">
 
 						<h:outputLabel for="id" value="Id:" />
 						<p:inputText readonly="true" size="3" id="id"
@@ -95,7 +96,7 @@
 									target="#{salaController.salaExcluir}" value="#{u}" />
 							</p:commandButton>
 
-							<p:commandButton icon="ui-icon-pencil" alt="Editar sala"
+							<p:commandButton icon="ui-icon-pencil" alt="Editar sala" process="@this"
 								title="Editar sala" action="#{salaController.editar(u)}"
 								update="@form">
 							</p:commandButton>
@@ -117,3 +118,4 @@
 		</h:form>
 	</ui:define>
 </ui:composition> </html>
+
