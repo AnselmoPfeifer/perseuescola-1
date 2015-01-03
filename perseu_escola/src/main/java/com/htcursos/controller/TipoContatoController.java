@@ -41,7 +41,7 @@ public class TipoContatoController implements Serializable{
 			tipoContatoService.salvar(tipoContato);
 			atualiza();
 			tipoContato = new TipoContato();
-			JsfMessages.adicionaMensagemInfo("TipoContato salvo");
+			JsfMessages.adicionaMensagemInfo("Tipo de Contato salvo");
 		} catch (ServiceExpcetion e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}

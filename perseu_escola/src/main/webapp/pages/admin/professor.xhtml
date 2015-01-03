@@ -1,89 +1,88 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
-
-
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+      
 <ui:composition template="/comum/templates.xhtml">
 	<ui:define name="content">
 		<h:form id="frmProfessor">
 			<p:growl id="mensagens" />
-			<p:accordionPanel multiple="true">
+			<p:accordionPanel multiple="true">			
 				<p:tab title="Dados do professor">
 					<h:panelGrid columns="9" id="panelEntity">
-
+					
 						<h:outputLabel for="id" value="Id:" />
-						<p:inputText id="id" readonly="true"
-							value="#{professorController.professor.id}" size="3">
+						<p:inputText id="id" readonly="true" value="#{professorController.professor.id}" size="3">
 							<f:converter converterId="javax.faces.Integer" />
 							<p:ajax event="blur" update="idMsg" />
-						</p:inputText>
-						<p:message id="idMsg" for="id" display="icon" />
-
+							</p:inputText>
+							<p:message id="idMsg" for="id" display="icon" />
+						
 						<h:outputLabel for="name" value="Nome:" />
-						<p:inputText id="name" required="true"
-							requiredMessage="Campo descrição é obrigatório."
-							value="#{professorController.professor.nome}" size="20">
+							<p:inputText id="name" value="#{professorController.professor.nome}" size="20">
 							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="nameMsg" />
-						</p:inputText>
-						<p:message id="nameMsg" for="name" display="icon" />
-
+							</p:inputText>
+							<p:message id="nameMsg" for="name" display="icon" />
+						
 						<p:commandButton value="Salvar"
 							action="#{professorController.salvar}" update="@form" />
 
 						<p:commandButton value="Cancelar"
 							rendered="#{professorController.professor.id != null}"
 							action="#{professorController.cancelar}" update="@form" />
-
+				
 					</h:panelGrid>
 				</p:tab>
 
 				<p:tab title="Lista de Professores">
-
-					<h:outputText value="Professores"></h:outputText>
-					<p:dataTable id="professores" var="p" paginatorAlwaysVisible="true"
-						value="#{professorController.professorList}" style="width: 20%"
-						paginator="true">
-
-						<p:column sortBy="#{p.id}" headerText="ID">
-							<h:outputText value="#{p.id}" />
-						</p:column>
-
-						<p:column sortBy="#{p.nome}" headerText="NOME" width="150">
-							<h:outputText value="#{p.nome}" />
-						</p:column>
-
-						<p:column headerText="Ações" width="60">
-							<p:commandButton icon="ui-icon-trash" alt="Excluir professor"
-								title="Excluir professor" oncomplete="confirmacao.show()">
-								<f:setPropertyActionListener
-									target="#{professorController.professorExcluir}" value="#{p}" />
-							</p:commandButton>
-
-							<p:commandButton icon="ui-icon-pencil" alt="Editar Professor"
-								process="@this" title="Editar Pais"
-								action="#{professorController.editar(p)}" update="@form">
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
+				
+						<h:outputText value="Professores"></h:outputText>
+							<p:dataTable id="professores" var="p" paginatorAlwaysVisible="true"
+									value="#{professorController.professorList}" style="width: 10%"
+									paginator="true">
+							
+								<p:column sortBy="#{p.id}" headerText="ID">
+									<h:outputText value="#{p.id}" />
+								</p:column >
+							
+								<p:column sortBy="#{p.nome}" headerText="NOME" width="150">
+									<h:outputText value="#{p.nome}" />
+								</p:column>
+										
+								<p:column headerText="Ações" width="60">
+									<p:commandButton icon="ui-icon-trash" alt="Excluir professor"
+											title="Excluir professor" oncomplete="confirmacao.show()">
+										<f:setPropertyActionListener
+											target="#{professorController.professorExcluir}" value="#{p}" />
+									</p:commandButton>
+									
+									<p:commandButton icon="ui-icon-pencil" alt="Editar Professor"
+										title="Editar Pais" action="#{professorController.editar(p)}"
+										update="@form">
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
 
 					<p:confirmDialog message="Deseja realmente remover este Professor?"
 						position="center" header="Aviso" id="confirmacaoId"
 						severity="alert" widgetVar="confirmacao" closable="true"
 						appendToBody="false">
-						<p:commandButton id="btnSim" value="Sim"
-							actionListener="#{professorController.excluir()}"
-							oncomplete="confirmacao.hide();" update="@form" />
-						<p:commandButton id="btnNao" value="Não"
-							onclick="confirmation.hide();" />
+							<p:commandButton id="btnSim" value="Sim"						
+								actionListener="#{professorController.excluir()}"
+								oncomplete="confirmacao.hide();" update="@form"/>
+							<p:commandButton id="btnNao" value="Não"
+								onclick="confirmation.hide();" />
 					</p:confirmDialog>
 				</p:tab>
 			</p:accordionPanel>
 		</h:form>
 
-	</ui:define>
+</ui:define>
 </ui:composition>
 </html>
+>>>>>>> 49c0e163891ac1b7258c24a2084a7501280c9cc3

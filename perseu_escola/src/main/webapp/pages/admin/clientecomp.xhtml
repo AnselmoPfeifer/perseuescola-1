@@ -114,7 +114,7 @@
 						</p:selectOneMenu>
 
 						<h:outputLabel for="dado" value="Dado:" />
-						<p:inputText id="dado" required="true" value="#{clienteController.contato.dado}"
+						<p:inputText id="dado" value="#{clienteController.contato.dado}"
 							size="25">
 							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="dadoMsg" />
@@ -244,3 +244,4 @@
 	
 	
 </html>
+
