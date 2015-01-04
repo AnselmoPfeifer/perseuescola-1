@@ -54,6 +54,7 @@ public class SessaoUtil implements Serializable {
 		
 		session.setAttribute(EMPRESA_LOGADA, null);
 		session.invalidate();
+		
 	}
 	
 	/**

@@ -74,11 +74,16 @@
 				<img src="#{request.contextPath}/images/logo.png" alt="Logo" />
 			</div>
 
-			<div id="user">
+			<div id="user" style=" width : 422px; height : 28px;">
 				<ul id="main">
-					<li>Usuário Logado</li>
-					<li class="separador"><a>|</a></li>
-					<!-- 					<li><a href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">logout</a></li> -->
+				<li><table width="400" border="0" style=" width : 282px;" align="right">
+					    <tr>
+					      <td width="145">Usuário: #{usuarioController.usuarioLogado}     </td>
+					      <td width="8" ><a href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">logout</a></td>
+				        </tr>
+				      </table> </li>
+					
+					 					
 				</ul>
 			</div>
 		</div>

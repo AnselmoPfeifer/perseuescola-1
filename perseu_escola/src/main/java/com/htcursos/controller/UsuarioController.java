@@ -15,6 +15,7 @@ import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Usuario;
 import com.htcursos.model.service.ServiceExpcetion;
 import com.htcursos.model.service.UsuarioService;
+import com.htcursos.model.util.SessaoUtil;
 
 @Controller("usuarioController")
 @Scope("view")
@@ -25,6 +26,10 @@ public class UsuarioController implements Serializable {
 
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	
+	@Autowired
+	private SessaoUtil sessaoUtil;
 
 	// Dados da tela
 	private Usuario usuario = new Usuario();
@@ -102,5 +107,12 @@ public class UsuarioController implements Serializable {
 	public void atualiza() {
 		usuarioList = getUsuarioService().buscarTodos();
 	}
+
+	
+	public String getUsuarioLogado(){
+		return sessaoUtil.getUserNameUsuarioLogado();
+	}
+	
+	
 
 }
