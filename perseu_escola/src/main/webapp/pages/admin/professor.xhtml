@@ -22,8 +22,8 @@
 							</p:inputText>
 							<p:message id="idMsg" for="id" display="icon" />
 						
-						<h:outputLabel for="name" value="Nome:" />
-							<p:inputText id="name" value="#{professorController.professor.nome}" size="20">
+						<h:outputLabel for="name" value="Nome:" /> 
+							<p:inputText id="name" required="true" requiredMessage="Campo Nome obrigatório." value="#{professorController.professor.nome}" size="20">
 							<f:validateLength minimum="3" />
 							<p:ajax event="blur" update="nameMsg" />
 							</p:inputText>
@@ -55,13 +55,13 @@
 								</p:column>
 										
 								<p:column headerText="Ações" width="60">
-									<p:commandButton icon="ui-icon-trash" alt="Excluir professor"
+									<p:commandButton icon="ui-icon-trash" alt="Excluir professor" process="@this"
 											title="Excluir professor" oncomplete="confirmacao.show()">
 										<f:setPropertyActionListener
 											target="#{professorController.professorExcluir}" value="#{p}" />
 									</p:commandButton>
 									
-									<p:commandButton icon="ui-icon-pencil" alt="Editar Professor"
+									<p:commandButton icon="ui-icon-pencil" alt="Editar Professor" process="@this"
 										title="Editar Pais" action="#{professorController.editar(p)}"
 										update="@form">
 									</p:commandButton>
@@ -72,7 +72,7 @@
 						position="center" header="Aviso" id="confirmacaoId"
 						severity="alert" widgetVar="confirmacao" closable="true"
 						appendToBody="false">
-							<p:commandButton id="btnSim" value="Sim"						
+							<p:commandButton id="btnSim" value="Sim" process="@this"						
 								actionListener="#{professorController.excluir()}"
 								oncomplete="confirmacao.hide();" update="@form"/>
 							<p:commandButton id="btnNao" value="Não"
