@@ -29,6 +29,6 @@ public class Anexo {
 	//NOME GERADO
 	private String nomeGerado;
 	//NOME ORIGINAL DO ARQUIVO
-	private String tituloOriginal;
+	private String nomeOriginal;
 
 }
