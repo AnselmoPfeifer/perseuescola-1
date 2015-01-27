@@ -28,8 +28,8 @@
 						</p:growl>
 
 						<p:commandButton value="Salvar"
-							action="#{matriculaController.salvar}" process="@this panelContratoTodo"
-							update="@form"></p:commandButton>
+							action="#{matriculaController.salvar}"
+							process="@this panelContratoTodo" update="@form"></p:commandButton>
 						<p:commandButton value="Cancelar"
 							action="#{matriculaController.cancelar}" process="@this"
 							update="@form"></p:commandButton>
@@ -260,7 +260,7 @@
 								<h:outputLabel for="dataVenc" value="Data Vencimento:  " />
 								<p:calendar
 									value="#{matriculaController.pagamentoNovo.dataVencimento}"
-									id="dataVenc"  pattern="dd/MM/yyyy" locale="pt_BR" />
+									id="dataVenc" pattern="dd/MM/yyyy" locale="pt_BR" />
 
 								<p:spacer width="20" height="20" />
 
@@ -458,8 +458,8 @@
 
 
 						<p:commandButton value="Salvar"
-							action="#{matriculaController.salvar}" process="@this panelContratoTodo"
-							update="@form"></p:commandButton>
+							action="#{matriculaController.salvar}"
+							process="@this panelContratoTodo" update="@form"></p:commandButton>
 						<p:commandButton value="Cancelar"
 							action="#{matriculaController.cancelar}" process="@this"
 							update="@form"></p:commandButton>
@@ -554,11 +554,6 @@
 				<p:dialog id="dialogContrato" header="Contrato" widgetVar="contrato"
 					resizable="true" modal="true" width="800" height="400">
 
-					<h:commandButton value="Imprimir" type="button"
-						icon="ui-icon-print">
-						<p:printer target="textoContrato" />
-					</h:commandButton>
-
 					<p:panel id="textoContrato" style="border:none;">
 						<div align="center" id="cabeca">
 							<p>
@@ -579,23 +574,34 @@
 								value="#{matriculaController.matriculaContrato.contratante.nome}" />
 							, CPF/CNPJ
 							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.CPFCNPJStr}" />, 
-								
-								
-							endereço <h:outputText	value="#{matriculaController.matriculaContrato.contratante.endereco.tipo_logradouro}" />&nbsp; 							
-							<h:outputText value="#{matriculaController.matriculaContrato.contratante.endereco.logradouro}" />,
-							  					
-							<h:outputText	value="#{matriculaController.matriculaContrato.contratante.endereco.numero}" />, 
-						
-							<h:outputText	value="#{matriculaController.matriculaContrato.contratante.endereco.bairro}" />, 
-							
-							<h:outputText	value="#{matriculaController.matriculaContrato.contratante.endereco.cidade}" /> -  
-							
-							<h:outputText	value="#{matriculaController.matriculaContrato.contratante.endereco.estado}" />, 
-								
-							CEP <h:outputText	value="#{matriculaController.matriculaContrato.contratante.endereco.cep}" />, 
-							resolvem firmar o presente CONTRATO DE PRESTA&Ccedil;&Atilde;O DE
-							SERVI&Ccedil;O EM CURSOS DE INFORMATICA, SEGUNDO AS
+								value="#{matriculaController.matriculaContrato.contratante.CPFCNPJStr}" />
+							, endereço
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.tipo_logradouro}" />
+							&nbsp;
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.logradouro}" />
+							,
+
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.numero}" />
+							,
+
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.bairro}" />
+							,
+
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.cidade}" />
+							-
+
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.estado}" />
+							, CEP
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.cep}" />
+							, resolvem firmar o presente CONTRATO DE PRESTA&Ccedil;&Atilde;O
+							DE SERVI&Ccedil;O EM CURSOS DE INFORMATICA, SEGUNDO AS
 							CL&Aacute;USULAS E CONDI&Ccedil;&Otilde;ES SEGUINTES:
 							<p>
 								<strong>CL&Aacute;USULA PRIMEIRA </strong>- Do objeto
@@ -604,16 +610,22 @@
 								A CONTRATADA ministrar&aacute; ao CONTRATANTE o(s) curso(s)
 								retro descrito(s) logo abaixo neste instrumento:
 								<h:outputText
-									value="#{matriculaController.matriculaContrato.cursoMatriculaListStr}" /> que iniciará no dia 
-									<h:outputText value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" />
+									value="#{matriculaController.matriculaContrato.cursoMatriculaListStr}" />
+								que iniciará no dia
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" />
 								.
 							</p>
-							<p>Par&aacute;grafo primeiro. A CONTRATADA compromete-se em
+							<p>
+								Par&aacute;grafo primeiro. A CONTRATADA compromete-se em
 								ministrar o(s) curso(s) acima, conforme conte&uacute;do
-								program&aacute;tico, carga hor&aacute;ria de <h:outputText value="#{matriculaController.matriculaContrato.cargaHorariaTotal()}" /> horas
-								, bem como, emitir apenas um certificado de
-								conclus&atilde;o no final do(s) curso(s).</p>
-							
+								program&aacute;tico, carga hor&aacute;ria de
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.cargaHorariaTotal()}" />
+								horas , bem como, emitir apenas um certificado de
+								conclus&atilde;o no final do(s) curso(s).
+							</p>
+
 							<p>Par&aacute;grafo segundo. A CONTRATADA se reserva ao
 								direito de mudar a data inicial do(s) curso(s) em caso de
 								n&atilde;o fechamento de turma, neste caso, os j&aacute;
@@ -623,15 +635,16 @@
 								<strong>CL&Aacute;USULA SEGUNDA </strong>- Do pre&ccedil;o e
 								condi&ccedil;&otilde;es de pagamento(s) o CONTRATANTE
 								pagar&aacute; pelo(s) curso(s) o valor descrito neste
-								instrumento de 
+								instrumento de
 
 
 								<h:outputText
 									value="#{matriculaController.matriculaContrato.valorTotalFmtExtenso}" />
 								na forma e condi&ccedil;&otilde;es a seguir: <br />
-								
-								<h:outputText	value="#{matriculaController.matriculaContrato.taxaInscricaoFmt}" /> 
-								
+
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.taxaInscricaoFmt}" />
+
 								<h:outputText
 									value="#{matriculaController.matriculaContrato.pagamentoListStr}" />
 								. <br /> <br /> Par&aacute;grafo &uacute;nico - O pagamento da
@@ -700,8 +713,8 @@
 								<strong>CL&Aacute;USULA S&Eacute;TIMA </strong>- Fotos e Videos.
 								A CONTRATADA fica autorizada a retirar fotografias e a fazer
 								videos em sala de aula contendo a imagem do CONTRATANTE para
-								fins de publicidade na TV, tanto como publicar na internet tanto no
-								site como nas rede sociais.
+								fins de publicidade na TV, tanto como publicar na internet tanto
+								no site como nas rede sociais.
 							</p>
 							<p>
 								<strong>CL&Aacute;USULA OITAVA </strong>- Certificado. A
@@ -744,6 +757,9 @@
 					</p:panel>
 				</p:dialog>
 
+				<h:commandButton value="Imprimir" type="button" icon="ui-icon-print">
+					<p:printer target="textoContrato" />
+				</h:commandButton>
 
 				<p:dialog id="dialogRecibo" header="Recibo" widgetVar="recibo"
 					resizable="true" modal="true" width="600" height="200"
