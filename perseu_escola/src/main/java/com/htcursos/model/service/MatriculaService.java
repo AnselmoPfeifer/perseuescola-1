@@ -48,7 +48,7 @@ public class MatriculaService extends GenericService<Matricula, Integer> impleme
 	}
 
 	/**
-	 * M�todo Sobrescrito para salvar matricula efetuando os lancamentos
+	 * M���todo Sobrescrito para salvar matricula efetuando os lancamentos
 	 * 
 	 * @throws ServiceExpcetion
 	 */

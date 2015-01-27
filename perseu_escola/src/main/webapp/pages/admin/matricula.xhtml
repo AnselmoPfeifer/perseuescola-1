@@ -107,7 +107,7 @@
 
 								<h:outputLabel value="Vai usar note?  " />
 								<p:selectBooleanCheckbox
-									value="#{matriculaController.clienteMatricula.vaiUsarNotebookFmt}" />
+									value="#{matriculaController.clienteMatricula.vaiUsarNotebook}" />
 
 
 								<p:commandButton value="Novo" process="panelCliente"
@@ -116,8 +116,7 @@
 
 								<p:commandButton
 									action="#{matriculaController.adicionarCliente}"
-									value="Adicionar" process="panelCliente" update="tblCliente">
-								</p:commandButton>
+									value="Adicionar" process="panelCliente" update="panelCliente" />
 
 							</h:panelGrid>
 
@@ -140,7 +139,7 @@
 								</p:column>
 
 								<p:column colspan="1" headerText="Notebook">
-									<h:outputText value="#{c.vaiUsarNotebook}" />
+									<h:outputText value="#{c.vaiUsarNotebookFmt}" />
 								</p:column>
 
 								<p:column headerText="Ações" width="60">
@@ -560,7 +559,7 @@
 						<p:printer target="textoContrato" />
 					</h:commandButton>
 
-					<p:panel id="textoContrato">
+					<p:panel id="textoContrato" style="border:none;">
 						<div align="center" id="cabeca">
 							<p>
 								<img src="#{request.contextPath}/images/logo.png" alt="Logo"

@@ -34,6 +34,7 @@ public class ClienteService extends GenericService<Cliente, Integer> implements 
 		return clienteDAO.buscarTodos(nomeBusca);
 	}
 	
+	
 	@Override
 	public Cliente salvar(Cliente cliente) throws ServiceExpcetion {
 		
