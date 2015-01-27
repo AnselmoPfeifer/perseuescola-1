@@ -36,16 +36,14 @@
 							<p:inputText readonly="true" size="5" id="id" disabled="true"
 								value="#{clienteController.cliente.id}">
 								<f:converter converterId="javax.faces.Integer" />
-								<p:ajax event="blur" />
 							</p:inputText>
-
 
 							<h:outputLabel for="nome" value="Nome:" />
 							<p:inputText id="nome" value="#{clienteController.cliente.nome}"
 								size="50"
-								required="true">
+								required="true" requiredMessage="Coloque o nome">
 								<f:validateLength minimum="3" />
-								<p:ajax event="blur" />
+							
 							</p:inputText>
 
 
@@ -276,7 +274,7 @@
 
 						<p:confirmDialog message="Deseja realmente remover este Contato?"
 							position="center" header="Aviso" id="confirmacaoContatoId"
-							severity="alert" widgetVar="confirmacaoContato" closable="true"
+							severity="alert" widgetVar="confirmacaoContato" closablez="true"
 							appendToBody="false">
 
 							<p:commandButton id="btnSim" value="Sim"
@@ -293,7 +291,7 @@
 					</p:commandButton>
 
 					<p:commandButton value="Cancelar"
-						action="#{clienteController.cancelar}" update="@form" />
+						action="#{clienteController.cancelar}" update="@form" process="@this"/>
 
 					<p:dialog header="Selected Dates" widgetVar="dialog"
 						showEffect="fade" hideEffect="fade">
