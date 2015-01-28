@@ -54,7 +54,7 @@ public class TestMatriculaService {
 		
 		
 		Matricula matricula = new Matricula();
-		matricula.setData(new Date());
+		matricula.setDatContrato(new Date());
 		
 		//Lista de pagamentos
 		List<Pagamento> pagamentoList =  new ArrayList<Pagamento>();

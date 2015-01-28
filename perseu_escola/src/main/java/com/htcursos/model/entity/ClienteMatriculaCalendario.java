@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 @Entity
 /**
@@ -32,12 +33,9 @@ public class ClienteMatriculaCalendario implements Serializable, Modelo<Integer>
 	@JoinColumn
 	@ManyToOne
 	private ClienteMatricula clienteMatricula;
-	private Integer notebook;
-	private Integer certificadoimpresso;
+
+	private Boolean certificadoImpresso;
 	private Double nota;
-	@Temporal(TemporalType.DATE)
-	private Date data;
-	private Integer checkin;
 	
 	
 	public Integer getId() {
@@ -55,23 +53,18 @@ public class ClienteMatriculaCalendario implements Serializable, Modelo<Integer>
 	public void setCalendario(Calendario calendario) {
 		this.calendario = calendario;
 	}
-	public Integer getNotebook() {
-		return notebook;
-	}
+	
 	public ClienteMatricula getClienteMatricula() {
 		return clienteMatricula;
 	}
 	public void setClienteMatricula(ClienteMatricula clienteMatricula) {
 		this.clienteMatricula = clienteMatricula;
 	}
-	public void setNotebook(Integer notebook) {
-		this.notebook = notebook;
+	public Boolean getCertificadoImpresso() {
+		return certificadoImpresso;
 	}
-	public Integer getCertificadoimpresso() {
-		return certificadoimpresso;
-	}
-	public void setCertificadoimpresso(Integer certificadoimpresso) {
-		this.certificadoimpresso = certificadoimpresso;
+	public void setCertificadoImpresso(Boolean certificadoImpresso) {
+		this.certificadoImpresso = certificadoImpresso;
 	}
 	public Double getNota() {
 		return nota;
@@ -79,18 +72,7 @@ public class ClienteMatriculaCalendario implements Serializable, Modelo<Integer>
 	public void setNota(Double nota) {
 		this.nota = nota;
 	}
-	public Date getData() {
-		return data;
-	}
-	public void setData(Date data) {
-		this.data = data;
-	}
-	public Integer getCheckin() {
-		return checkin;
-	}
-	public void setCheckin(Integer checkin) {
-		this.checkin = checkin;
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,12 +108,10 @@ public class ClienteMatriculaCalendario implements Serializable, Modelo<Integer>
 	public String toString() {
 		return "ClienteMatriculaCalendario [id=" + id + ", calendario="
 				+ calendario + ", clienteMatricula=" + clienteMatricula
-				+ ", notebook=" + notebook + ", certificadoimpresso="
-				+ certificadoimpresso + ", nota=" + nota + ", data=" + data
-				+ ", checkin=" + checkin + "]";
+				+ ", certificadoImpresso=" + certificadoImpresso + ", nota="
+				+ nota + "]";
 	}
-	
-	
+
 	
 	
 }

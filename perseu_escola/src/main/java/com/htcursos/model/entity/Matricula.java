@@ -47,7 +47,7 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	/**
 	 * // Data do Contrato que pode ser mudada
 	 */
-	private Date data = new Date();
+	private Date dataContrato = new Date();
 	/**
 	 * Data do Cadastro é automático
 	 */
@@ -58,10 +58,10 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	 */
 	private Date dataPrevista = new Date();
 
-	private String motivocancelamento;
+	private String motivoCancelamento;
 	private Integer status;
 	@Temporal(TemporalType.DATE)
-	private Date datacancelamento;
+	private Date dataCancelamento;
 	@JoinColumn
 	@ManyToOne
 	private Usuario usuario;
@@ -138,24 +138,24 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		this.unidade = unidade;
 	}
 
-	public Date getData() {
-		return data;
+	public Date getDataContrato() {
+		return dataContrato;
 	}
 
 	public String getDataFmt() {
-		return FormataUtil.formataDataBrasil(data);
+		return FormataUtil.formataDataBrasil(dataContrato);
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setDatContrato(Date dataContrato) {
+		this.dataContrato = dataContrato;
 	}
 
-	public String getMotivocancelamento() {
-		return motivocancelamento;
+	public String getMotivoCancelamento() {
+		return motivoCancelamento;
 	}
 
-	public void setMotivocancelamento(String motivocancelamento) {
-		this.motivocancelamento = motivocancelamento;
+	public void setMotivoCancelamento(String motivoCancelamento) {
+		this.motivoCancelamento = motivoCancelamento;
 	}
 
 	public Integer getStatus() {
@@ -167,15 +167,15 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	}
 
 	public Date getDatacancelamento() {
-		return datacancelamento;
+		return dataCancelamento;
 	}
 
 	public String getDatacancelamentoFmt() {
-		return FormataUtil.formataDataBrasil(datacancelamento);
+		return FormataUtil.formataDataBrasil(dataCancelamento);
 	}
 
 	public void setDatacancelamento(Date datacancelamento) {
-		this.datacancelamento = datacancelamento;
+		this.dataCancelamento = datacancelamento;
 	}
 
 	public List<Pagamento> getPagamentoList() {
