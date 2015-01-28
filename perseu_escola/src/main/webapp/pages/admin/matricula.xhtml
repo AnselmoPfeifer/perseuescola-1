@@ -468,67 +468,83 @@
 
 					<p:tab title="Consultar" id="tab2">
 
-						<p:dataTable value="#{matriculaController.matriculaList}"
-							var="mat" resizableColumns="true" paginator="true"
-							liveResize="true">
+						<p:panel id="panel_buscar">
 
-							<p:column headerText="ID" style="width:5%">
-								<h:outputText value="#{mat.id}" />
-							</p:column>
+							<p:outputLabel value="Nome do Aluno" />
+							<p:inputText
+								value="#{matriculaController.clienteMatriculaBusca.cliente.nome}" />
 
-							<p:column headerText="Cliente" style="width:60%">
-								<h:outputText value="#{mat.clientes}" />
-							</p:column>
+							<p:outputLabel value="CPF do Aluno" />
+							<p:inputText
+								value="#{matriculaController.clienteMatriculaBusca.cliente.pfCpf}" />
 
-							<p:column headerText="Data">
-								<h:outputText value="#{mat.dataFmt}" />
-							</p:column>
+							<p:commandButton value="Buscar"
+								action="#{matriculaController.buscarMatricula}"
+								process="panel_buscar" update="td_matriculas" />
 
-							<p:column headerText="Valor">
-								<h:outputText value="#{mat.valorTotalFmtSemExtenso}" />
-							</p:column>
+							<p:dataTable value="#{matriculaController.matriculaList}"
+								var="mat" resizableColumns="true" paginator="false"
+								liveResize="true" id="td_matriculas">
 
-							<p:column headerText="Ações">
-
-								<p:column style="width:5%">
-									<p:commandButton id="selectButtonImprimir" icon="ui-icon-print"
-										title="Imprimir Contrato" oncomplete="contrato.show()"
-										process="@this" update=":formMat:dialogContrato">
-										<f:setPropertyActionListener
-											target="#{matriculaController.matriculaContrato}"
-											value="#{mat}" />
-									</p:commandButton>
+								<p:column headerText="ID" style="width:5%">
+									<h:outputText value="#{mat.id}" />
 								</p:column>
 
-								<!-- 								<p:column style="width:5%"> -->
-								<!-- 									<p:commandButton update="@form" icon="ui-icon-calculator" -->
-								<!-- 										title="Pacelas" process="@this"> -->
-
-								<!-- 									</p:commandButton> -->
-								<!-- 								</p:column> -->
-
-								<p:column style="width:5%">
-									<p:commandButton id="selectButton" update="@form"
-										icon="ui-icon-pencil" title="Editar" process="@this"
-										actionListener="#{matriculaController.editar(mat)}">
-										<!-- 										<f:setPropertyActionListener -->
-										<!-- 											target="#{matriculaController.matricula}" value="#{mat}" /> -->
-									</p:commandButton>
+								<p:column headerText="Cliente" style="width:60%">
+									<h:outputText value="#{mat.clientes}" />
 								</p:column>
 
-								<p:column style="width:5%">
-									<p:commandButton id="deletButton"
-										oncomplete="confirmacaoMat.show()" icon="ui-icon-trash"
-										title="Excluir" immediate="true" process="@this">
-										<f:setPropertyActionListener
-											target="#{matriculaController.matriculaExcluir}"
-											value="#{mat}" />
-									</p:commandButton>
+								<p:column headerText="Data">
+									<h:outputText value="#{mat.dataFmt}" />
 								</p:column>
-							</p:column>
 
-						</p:dataTable>
+								<p:column headerText="Valor">
+									<h:outputText value="#{mat.valorTotalFmtSemExtenso}" />
+								</p:column>
 
+								<p:column headerText="Ações">
+
+									<p:column style="width:5%">
+										<p:commandButton id="selectButtonImprimir"
+											icon="ui-icon-print" title="Imprimir Contrato"
+											oncomplete="contrato.show()" process="@this"
+											update=":formMat:dialogContrato">
+											<f:setPropertyActionListener
+												target="#{matriculaController.matriculaContrato}"
+												value="#{mat}" />
+										</p:commandButton>
+									</p:column>
+
+									<!-- 								<p:column style="width:5%"> -->
+									<!-- 									<p:commandButton update="@form" icon="ui-icon-calculator" -->
+									<!-- 										title="Pacelas" process="@this"> -->
+
+									<!-- 									</p:commandButton> -->
+									<!-- 								</p:column> -->
+
+									<p:column style="width:5%">
+										<p:commandButton id="selectButton" update="@form"
+											icon="ui-icon-pencil" title="Editar" process="@this"
+											actionListener="#{matriculaController.editar(mat)}">
+											<!-- 										<f:setPropertyActionListener -->
+											<!-- 											target="#{matriculaController.matricula}" value="#{mat}" /> -->
+										</p:commandButton>
+									</p:column>
+
+									<p:column style="width:5%">
+										<p:commandButton id="deletButton"
+											oncomplete="confirmacaoMat.show()" icon="ui-icon-trash"
+											title="Excluir" immediate="true" process="@this">
+											<f:setPropertyActionListener
+												target="#{matriculaController.matriculaExcluir}"
+												value="#{mat}" />
+										</p:commandButton>
+									</p:column>
+								</p:column>
+
+							</p:dataTable>
+
+						</p:panel>
 
 						<p:confirmDialog
 							message="Deseja realmente remover esta matrícula ?"
@@ -760,7 +776,7 @@
 						icon="ui-icon-print">
 						<p:printer target="textoContrato" />
 					</h:commandButton>
-					
+
 				</p:dialog>
 
 				<h:commandButton value="Imprimir" type="button" icon="ui-icon-print">

@@ -33,6 +33,15 @@ public class ClienteMatricula implements Serializable, Modelo<Integer> {
 	
 	private Boolean vaiUsarNotebook=false;
 
+	public ClienteMatricula(Cliente cliente, Matricula matricula) {
+		setCliente(cliente);
+		setMatricula(matricula);
+	}
+
+	public ClienteMatricula() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
