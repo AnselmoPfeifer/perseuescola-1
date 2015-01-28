@@ -71,7 +71,9 @@ public class MatriculaController implements Serializable {
 	// Objetos de manipulacao de dados
 	private Matricula matricula = new Matricula();
 	private Matricula matriculaContrato = new Matricula();
-	
+	// OBJETO UTILIZADO SOMENTE PARA BUSCAS DE MATRICULAS
+	private ClienteMatricula clienteMatriculaBusca = new ClienteMatricula(
+			new Cliente(), new Matricula());
 	private Matricula matriculaSetada = new Matricula();
 	private Cliente cliente = new Cliente();
 	private Cliente clienteBuscado = new Cliente();
@@ -96,8 +98,7 @@ public class MatriculaController implements Serializable {
 	private Unidade unidade = new Unidade();
 	private Usuario usuario;
 	// Lista de objetos
-	private List<Matricula> matriculaList; // **esta sendo usado pra buscartodas
-											// matriculas e excluir
+	private List<Matricula> matriculaList;
 	private List<Curso> listaCursos;
 	private List<Parcela> parcelaList;
 	private List<ClienteMatricula> clienteMatriculaList = new ArrayList<ClienteMatricula>();
@@ -105,29 +106,28 @@ public class MatriculaController implements Serializable {
 	@Autowired
 	private SessaoUtil sessaoUtil;
 
-	
-
-//	
-//	public List<Cliente> obterClientes(String nomeBusca) {
-//		List<Cliente> clientes, sclientes = new ArrayList<Cliente>();
-//		try {
-//			clientes = clienteService.buscarTodos(nomeBusca);
-//			if (nomeBusca.trim().equals(""))
-//				return clientes;
-//			for (Cliente cli : clientes)
-//				if (cli.getNome().toString().contains(nomeBusca)
-//						|| cli.getNome().toLowerCase()
-//								.contains(nomeBusca.toLowerCase())) {
-//					sclientes.add(cli);
-//				}
-//			return sclientes;
-//		} catch (Exception e) {
-//			// JsfUtil.showFacesMsg(e,"Erro ao buscar clientes ",FacesMessage.SEVERITY_WARN);
-//			e.printStackTrace();
-//
-//			return null;
-//		}
-//	}
+	//
+	// public List<Cliente> obterClientes(String nomeBusca) {
+	// List<Cliente> clientes, sclientes = new ArrayList<Cliente>();
+	// try {
+	// clientes = clienteService.buscarTodos(nomeBusca);
+	// if (nomeBusca.trim().equals(""))
+	// return clientes;
+	// for (Cliente cli : clientes)
+	// if (cli.getNome().toString().contains(nomeBusca)
+	// || cli.getNome().toLowerCase()
+	// .contains(nomeBusca.toLowerCase())) {
+	// sclientes.add(cli);
+	// }
+	// return sclientes;
+	// } catch (Exception e) {
+	// //
+	// JsfUtil.showFacesMsg(e,"Erro ao buscar clientes ",FacesMessage.SEVERITY_WARN);
+	// e.printStackTrace();
+	//
+	// return null;
+	// }
+	// }
 	public void adicionarPagamento() {
 
 		pagamentoNovo.setMatricula(matricula);
@@ -213,13 +213,19 @@ public class MatriculaController implements Serializable {
 	protected void init() {
 		matricula = new Matricula();
 
-		atualiza();
+		// atualiza();
 		atualizaCurso();
-		//Setando o Fábrica como padrao
-		curso =  cursoService.buscarPorId(52);
-		
+		// Setando o F��brica como padrao
+		curso = cursoService.buscarPorId(52);
+
 		// atualizaPagamento();
 		// atualizaClienteMatricula();
+
+	}
+
+	public void buscarMatricula() {
+		
+		matriculaList = clienteMatriculaService.buscarMatriculas(clienteMatriculaBusca);
 
 	}
 
@@ -680,6 +686,14 @@ public class MatriculaController implements Serializable {
 
 	public void setMatriculaContrato(Matricula matriculaContrato) {
 		this.matriculaContrato = matriculaContrato;
+	}
+
+	public ClienteMatricula getClienteMatriculaBusca() {
+		return clienteMatriculaBusca;
+	}
+
+	public void setClienteMatriculaBusca(ClienteMatricula clienteMatriculaBusca) {
+		this.clienteMatriculaBusca = clienteMatriculaBusca;
 	}
 
 }

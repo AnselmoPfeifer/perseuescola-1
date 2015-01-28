@@ -1,6 +1,7 @@
 package com.htcursos.model.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.htcursos.model.dao.ClienteMatriculaDAO;
 import com.htcursos.model.dao.GenericDAO;
 import com.htcursos.model.entity.ClienteMatricula;
+import com.htcursos.model.entity.Matricula;
 @Service
 public class ClienteMatriculaService extends GenericService<ClienteMatricula, Integer> implements Serializable {
 	/**
@@ -21,6 +23,12 @@ public class ClienteMatriculaService extends GenericService<ClienteMatricula, In
 	public GenericDAO<ClienteMatricula, Integer> getDao() {
 		// TODO Auto-generated method stub
 		return clienteMatriculaDAO;
+	}
+
+	public List<Matricula> buscarMatriculas(ClienteMatricula clienteMatriculaBusca) {
+		
+		return clienteMatriculaDAO.buscarMatriculas(clienteMatriculaBusca);
+
 	}
 
 }
