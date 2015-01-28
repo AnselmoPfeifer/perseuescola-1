@@ -475,8 +475,8 @@
 								value="#{matriculaController.clienteMatriculaBusca.cliente.nome}" />
 
 							<p:outputLabel value="CPF do Aluno" />
-							<p:inputText
-								value="#{matriculaController.clienteMatriculaBusca.cliente.pfCpf}" />
+							<p:inputMask mask="999.999.999-99"
+								value="#{matriculaController.clienteMatriculaBusca.cliente.pfCpf}"></p:inputMask>
 
 							<p:commandButton value="Buscar"
 								action="#{matriculaController.buscarMatricula}"

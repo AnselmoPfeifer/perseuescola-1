@@ -31,20 +31,20 @@ public class ClienteMatriculaDAO extends GenericDAO<ClienteMatricula, Integer>
 		StringBuilder jpql = new StringBuilder();
 		jpql.append("Select cm.matricula from ClienteMatricula cm where 1=1 ");
 
-		if (clienteMatriculaBusca.getCliente().getNome() != null) {
-			jpql.append(" and cm.cliente.nome like :nome");
+		if (clienteMatriculaBusca.getCliente().getNome() != "") {
+			jpql.append(" or upper(cm.cliente.nome) like upper(:nome)");
 		}
-		if (clienteMatriculaBusca.getCliente().getPfCpf() != null) {
-			jpql.append(" and cm.cliente.pfCpf like :cpf");
+		if (clienteMatriculaBusca.getCliente().getPfCpf() != "") {
+			jpql.append(" or cm.cliente.pfCpf = :cpf");
 		}
 
 		Query query = em.createQuery(jpql.toString());
 
-		if (clienteMatriculaBusca.getCliente().getNome() != null||clienteMatriculaBusca.getCliente().getNome() != "") {
-			query.setParameter("nome", clienteMatriculaBusca.getCliente()
-					.getNome());
+		if (clienteMatriculaBusca.getCliente().getNome() != "") {
+			query.setParameter("nome", "%"+clienteMatriculaBusca.getCliente()
+					.getNome()+"%");
 		}
-		if (clienteMatriculaBusca.getCliente().getPfCpf() != null||clienteMatriculaBusca.getCliente().getPfCpf() != "") {
+		if (clienteMatriculaBusca.getCliente().getPfCpf() != "") {
 			query.setParameter("cpf", clienteMatriculaBusca.getCliente()
 					.getPfCpf());
 		}
