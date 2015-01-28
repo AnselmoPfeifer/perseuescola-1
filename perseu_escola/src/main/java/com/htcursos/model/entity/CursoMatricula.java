@@ -30,6 +30,8 @@ public class CursoMatricula implements Serializable, Modelo<Integer> {
 	private Matricula matricula;
 	
 	private BigDecimal valor;
+	//Se o curso já foi realizado ou não 
+	private Boolean realizado;
 	
 	public Curso getCurso() {
 		return curso;
@@ -89,6 +91,12 @@ public class CursoMatricula implements Serializable, Modelo<Integer> {
 	public String getValorFmt() {
 
 		return FormataUtil.formataMoedaBrasil(valor);
+	}
+	public Boolean getRealizado() {
+		return realizado;
+	}
+	public void setRealizado(Boolean realizado) {
+		this.realizado = realizado;
 	}
 
 
