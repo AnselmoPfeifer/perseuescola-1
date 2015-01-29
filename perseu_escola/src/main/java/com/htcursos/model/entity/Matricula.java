@@ -150,7 +150,7 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		return FormataUtil.formataDataBrasil(dataContrato);
 	}
 
-	public void setDatContrato(Date dataContrato) {
+	public void setDataContrato(Date dataContrato) {
 		this.dataContrato = dataContrato;
 	}
 
