@@ -18,10 +18,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.htcursos.model.enums.TipoAtivoEnum;
 import com.htcursos.model.enums.TipoClienteEnum;
@@ -45,6 +48,7 @@ public class Cliente implements Serializable, Modelo<Integer> {
 	@SequenceGenerator(name = "seq_cliente", sequenceName = "seq_cliente", initialValue = 1)
 	@GeneratedValue(generator = "seq_cliente", strategy = GenerationType.AUTO)
 	private Integer id;
+	@NotNull (message= "Selecione a unidade!")
 	@JoinColumn
 	@ManyToOne
 	private Unidade unidade;
@@ -58,7 +62,9 @@ public class Cliente implements Serializable, Modelo<Integer> {
 	private String pjCnpj;
 	private String pjRazaoSocial;
 	private String unicoId;
-	private String nome="";
+	@NotNull (message="Campo Nome obrigatório!")
+	@NotEmpty(message="Campo Nome obrigatório!")
+	private String nome;
 	private String origem;
 	private String unicoIdPai;
 	private String senha;
@@ -70,6 +76,8 @@ public class Cliente implements Serializable, Modelo<Integer> {
 	@Enumerated(EnumType.STRING)
 	private TipoAtivoEnum ativo;
 	private String permissao;
+	@NotNull (message= "Campo E-mail obrigatório!")
+	@Email (message="E-mail inválido!")
 	private String email;
 	private String camiseta;
 

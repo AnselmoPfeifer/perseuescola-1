@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Uf;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.UfService;
 
 @Controller("ufController")
@@ -42,7 +42,7 @@ public class UfController implements Serializable {
 			atualiza();
 			uf = new Uf();
 			JsfMessages.adicionaMensagemInfo("Uf salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

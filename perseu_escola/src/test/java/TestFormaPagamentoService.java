@@ -10,7 +10,7 @@ import com.htcursos.model.entity.Conta;
 import com.htcursos.model.entity.FormaPagamento;
 import com.htcursos.model.service.ContaService;
 import com.htcursos.model.service.FormaPagamentoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/applicationContext.xml" })
@@ -26,7 +26,7 @@ public class TestFormaPagamentoService {
 
 		@Test
 		@Transactional
-		public void testSalvar() throws ServiceExpcetion{
+		public void testSalvar() throws ServiceException{
 			
 			Integer[] contas = {11211, 11321, 11211, 11311,11211, 11211};
 		//	String [] descricoes = {"Dinheiro", "Cartão Débito", "Boleto", "Cartão de Crédito" ,  "Cheque", "Nota Promissória"};

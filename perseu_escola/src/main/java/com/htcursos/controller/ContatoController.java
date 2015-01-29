@@ -17,7 +17,7 @@ import com.htcursos.model.entity.Contato;
 import com.htcursos.model.entity.TipoContato;
 import com.htcursos.model.service.ClienteService;
 import com.htcursos.model.service.ContatoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.TipoContatoService;
 
 @Controller("contatoController")
@@ -54,7 +54,7 @@ public class ContatoController implements Serializable {
 			atualiza();
 			contato = new Contato();
 			JsfMessages.adicionaMensagemInfo("Contato salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

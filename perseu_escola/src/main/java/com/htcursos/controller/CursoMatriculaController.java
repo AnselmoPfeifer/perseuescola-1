@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.CursoMatricula;
 import com.htcursos.model.service.CursoMatriculaService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("cursoMatriculaController")
 @Scope("view")
@@ -43,7 +43,7 @@ public class CursoMatriculaController implements Serializable {
 			atualiza();
 			cursoMatricula = new CursoMatricula();
 			JsfMessages.adicionaMensagemInfo("CursoMatricula salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

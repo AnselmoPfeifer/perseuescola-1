@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Conta;
 import com.htcursos.model.service.ContaService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("contaController")
 @Scope("view")
@@ -45,7 +45,7 @@ public class ContaController implements Serializable{
 			atualiza();
 			conta = new Conta();
 			JsfMessages.adicionaMensagemInfo("Conta salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 		

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Cidade;
 import com.htcursos.model.service.CidadeService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("cidadeController")
 @Scope("view")
@@ -45,7 +45,7 @@ public class CidadeController implements Serializable {
 			atualiza();
 			cidade = new Cidade();
 			JsfMessages.adicionaMensagemInfo("Cidade salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

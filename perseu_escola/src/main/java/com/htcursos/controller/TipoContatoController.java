@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.TipoContato;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.TipoContatoService;
 
 @Controller("tipoContatoController")
@@ -42,7 +42,7 @@ public class TipoContatoController implements Serializable{
 			atualiza();
 			tipoContato = new TipoContato();
 			JsfMessages.adicionaMensagemInfo("Tipo de Contato salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 		

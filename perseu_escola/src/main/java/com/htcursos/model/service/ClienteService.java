@@ -3,7 +3,6 @@ package com.htcursos.model.service;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +35,7 @@ public class ClienteService extends GenericService<Cliente, Integer> implements 
 	
 	
 	@Override
-	public Cliente salvar(Cliente cliente) throws ServiceExpcetion {
+	public Cliente salvar(Cliente cliente) throws ServiceException {
 		
 		if(cliente.getContatoList()==null||cliente.getContatoList().size()==0){
 			throw new ServiceException("Adicione pelo menos um contato");

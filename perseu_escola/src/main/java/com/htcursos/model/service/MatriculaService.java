@@ -50,42 +50,42 @@ public class MatriculaService extends GenericService<Matricula, Integer> impleme
 	/**
 	 * M���todo Sobrescrito para salvar matricula efetuando os lancamentos
 	 * 
-	 * @throws ServiceExpcetion
+	 * @throws ServiceException
 	 */
-	public Matricula salvar(Matricula matricula) throws ServiceExpcetion {
+	public Matricula salvar(Matricula matricula) throws ServiceException {
 		int qtdContratante = matricula.getQuantidadeContratantes();
 
 		 if(qtdContratante>0 &&!matricula.getContratante().possuiDadosCompletos()){
-		 throw new ServiceExpcetion(
+		 throw new ServiceException(
 		 "Este cliente possui dados incompletos, verifique seu cadastro.");
 		 }
 
 		if (qtdContratante == 0) {
-			throw new ServiceExpcetion(
+			throw new ServiceException(
 					"Insira pelo menos um cliente contratante na matrícula.");
 		}
 		if (qtdContratante > 1) {
-			throw new ServiceExpcetion(
+			throw new ServiceException(
 					"Insira apenas uma cliente contratante na matrícula.");
 		}
 
 		if (matricula.getTotalCursos().doubleValue() == 0.0) {
-			throw new ServiceExpcetion(
+			throw new ServiceException(
 					"Insira cursos com valores na matrícula.");
 		}
 		
 		if( !matricula.validaPagamentos()){
-			throw new ServiceExpcetion(
+			throw new ServiceException(
 					"Pagamentos com dados incompletos");
 		}
 			
 		if (matricula.getTotalPagamentos().doubleValue() == 0.0) {
-			throw new ServiceExpcetion(
+			throw new ServiceException(
 					"Insira pagamentos com valores na matrícula.");
 		}
 
 		if (matricula.calcularDiferenca().doubleValue() != 0.0) {
-			throw new ServiceExpcetion(
+			throw new ServiceException(
 					"Os valores dos pagamentos não batem com os valores dos cursos. Verifique a diferença");
 		}
 

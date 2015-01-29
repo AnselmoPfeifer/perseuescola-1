@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Usuario;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.UsuarioService;
 
 @Controller("usuarioController")
@@ -44,7 +44,7 @@ public class UsuarioController implements Serializable {
 			atualiza();
 			usuario = new Usuario();
 			JsfMessages.adicionaMensagemInfo("Usuario salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

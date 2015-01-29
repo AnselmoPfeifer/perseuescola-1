@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Calendario;
 import com.htcursos.model.service.CalendarioService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("calendarioController")
 @Scope("view")
@@ -44,7 +44,7 @@ public class CalendarioController implements Serializable{
 		atualiza();
 		calendario = new Calendario();
 		JsfMessages.adicionaMensagemInfo("Calendario salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 			e.printStackTrace();
 		}

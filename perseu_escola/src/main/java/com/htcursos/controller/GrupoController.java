@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Grupo;
 import com.htcursos.model.service.GrupoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("grupoController")
 @Scope("view")
@@ -43,7 +43,7 @@ public class GrupoController implements Serializable {
 			atualiza();
 			grupo = new Grupo();
 			JsfMessages.adicionaMensagemInfo("Grupo salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

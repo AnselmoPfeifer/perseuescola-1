@@ -20,7 +20,7 @@ import com.htcursos.model.entity.EnumCamisetas;
 import com.htcursos.model.enums.TipoClienteEnum;
 import com.htcursos.model.enums.TipoSexoEnum;
 import com.htcursos.model.service.ClienteService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.tools.CepWebService;
 
 @Controller("clienteController")
@@ -115,7 +115,7 @@ public class ClienteController implements Serializable {
 			atualiza();
 			cliente = new Cliente();
 			JsfMessages.adicionaMensagemInfo("Cliente salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 			e.printStackTrace();
 		}

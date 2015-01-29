@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Pagamento;
 import com.htcursos.model.service.PagamentoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("pagamentoController")
 @Scope("view")
@@ -46,7 +46,7 @@ public class PagamentoController implements Serializable {
 			atualiza();
 			pagamento = new Pagamento();
 			JsfMessages.adicionaMensagemInfo("Pagamento salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

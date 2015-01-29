@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Parcela;
 import com.htcursos.model.service.ParcelaService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("parcelaController")
 @Scope("view")
@@ -43,7 +43,7 @@ public class ParcelaController implements Serializable {
 			atualiza();
 			parcela = new Parcela();
 			JsfMessages.adicionaMensagemInfo("Parcela salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

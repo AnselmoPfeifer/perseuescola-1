@@ -1,18 +1,18 @@
 package com.htcursos.model.service;
 
-public class ServiceExpcetion extends Exception {
+public class ServiceException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public ServiceExpcetion(String mensagem, Exception causa) {
+	public ServiceException(String mensagem, Exception causa) {
 		super(mensagem, causa);
 	}
 
-	public ServiceExpcetion(Exception causa) {
+	public ServiceException(Exception causa) {
 		super("Não pode realizar essa operação! motivo: "+ causa);
 	}
 
-	public ServiceExpcetion(String string) {
+	public ServiceException(String string) {
 		super(string);
 	}
 }

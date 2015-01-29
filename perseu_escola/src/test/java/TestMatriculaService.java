@@ -23,7 +23,7 @@ import com.htcursos.model.entity.Unidade;
 import com.htcursos.model.entity.Usuario;
 import com.htcursos.model.service.FormaPagamentoService;
 import com.htcursos.model.service.MatriculaService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.UnidadeService;
 import com.htcursos.model.service.UsuarioService;
 
@@ -50,7 +50,7 @@ public class TestMatriculaService {
 	
 	@Test
 	@Rollback(value=true)
-	public void testSalvar() throws ServiceExpcetion{
+	public void testSalvar() throws ServiceException{
 		
 		
 		Matricula matricula = new Matricula();

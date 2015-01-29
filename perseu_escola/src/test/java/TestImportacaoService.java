@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.htcursos.model.entity.Conta;
 import com.htcursos.model.service.ContaService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.util.PoiReadExcelFile;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,7 +29,7 @@ public class TestImportacaoService {
 	String path = "/home/virmerson/Dropbox/High Tech Cursos/workspace_perseu/perseu-escola/src/test/resources/PlanoDeContas.xlsx";
 
 	@Test
-	public void deveImportarPlanoDeContas() throws ServiceExpcetion {
+	public void deveImportarPlanoDeContas() throws ServiceException {
 		List<Conta> contas = new ArrayList<Conta>();
 		contas = PoiReadExcelFile.importarXLSX(path, "planilha");
 

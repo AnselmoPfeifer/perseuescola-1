@@ -36,7 +36,7 @@ import com.htcursos.model.service.CursoService;
 import com.htcursos.model.service.MatriculaService;
 import com.htcursos.model.service.PagamentoService;
 import com.htcursos.model.service.ParcelaService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.UnidadeService;
 import com.htcursos.model.service.UsuarioService;
 import com.htcursos.model.util.FormataUtil;
@@ -299,7 +299,7 @@ public class MatriculaController implements Serializable {
 			matricula = new Matricula();
 			atualiza();
 			JsfMessages.adicionaMensagemInfo("Matricula salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 			e.printStackTrace();
 		}

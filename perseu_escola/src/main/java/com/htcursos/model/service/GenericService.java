@@ -19,11 +19,11 @@ public abstract class GenericService<T extends Modelo<ID> ,ID extends Serializab
 
 	public abstract GenericDAO<T, ID> getDao() ; 
 	
-	public T salvar(T o ) throws ServiceExpcetion{
+	public T salvar(T o ) throws ServiceException{
 		try{
 			return getDao().salvar(o);
 		}catch(Exception e){
-			throw new ServiceExpcetion (e);
+			throw new ServiceException (e);
 		}
 	}
 	

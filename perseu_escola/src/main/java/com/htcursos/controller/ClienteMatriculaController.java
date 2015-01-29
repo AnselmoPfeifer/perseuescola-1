@@ -15,7 +15,7 @@ import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.ClienteMatricula;
 import com.htcursos.model.enums.TipoContratacaoEnum;
 import com.htcursos.model.service.ClienteMatriculaService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("clienteMatriculaController")
 @Scope("view")
@@ -42,7 +42,7 @@ public class ClienteMatriculaController implements Serializable{
 			atualiza();
 			clienteMatricula = new ClienteMatricula();
 			JsfMessages.adicionaMensagemInfo("ClienteMatricula salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 		

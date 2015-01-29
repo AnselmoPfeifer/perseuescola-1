@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Cartao;
 import com.htcursos.model.service.CartaoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("cartaoController")
 @Scope("view")
@@ -43,7 +43,7 @@ public class CartaoController implements Serializable{
 			atualiza();
 			cartao = new Cartao();
 			JsfMessages.adicionaMensagemInfo("Cartao salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 		

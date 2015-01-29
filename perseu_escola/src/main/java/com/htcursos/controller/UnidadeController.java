@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Unidade;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.UnidadeService;
 
 @Controller("unidadeController")
@@ -42,7 +42,7 @@ public class UnidadeController implements Serializable {
 			atualiza();
 			unidade = new Unidade();
 			JsfMessages.adicionaMensagemInfo("Unidade salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 		

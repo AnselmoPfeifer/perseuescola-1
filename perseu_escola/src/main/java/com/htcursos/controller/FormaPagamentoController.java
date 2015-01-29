@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.FormaPagamento;
 import com.htcursos.model.service.FormaPagamentoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("formaPagamentoController")
 @Scope("view")
@@ -43,7 +43,7 @@ public class FormaPagamentoController implements Serializable{
 			atualiza();
 			formaPagamento = new FormaPagamento();
 			JsfMessages.adicionaMensagemInfo("FormaPagamento salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 		

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Sala;
 import com.htcursos.model.service.SalaService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("salaController")
 @Scope("view")
@@ -42,7 +42,7 @@ public class SalaController implements Serializable {
 			atualiza();
 			sala = new Sala();
 			JsfMessages.adicionaMensagemInfo("Sala salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 

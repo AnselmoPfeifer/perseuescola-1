@@ -18,7 +18,7 @@ import com.htcursos.model.entity.Usuario;
 import com.htcursos.model.service.AutorizacaoService;
 import com.htcursos.model.service.CursoService;
 import com.htcursos.model.service.FormaPagamentoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.UfService;
 import com.htcursos.model.service.UsuarioService;
 
@@ -46,7 +46,7 @@ public class TestPopulaBanco {
 	
 	@Test
 	@Rollback(false)
-	public void polularBanco() throws ServiceExpcetion  {
+	public void polularBanco() throws ServiceException  {
 		
 		Autorizacao roleAdmin = new Autorizacao();
 		roleAdmin.setAuthority("ROLE_ADMIN");

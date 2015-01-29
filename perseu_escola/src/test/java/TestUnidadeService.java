@@ -14,7 +14,7 @@ import com.htcursos.model.entity.Uf;
 import com.htcursos.model.entity.Unidade;
 import com.htcursos.model.service.ContaService;
 import com.htcursos.model.service.FormaPagamentoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 import com.htcursos.model.service.UnidadeService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,7 +29,7 @@ public class TestUnidadeService {
 		UnidadeService unidadeService;
 
 		@Test
-		public void testSalvar() throws ServiceExpcetion{
+		public void testSalvar() throws ServiceException{
 			
 				Uf uf =  new Uf();
 				uf.setDescricao("Mato Grosso do Sul");

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Lancamento;
 import com.htcursos.model.service.LancamentoService;
-import com.htcursos.model.service.ServiceExpcetion;
+import com.htcursos.model.service.ServiceException;
 
 @Controller("lancamentoController")
 @Scope("view")
@@ -43,7 +43,7 @@ public class LancamentoController implements Serializable{
 			atualiza();
 			lancamento = new Lancamento();
 			JsfMessages.adicionaMensagemInfo("Lancamento salvo");
-		} catch (ServiceExpcetion e) {
+		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 		
