@@ -55,7 +55,7 @@ public class MatriculaService extends GenericService<Matricula, Integer> impleme
 	public Matricula salvar(Matricula matricula) throws ServiceExpcetion {
 		int qtdContratante = matricula.getQuantidadeContratantes();
 
-		 if(!matricula.getContratante().possuiDadosCompletos()){
+		 if(qtdContratante>0 &&!matricula.getContratante().possuiDadosCompletos()){
 		 throw new ServiceExpcetion(
 		 "Este cliente possui dados incompletos, verifique seu cadastro.");
 		 }

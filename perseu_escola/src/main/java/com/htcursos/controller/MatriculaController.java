@@ -106,6 +106,11 @@ public class MatriculaController implements Serializable {
 	@Autowired
 	private SessaoUtil sessaoUtil;
 
+	public MatriculaController() {
+
+		System.out.println("instanciando matricula controller");
+	}
+
 	//
 	// public List<Cliente> obterClientes(String nomeBusca) {
 	// List<Cliente> clientes, sclientes = new ArrayList<Cliente>();
@@ -216,7 +221,7 @@ public class MatriculaController implements Serializable {
 		// atualiza();
 		atualizaCurso();
 		// Setando o F��brica como padrao
-		curso = cursoService.buscarPorId(52);
+		// curso = cursoService.buscarPorId(52);
 
 		// atualizaPagamento();
 		// atualizaClienteMatricula();
@@ -224,8 +229,9 @@ public class MatriculaController implements Serializable {
 	}
 
 	public void buscarMatricula() {
-		
-		matriculaList = clienteMatriculaService.buscarMatriculas(clienteMatriculaBusca);
+
+		matriculaList = clienteMatriculaService
+				.buscarMatriculas(clienteMatriculaBusca);
 
 	}
 
@@ -279,7 +285,7 @@ public class MatriculaController implements Serializable {
 	}
 
 	public void salvar() {
-
+		System.out.println(" Chamou salvar");
 		// buscando clientes
 
 		for (ClienteMatricula cm : matricula.getClienteMatriculaList()) {
@@ -451,6 +457,8 @@ public class MatriculaController implements Serializable {
 	}
 
 	public Curso getCursoBuscado() {
+		if (cursoBuscado == null)
+			cursoBuscado = new Curso();
 		return cursoBuscado;
 	}
 

@@ -21,21 +21,18 @@
 			<h:form id="formMat">
 				<p:messages id="msgForm" showDetail="false" />
 
-				<p:tabView id="tabView">
+				<p:tabView id="tvMatricula">
 					<p:tab id="tab1" title="Cadastrar">
 
 						<p:growl id="mensagem" showDetail="true">
 						</p:growl>
 
-						<p:commandButton value="Salvar"
-							action="#{matriculaController.salvar}"
-							process="@this panelContratoTodo" update="@form"></p:commandButton>
-						<p:commandButton value="Cancelar"
-							action="#{matriculaController.cancelar}" process="@this"
-							update="@form"></p:commandButton>
 
-						<p:panel header="1- Contrato" id="panelContratoTodo">
-							<h:panelGrid id="panelContrato" columns="4">
+					
+
+
+						<p:panel header="1- Contrato" id="panelContrato">
+							<h:panelGrid columns="4">
 
 								<h:outputLabel for="idmatr" value="Id: " rendered="false" />
 								<p:inputText readonly="true" size="3" id="idmatr"
@@ -45,7 +42,8 @@
 								</p:inputText>
 
 								<h:outputLabel for="datalan" value="Data Matricula:  " />
-								<p:calendar value="#{matriculaController.matricula.data}"
+								<p:calendar
+									value="#{matriculaController.matricula.dataContrato}"
 									id="datalan" pattern="dd/MM/yyyy" locale="pt_BR" />
 
 								<h:outputLabel for="dataprev" value="Data Prevista do Curso:  " />
@@ -70,7 +68,13 @@
 								<p:spinner size="4" min="0"
 									value="#{matriculaController.matricula.taxaInscricao}" />
 
+								<p:commandButton value="Salvar 4"
+							action="#{matriculaController.salvar}"
+							process="formMat:tvMatricula:panelContrato" update="tab1" />
+							
 							</h:panelGrid>
+							
+							
 						</p:panel>
 
 						<p:spacer width="15"></p:spacer>
@@ -111,7 +115,7 @@
 
 
 								<p:commandButton value="Novo" process="panelCliente"
-									update="panelCliente" onclick="crudCliente.show()">
+									update="panelCliente" onclick="PF('crudCliente').show()">
 								</p:commandButton>
 
 								<p:commandButton
@@ -145,7 +149,7 @@
 								<p:column headerText="Ações" width="60">
 									<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
 										<p:commandButton icon="ui-icon-trash" alt="Excluir Cliente"
-											title="Excluir Cliente" oncomplete="confirmacao.show()"
+											title="Excluir Cliente" oncomplete="PF('confirmacao').show()"
 											process="@this">
 											<f:setPropertyActionListener
 												target="#{matriculaController.clienteExcluir}" value="#{c}" />
@@ -164,9 +168,9 @@
 
 							<p:commandButton id="btnSim1" value="Sim" process="@this"
 								actionListener="#{matriculaController.excluirCliente}"
-								oncomplete="confirmacao.hide();" update="tblCliente" />
+								oncomplete="PF('confirmacao').hide();" update="tblCliente" />
 							<p:commandButton id="btnNao1" value="Não"
-								onclick="confirmacao.hide();" />
+								onclick="PF('confirmacao').hide();" />
 						</p:confirmDialog>
 
 
@@ -216,7 +220,7 @@
 								<p:column headerText="Ações" width="60">
 									<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
 										<p:commandButton icon="ui-icon-trash" alt="Excluir Curso"
-											title="Excluir Curso" oncomplete="msgCurso.show()"
+											title="Excluir Curso" oncomplete="PF('msgCurso').show()"
 											process="@this">
 											<f:setPropertyActionListener
 												target="#{matriculaController.cursoExcluir}" value="#{cm}" />
@@ -234,9 +238,9 @@
 
 								<p:commandButton id="btnSim2" value="Sim" process="@this"
 									actionListener="#{matriculaController.excluirCurso}"
-									oncomplete="msgCurso.hide();" update="tabelaCurso,panelTotais" />
+									oncomplete="PF('msgCurso').hide();" update="tabelaCurso,panelTotais" />
 								<p:commandButton id="btnNao2" value="Não"
-									onclick="msgCurso.hide();" />
+									onclick="PF('msgCurso').hide();" />
 							</p:confirmDialog>
 						</p:panel>
 
@@ -343,7 +347,7 @@
 								<p:column headerText="Ações" width="60">
 									<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
 										<p:commandButton icon="ui-icon-trash" alt="Excluir Pagamento"
-											title="Excluir Pagamento" oncomplete="msgPagamento.show()"
+											title="Excluir Pagamento" oncomplete="PF('msgPagamento').show()"
 											process="@this" update="@form">
 											<f:setPropertyActionListener
 												target="#{matriculaController.pagamentoExcluir}"
@@ -362,9 +366,9 @@
 
 								<p:commandButton id="btnSim3" value="Sim" process="@this"
 									actionListener="#{matriculaController.excluirPagamento}"
-									oncomplete="msgPagamento.hide();" update="tabelaPagamento" />
+									oncomplete="PF('msgPagamento').hide();" update="tabelaPagamento" />
 								<p:commandButton id="btnNao3" value="Não"
-									onclick="msgPagamento.hide();" />
+									onclick="PF('msgPagamento').hide();" />
 							</p:confirmDialog>
 							<p:separator></p:separator>
 							<!-- 					<p:dataTable -->
@@ -457,12 +461,9 @@
 
 
 
-						<p:commandButton value="Salvar"
-							action="#{matriculaController.salvar}"
-							process="@this panelContratoTodo" update="@form"></p:commandButton>
 						<p:commandButton value="Cancelar"
-							action="#{matriculaController.cancelar}" process="@this"
-							update="@form"></p:commandButton>
+							action="#{matriculaController.cancelar()}" process="@this"
+							update="@form" />
 
 					</p:tab>
 
@@ -507,7 +508,7 @@
 									<p:column style="width:5%">
 										<p:commandButton id="selectButtonImprimir"
 											icon="ui-icon-print" title="Imprimir Contrato"
-											oncomplete="contrato.show()" process="@this"
+											oncomplete="PF('contrato').show()" process="@this"
 											update=":formMat:dialogContrato">
 											<f:setPropertyActionListener
 												target="#{matriculaController.matriculaContrato}"
@@ -533,7 +534,7 @@
 
 									<p:column style="width:5%">
 										<p:commandButton id="deletButton"
-											oncomplete="confirmacaoMat.show()" icon="ui-icon-trash"
+											oncomplete="PF('confirmacaoMat').show()" icon="ui-icon-trash"
 											title="Excluir" immediate="true" process="@this">
 											<f:setPropertyActionListener
 												target="#{matriculaController.matriculaExcluir}"
@@ -553,11 +554,11 @@
 							appendToBody="true">
 
 							<p:commandButton id="btnSim" value="Sim"
-								onclick="confirmacaoMat.hide();"
+								onclick="PF('confirmacaoMat').hide();"
 								actionListener="#{matriculaController.excluir}" update="@form"
 								process="@this" />
 							<p:commandButton id="btnNao" value="Não"
-								onclick="confirmacaoMat.hide();" />
+								onclick="PF('confirmacaoMat').hide();" />
 						</p:confirmDialog>
 
 
@@ -580,195 +581,203 @@
 								<strong>CONTRATO DE MATRICULA DE CURSO </strong>
 							</p>
 						</div>
-						<div style="font-size: 11px;">
-							A HIGHTECH ESCOLA DE INFORM&Aacute;TICA situada com sede matriz
-							na Av. Noroeste 10.624, Bairro Betaville - Campo Grande &ndash;
-							MS, CEP: 79060-095, Brasil, inscrito no CNPJ 10.797.626/0001-24,
-							daqui em diante denominado CONTRATADA, e o denominado
-							CONTRATANTE,
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.nome}" />
-							, CPF/CNPJ
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.CPFCNPJStr}" />
-							, endereço
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.tipo_logradouro}" />
-							&nbsp;
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.logradouro}" />
-							,
+						<!-- 						<div style="font-size: 11px;"> -->
+						<!-- 							A HIGHTECH ESCOLA DE INFORM&Aacute;TICA situada com sede matriz -->
+						<!-- 							na Av. Noroeste 10.624, Bairro Betaville - Campo Grande &ndash; -->
+						<!-- 							MS, CEP: 79060-095, Brasil, inscrito no CNPJ 10.797.626/0001-24, -->
+						<!-- 							daqui em diante denominado CONTRATADA, e o denominado -->
+						<!-- 							CONTRATANTE, -->
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.nome}" /> -->
+						<!-- 							, CPF/CNPJ -->
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.CPFCNPJStr}" /> -->
+						<!-- 							, endereço -->
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.tipo_logradouro}" /> -->
+						<!-- 							&nbsp; -->
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.logradouro}" /> -->
+						<!-- 							, -->
 
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.numero}" />
-							,
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.numero}" /> -->
+						<!-- 							, -->
 
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.bairro}" />
-							,
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.bairro}" /> -->
+						<!-- 							, -->
 
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.cidade}" />
-							-
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.cidade}" /> -->
+						<!-- 							- -->
 
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.estado}" />
-							, CEP
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.cep}" />
-							, resolvem firmar o presente CONTRATO DE PRESTA&Ccedil;&Atilde;O
-							DE SERVI&Ccedil;O EM CURSOS DE INFORMATICA, SEGUNDO AS
-							CL&Aacute;USULAS E CONDI&Ccedil;&Otilde;ES SEGUINTES:
-							<p>
-								<strong>CL&Aacute;USULA PRIMEIRA </strong>- Do objeto
-							</p>
-							<p>
-								A CONTRATADA ministrar&aacute; ao CONTRATANTE o(s) curso(s)
-								retro descrito(s) logo abaixo neste instrumento:
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.cursoMatriculaListStr}" />
-								que iniciará no dia
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" />
-								.
-							</p>
-							<p>
-								Par&aacute;grafo primeiro. A CONTRATADA compromete-se em
-								ministrar o(s) curso(s) acima, conforme conte&uacute;do
-								program&aacute;tico, carga hor&aacute;ria de
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.cargaHorariaTotal()}" />
-								horas , bem como, emitir apenas um certificado de
-								conclus&atilde;o no final do(s) curso(s).
-							</p>
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.estado}" /> -->
+						<!-- 							, CEP -->
+						<!-- 							<h:outputText -->
+						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.cep}" /> -->
+						<!-- 							, resolvem firmar o presente CONTRATO DE PRESTA&Ccedil;&Atilde;O -->
+						<!-- 							DE SERVI&Ccedil;O EM CURSOS DE INFORMATICA, SEGUNDO AS -->
+						<!-- 							CL&Aacute;USULAS E CONDI&Ccedil;&Otilde;ES SEGUINTES: -->
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA PRIMEIRA </strong>- Do objeto -->
+						<!-- 							</p> -->
+						<!-- 							<p> -->
+						<!-- 								A CONTRATADA ministrar&aacute; ao CONTRATANTE o(s) curso(s) -->
+						<!-- 								retro descrito(s) logo abaixo neste instrumento: -->
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.cursoMatriculaListStr}" /> -->
+						<!-- 								que iniciará no dia -->
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" /> -->
+						<!-- 								. -->
+						<!-- 							</p> -->
+						<!-- 							<p> -->
+						<!-- 								Par&aacute;grafo primeiro. A CONTRATADA compromete-se em -->
+						<!-- 								ministrar o(s) curso(s) acima, conforme conte&uacute;do -->
+						<!-- 								program&aacute;tico, carga hor&aacute;ria de -->
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.cargaHorariaTotal()}" /> -->
+						<!-- 								horas , bem como, emitir apenas um certificado de -->
+						<!-- 								conclus&atilde;o no final do(s) curso(s). -->
+						<!-- 							</p> -->
 
-							<p>Par&aacute;grafo segundo. A CONTRATADA se reserva ao
-								direito de mudar a data inicial do(s) curso(s) em caso de
-								n&atilde;o fechamento de turma, neste caso, os j&aacute;
-								matriculados ser&atilde;o avisados com anteced&ecirc;ncia
-								m&iacute;nima de um dia (24 horas).</p>
-							<p>
-								<strong>CL&Aacute;USULA SEGUNDA </strong>- Do pre&ccedil;o e
-								condi&ccedil;&otilde;es de pagamento(s) o CONTRATANTE
-								pagar&aacute; pelo(s) curso(s) o valor descrito neste
-								instrumento de
-
-
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.valorTotalFmtExtenso}" />
-								na forma e condi&ccedil;&otilde;es a seguir: <br />
-
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.taxaInscricaoFmt}" />
-
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.pagamentoListStr}" />
-								. <br /> <br /> Par&aacute;grafo &uacute;nico - O pagamento da
-								parcela paga at&eacute; o dia do vencimento ter&aacute; um
-								desconto de
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.descontoAteVencimento}" />
-								%. Ap&oacute;s a data do vencimento das parcelas pactuadas neste
-								instrumento, haver&aacute; incid&ecirc;ncia de multa de
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.multa}" />
-								% mais
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.taxaAtrasoPorDiaFtm}" />
-								por dia.
-							</p>
-
-							<p>
-								<strong>CL&Aacute;USULA TERCEIRA</strong> - Da
-								transfer&ecirc;ncia. O (a) CONTRATANTE poder&aacute; transferir
-								os direitos e obriga&ccedil;&otilde;es contratados,
-								&agrave;&nbsp; pessoa id&ocirc;nea, devendo para tal, notificar
-								a CONTRATADA, com anteced&ecirc;ncia m&iacute;nima de 05 (cinco)
-								dias do in&iacute;cio do Curso. Par&aacute;grafo &uacute;nico:
-								Caso o cancelamento se da por parte da contratada, os valores
-								pagos pelo curso contratado, ser&atilde;o devolvidos
-								integralmente.
-							</p>
-
-							<p>
-								<strong>CL&Aacute;USULA QUARTA</strong> Da desistência
-								pós-matrícula. Em caso de desistência do CONTRATANTE, uma vez
-								que o curso ou a carreira de cursos contratados já esteja em
-								andamento, não haverá devolução do valor pago. O não
-								comparecimento do CONTRATANTE as aulas não implicará na redução
-								do valor pago não havendo devolução das parcelas pagas e também
-								não isenta as parcelas em aberto a pagar em caso de venda
-								parcelada. O CONTRATANTE declara ter ciência de que o desconto
-								que lhe foi concedido tem por premissa sua permanência no curso
-								até o seu término. Na hipótese do CONTRATANTE não permancer no
-								curso até o final, sujeitar-se-á à política de cancelamento a
-								seguir: Solicitação de cancelamento - A solicitação de
-								cancelamento pode ser efetuada a qualquer momento. Reembolso e
-								quitação – Cancelamento possível mediante pagamento de 30%
-								incidente sobre o saldo total devedor vincendo, este calculado
-								conforme o tempo de cumprimento do contrato.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA QUINTA</strong> - O n&atilde;o pagamento
-								acarretar&aacute; a inclus&atilde;o do d&eacute;bito no
-								SERVI&Ccedil;O DE PROTE&Ccedil;&Atilde;O AO CR&Eacute;DITO (SPC
-								e/ou SERASA).
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA SEXTA</strong> - Do Material em
-								M&iacute;dia Digital. O material digital ser&aacute; entregue ao
-								CONTRATADO apenas em caso de reposi&ccedil;&otilde;es desde que
-								o mesmo tenha solicitado no m&iacute;nimo de 5 horas de
-								antecedencia. O material Digital (V&iacute;deos Aulas) feito em
-								sala de aulas para as reposi&ccedil;&atilde;o n&atilde;o
-								poder&atilde;o ser publicadas na internet ou comparilhada com
-								terceiros, acarretando nas consequencias da
-								viola&ccedil;&atilde;o dos direitos autorais da CONTRATADA.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA S&Eacute;TIMA </strong>- Fotos e Videos.
-								A CONTRATADA fica autorizada a retirar fotografias e a fazer
-								videos em sala de aula contendo a imagem do CONTRATANTE para
-								fins de publicidade na TV, tanto como publicar na internet tanto
-								no site como nas rede sociais.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA OITAVA </strong>- Certificado. A
-								CONTRATADA exige 80 % (oitenta porcento) de presen&ccedil;a
-								al&eacute;m da aplica&ccedil;&atilde;o de testes que
-								ser&atilde;o aplicados pelo instrutor em sala de aula com
-								exigencia de 70 % (setenta porcento) de acertos para
-								emiss&atilde;o do certificado de conclus&atilde;o de curso.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA NONA</strong> -
-								Disposi&ccedil;&otilde;es finais. E por estarem assim, justas e
-								contratadas, as partes assinarem o presente instrumento, em duas
-								vias e igual teor e forma, elegendo o F&oacute;rum da comarca de
-								Campo Grande MS para dirimir qualquer d&iacute;vida que dele
-								possa originar.
-							</p>
+						<!-- 							<p>Par&aacute;grafo segundo. A CONTRATADA se reserva ao -->
+						<!-- 								direito de mudar a data inicial do(s) curso(s) em caso de -->
+						<!-- 								n&atilde;o fechamento de turma, neste caso, os j&aacute; -->
+						<!-- 								matriculados ser&atilde;o avisados com anteced&ecirc;ncia -->
+						<!-- 								m&iacute;nima de um dia (24 horas).</p> -->
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA SEGUNDA </strong>- Do pre&ccedil;o e -->
+						<!-- 								condi&ccedil;&otilde;es de pagamento(s) o CONTRATANTE -->
+						<!-- 								pagar&aacute; pelo(s) curso(s) o valor descrito neste -->
+						<!-- 								instrumento de -->
 
 
-							<p>
-								Campo Grande,
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.dataFmt}" />
-							</p>
-							<p>
-								___________________________________
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________________________
-								<br></br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								CONTRATADA
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CONTRATANTE
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.valorTotalFmtExtenso}" /> -->
+						<!-- 								na forma e condi&ccedil;&otilde;es a seguir: <br /> -->
 
-							</p>
-							<p></p>
-						</div>
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.taxaInscricaoFmt}" /> -->
+
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.pagamentoListStr}" /> -->
+						<!-- 								. <br /> <br /> Par&aacute;grafo &uacute;nico - O pagamento da -->
+						<!-- 								parcela paga at&eacute; o dia do vencimento ter&aacute; um -->
+						<!-- 								desconto de -->
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.descontoAteVencimento}" /> -->
+						<!-- 								%. Ap&oacute;s a data do vencimento das parcelas pactuadas neste -->
+						<!-- 								instrumento, haver&aacute; incid&ecirc;ncia de multa de -->
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.multa}" /> -->
+						<!-- 								% mais -->
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.taxaAtrasoPorDiaFtm}" /> -->
+						<!-- 								por dia. -->
+						<!-- 							</p> -->
+
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA TERCEIRA</strong> - Da -->
+						<!-- 								transfer&ecirc;ncia. O (a) CONTRATANTE poder&aacute; transferir -->
+						<!-- 								os direitos e obriga&ccedil;&otilde;es contratados, -->
+						<!-- 								&agrave;&nbsp; pessoa id&ocirc;nea, devendo para tal, notificar -->
+						<!-- 								a CONTRATADA, com anteced&ecirc;ncia m&iacute;nima de 05 (cinco) -->
+						<!-- 								dias do in&iacute;cio do Curso. Par&aacute;grafo &uacute;nico: -->
+						<!-- 								Caso o cancelamento se da por parte da CONTRATADA, os valores -->
+						<!-- 								pagos pelo curso contratado, ser&atilde;o devolvidos -->
+						<!-- 								integralmente. -->
+						<!-- 							</p> -->
+
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA QUARTA</strong> Da desistência -->
+						<!-- 								pós-matrícula. Em caso de desistência do CONTRATANTE, uma vez -->
+						<!-- 								que o curso ou a carreira de cursos contratados já esteja em -->
+						<!-- 								andamento, não haverá devolução do valor pago. O não -->
+						<!-- 								comparecimento do CONTRATANTE as aulas não implicará na redução -->
+						<!-- 								do valor pago não havendo devolução das parcelas pagas e também -->
+						<!-- 								não isenta as parcelas em aberto a pagar em caso de venda -->
+						<!-- 								parcelada. O CONTRATANTE declara ter ciência de que o desconto -->
+						<!-- 								que lhe foi concedido tem por premissa sua permanência no curso -->
+						<!-- 								até o seu término. Na hipótese do CONTRATANTE não permancer no -->
+						<!-- 								curso até o final, sujeitar-se-á à política de cancelamento a -->
+						<!-- 								seguir: Solicitação de cancelamento - A solicitação de -->
+						<!-- 								cancelamento pode ser efetuada a qualquer momento. Reembolso e -->
+						<!-- 								quitação – Cancelamento possível mediante pagamento de 30% -->
+						<!-- 								incidente sobre o saldo total devedor vincendo, este calculado -->
+						<!-- 								conforme o tempo de cumprimento do contrato. -->
+						<!-- 							</p> -->
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA QUINTA</strong> - O n&atilde;o pagamento -->
+						<!-- 								acarretar&aacute; a inclus&atilde;o do d&eacute;bito no -->
+						<!-- 								SERVI&Ccedil;O DE PROTE&Ccedil;&Atilde;O AO CR&Eacute;DITO (SPC -->
+						<!-- 								e/ou SERASA) e suspensão nos acesso ao ambiente online da escola -->
+						<!-- 								e as aulas presenciais. -->
+						<!-- 							</p> -->
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA SEXTA</strong> - Do Material em -->
+						<!-- 								M&iacute;dia Digital. O material digital ser&aacute; entregue ao -->
+						<!-- 								CONTRATADO apenas em caso de reposi&ccedil;&otilde;es desde que -->
+						<!-- 								o mesmo tenha solicitado no m&iacute;nimo de 5 horas de -->
+						<!-- 								anteced&ecirc;ncia. O material Digital (V&iacute;deos Aulas) -->
+						<!-- 								feito em sala de aulas para as reposi&ccedil;&atilde;o -->
+						<!-- 								n&atilde;o poder&atilde;o ser publicadas na internet ou -->
+						<!-- 								comparilhada com terceiros, acarretando nas consequ&ecirc;ncias -->
+						<!-- 								da viola&ccedil;&atilde;o dos direitos autorais da CONTRATADA. -->
+						<!-- 							</p> -->
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA S&Eacute;TIMA </strong>- Fotos e Videos. -->
+						<!-- 								A CONTRATADA fica autorizada a retirar fotografias e a fazer -->
+						<!-- 								videos em sala de aula contendo a imagem do CONTRATANTE para -->
+						<!-- 								fins de publicidade na TV, tanto como publicar na internet tanto -->
+						<!-- 								no site como nas rede sociais. -->
+						<!-- 							</p> -->
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA OITAVA </strong>- Certificado. A -->
+						<!-- 								CONTRATADA exige 80 % (oitenta porcento) de presen&ccedil;a -->
+						<!-- 								al&eacute;m da aplica&ccedil;&atilde;o de testes que -->
+						<!-- 								ser&atilde;o aplicados pelo instrutor em sala de aula com -->
+						<!-- 								exigencia de 70 % (setenta porcento), ou seja, m&eacute;dia -->
+						<!-- 								7(sete) de acertos para emiss&atilde;o do certificado de -->
+						<!-- 								conclus&atilde;o de curso. O CONTRATANDE recebe o certificado de -->
+						<!-- 								conclus&atilde;o de curso somente ap&oacute;s a -->
+						<!-- 								quita&ccedil;&atilde;o do saldo devedor total do curso. -->
+						<!-- 							</p> -->
+						<!-- 							<p> -->
+						<!-- 								<strong>CL&Aacute;USULA NONA</strong> - -->
+						<!-- 								Disposi&ccedil;&otilde;es finais. E por estarem assim, justas e -->
+						<!-- 								contratadas, as partes assinarem o presente instrumento, em duas -->
+						<!-- 								vias e igual teor e forma, elegendo o F&oacute;rum da comarca de -->
+						<!-- 								Campo Grande MS para dirimir qualquer d&iacute;vida que dele -->
+						<!-- 								possa originar. -->
+						<!-- 							</p> -->
+
+
+						<!-- 							<p> -->
+						<!-- 								Campo Grande, -->
+						<!-- 								<h:outputText -->
+						<!-- 									value="#{matriculaController.matriculaContrato.dataFmt}" /> -->
+						<!-- 							</p> -->
+						<!-- 							<p> -->
+						<!-- 								___________________________________ -->
+						<!-- 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________________________ -->
+						<!-- 								<br></br> -->
+						<!-- 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+						<!-- 								CONTRATADA -->
+						<!-- 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+						<!-- 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+						<!-- 								CONTRATANTE&nbsp;( -->
+						<!-- 								<p:outputLabel -->
+						<!-- 									value="#{matriculaController.matriculaContrato.contratante.nome}" /> -->
+						<!-- 								) -->
+
+						<!-- 							</p> -->
+						<!-- 							<p>Turno: Manh&atilde; [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] Tarde [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] -->
+						<!-- 								Noite [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</p> -->
+						<!-- 							<p></p> -->
+						<!-- 						</div> -->
 
 					</p:panel>
 

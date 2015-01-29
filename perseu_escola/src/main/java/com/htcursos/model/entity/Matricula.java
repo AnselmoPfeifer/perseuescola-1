@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.LazyCollection;
@@ -49,7 +50,7 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	 */
 	private Date dataContrato = new Date();
 	/**
-	 * Data do Cadastro é automático
+	 * Data do Cadastro �� autom��tico
 	 */
 	private Date dataCadastro = new Date();
 
@@ -111,6 +112,9 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "matricula", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<CursoMatricula> cursoMatriculaList = new ArrayList<CursoMatricula>();
+	/** nao vai existir no banco, apenas para ser singleton no getContratante */
+	@Transient
+	private Cliente contratante;
 
 	// gets e setts
 
@@ -329,11 +333,18 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	}
 
 	public Cliente getContratante() {
-		for (ClienteMatricula cm : this.getClienteMatriculaList()) {
-			if (cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTE
-					|| cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTECONSUMIDOR) {
-				return cm.getCliente();
+		//Procura a primeira vez
+		if (this.contratante==null){
+			for (ClienteMatricula cm : this.getClienteMatriculaList()) {
+				if (cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTE
+						|| cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTECONSUMIDOR) {
+					//seta quando encontrar
+					return contratante = cm.getCliente() ;
+				}
 			}
+		}else{
+			
+			return this.contratante;
 		}
 		return null;
 	}
@@ -441,7 +452,7 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	}
 
 	/**
-	 * Somando a carga horário de todos os cursos da matricula
+	 * Somando a carga hor��rio de todos os cursos da matricula
 	 * 
 	 * @return
 	 */
