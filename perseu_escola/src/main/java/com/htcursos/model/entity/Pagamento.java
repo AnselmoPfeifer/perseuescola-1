@@ -2,6 +2,7 @@ package com.htcursos.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class Pagamento implements Serializable, Modelo<Integer> {
 	private FormaPagamento formaPagamento;
 	private Date dataEmissao = new Date();
 	private Date dataVencimento = new Date() ;
-	private BigDecimal valor;
+	private BigDecimal valor = new BigDecimal(0);
 	private Integer numeroParcelas;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="pagamento", cascade={CascadeType.MERGE,CascadeType.PERSIST})
@@ -155,7 +156,7 @@ public class Pagamento implements Serializable, Modelo<Integer> {
 		return true;
 	}
 	/**
-	 * Gera Parcelas e já seta na propria lista
+	 * Gera Parcelas e j�� seta na propria lista
 	 * @return
 	 */
 	public List<Parcela> gerarParcelas() {
@@ -182,7 +183,7 @@ public class Pagamento implements Serializable, Modelo<Integer> {
 	 */
 	public BigDecimal getValorParcela() {
 		BigDecimal numeroParcelas = new BigDecimal( this.getNumeroParcelas() );
-		return this.getValor().divide(numeroParcelas);
+		return this.getValor().divide(numeroParcelas, MathContext.DECIMAL128);
 	}
 	
 	public Date getDataEmissao() {

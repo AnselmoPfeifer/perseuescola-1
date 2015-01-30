@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import com.htcursos.model.dao.CursoDAO;
 import com.htcursos.model.entity.Curso;
 @Component
-@FacesConverter(value="cursoConverter")
 public class CursoConverter implements Converter {
 	@Autowired
 	CursoDAO cursoDao;

@@ -69,8 +69,8 @@
 									value="#{matriculaController.matricula.taxaInscricao}" />
 
 								<p:commandButton value="Salvar 4"
-							action="#{matriculaController.salvar}"
-							process=":formMat:tvMatricula:panelContrato" update="tab1" />
+							actionListener="#{matriculaController.salvar}"
+							process=":formMat:tvMatricula:panelContrato" update="tab1" oncomplete="script:location.reload()"/>
 							
 							</h:panelGrid>
 							
@@ -91,16 +91,6 @@
 
 								</perseu:BuscaClienteComp>
 
-								<!-- 								<h:outputLabel for="nome" value="Nome:  " /> -->
-								<!-- 								<p:autoComplete id="nome" -->
-								<!-- 									value="#{matriculaController.clienteBuscado}" size="40" -->
-								<!-- 									converter="#{clienteConverter}" -->
-								<!-- 									completeMethod="#{matriculaController.obterClientes}" var="c" -->
-								<!-- 									itemLabel="#{c.nome}" itemValue="#{c}" forceSelection="true" -->
-								<!-- 									dropdown="true" required="true" scrollHeight="200"> -->
-								<!-- 								</p:autoComplete> -->
-
-
 								<h:outputLabel for="tipoContrato" value="Tipo:  " />
 								<p:selectOneMenu id="tipoContrato"
 									value="#{matriculaController.clienteMatricula.tipoContratacao}">
@@ -119,7 +109,7 @@
 								</p:commandButton>
 
 								<p:commandButton
-									action="#{matriculaController.adicionarCliente}"
+									actionListener="#{matriculaController.adicionarCliente}"
 									value="Adicionar" process="panelCliente" update="panelCliente" />
 
 							</h:panelGrid>
@@ -201,7 +191,7 @@
 								<p:commandButton value="Adicionar"
 									update="panelCursos,tabelaCurso,panelTotais,panelPagamento"
 									process="panelCursos"
-									action="#{matriculaController.adicionarCursos}">
+									actionListener="#{matriculaController.adicionarCursos}">
 								</p:commandButton>
 							</h:panelGrid>
 
@@ -308,7 +298,7 @@
 								<p:spacer width="20" height="20" />
 
 								<p:commandButton
-									action="#{matriculaController.adicionarPagamento}"
+									actionListener="#{matriculaController.adicionarPagamento}"
 									value="Adicionar" update="panelPagamento,panelTotais"
 									process="panelPagamento,panelTotais"></p:commandButton>
 
@@ -480,8 +470,8 @@
 								value="#{matriculaController.clienteMatriculaBusca.cliente.pfCpf}"></p:inputMask>
 
 							<p:commandButton value="Buscar"
-								action="#{matriculaController.buscarMatricula}"
-								process="panel_buscar" update="td_matriculas" />
+								actionListener="#{matriculaController.buscarMatricula}"
+								process="panel_buscar" />
 
 							<p:dataTable value="#{matriculaController.matriculaList}"
 								var="mat" resizableColumns="true" paginator="false"
@@ -581,203 +571,204 @@
 								<strong>CONTRATO DE MATRICULA DE CURSO </strong>
 							</p>
 						</div>
-						<!-- 						<div style="font-size: 11px;"> -->
-						<!-- 							A HIGHTECH ESCOLA DE INFORM&Aacute;TICA situada com sede matriz -->
-						<!-- 							na Av. Noroeste 10.624, Bairro Betaville - Campo Grande &ndash; -->
-						<!-- 							MS, CEP: 79060-095, Brasil, inscrito no CNPJ 10.797.626/0001-24, -->
-						<!-- 							daqui em diante denominado CONTRATADA, e o denominado -->
-						<!-- 							CONTRATANTE, -->
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.nome}" /> -->
-						<!-- 							, CPF/CNPJ -->
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.CPFCNPJStr}" /> -->
-						<!-- 							, endereço -->
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.tipo_logradouro}" /> -->
-						<!-- 							&nbsp; -->
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.logradouro}" /> -->
-						<!-- 							, -->
+						<div style="font-size: 11px;">
+							A HIGHTECH ESCOLA DE INFORM&Aacute;TICA situada com sede matriz
+							na Av. Noroeste 10.624, Bairro Betaville - Campo Grande &ndash;
+							MS, CEP: 79060-095, Brasil, inscrito no CNPJ 10.797.626/0001-24,
+							daqui em diante denominado CONTRATADA, e o denominado
+							CONTRATANTE,
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.nome}" />
+							, CPF/CNPJ
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.CPFCNPJStr}" />
+							, endereço
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.tipo_logradouro}" />
+							&nbsp;
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.logradouro}" />
+							,
 
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.numero}" /> -->
-						<!-- 							, -->
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.numero}" />
+							,
 
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.bairro}" /> -->
-						<!-- 							, -->
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.bairro}" />
+							,
 
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.cidade}" /> -->
-						<!-- 							- -->
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.cidade}" />
+							-
 
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.estado}" /> -->
-						<!-- 							, CEP -->
-						<!-- 							<h:outputText -->
-						<!-- 								value="#{matriculaController.matriculaContrato.contratante.endereco.cep}" /> -->
-						<!-- 							, resolvem firmar o presente CONTRATO DE PRESTA&Ccedil;&Atilde;O -->
-						<!-- 							DE SERVI&Ccedil;O EM CURSOS DE INFORMATICA, SEGUNDO AS -->
-						<!-- 							CL&Aacute;USULAS E CONDI&Ccedil;&Otilde;ES SEGUINTES: -->
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA PRIMEIRA </strong>- Do objeto -->
-						<!-- 							</p> -->
-						<!-- 							<p> -->
-						<!-- 								A CONTRATADA ministrar&aacute; ao CONTRATANTE o(s) curso(s) -->
-						<!-- 								retro descrito(s) logo abaixo neste instrumento: -->
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.cursoMatriculaListStr}" /> -->
-						<!-- 								que iniciará no dia -->
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" /> -->
-						<!-- 								. -->
-						<!-- 							</p> -->
-						<!-- 							<p> -->
-						<!-- 								Par&aacute;grafo primeiro. A CONTRATADA compromete-se em -->
-						<!-- 								ministrar o(s) curso(s) acima, conforme conte&uacute;do -->
-						<!-- 								program&aacute;tico, carga hor&aacute;ria de -->
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.cargaHorariaTotal()}" /> -->
-						<!-- 								horas , bem como, emitir apenas um certificado de -->
-						<!-- 								conclus&atilde;o no final do(s) curso(s). -->
-						<!-- 							</p> -->
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.estado}" />
+							, CEP
+							<h:outputText
+								value="#{matriculaController.matriculaContrato.contratante.endereco.cep}" />
+							, resolvem firmar o presente CONTRATO DE PRESTA&Ccedil;&Atilde;O
+							DE SERVI&Ccedil;O EM CURSOS DE INFORMATICA, SEGUNDO AS
+							CL&Aacute;USULAS E CONDI&Ccedil;&Otilde;ES SEGUINTES:
+							<p>
+								<strong>CL&Aacute;USULA PRIMEIRA </strong>- Do objeto
+							</p>
+							<p>
+								A CONTRATADA ministrar&aacute; ao CONTRATANTE o(s) curso(s)
+								retro descrito(s) logo abaixo neste instrumento:
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.cursoMatriculaListStr}" />
+								que iniciará no dia
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" />
+								.
+							</p>
+							<p>
+								Par&aacute;grafo primeiro. A CONTRATADA compromete-se em
+								ministrar o(s) curso(s) acima, conforme conte&uacute;do
+								program&aacute;tico, carga hor&aacute;ria de
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.cargaHorariaTotal()}" />
+								horas , bem como, emitir apenas um certificado de
+								conclus&atilde;o no final do(s) curso(s).
+							</p>
 
-						<!-- 							<p>Par&aacute;grafo segundo. A CONTRATADA se reserva ao -->
-						<!-- 								direito de mudar a data inicial do(s) curso(s) em caso de -->
-						<!-- 								n&atilde;o fechamento de turma, neste caso, os j&aacute; -->
-						<!-- 								matriculados ser&atilde;o avisados com anteced&ecirc;ncia -->
-						<!-- 								m&iacute;nima de um dia (24 horas).</p> -->
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA SEGUNDA </strong>- Do pre&ccedil;o e -->
-						<!-- 								condi&ccedil;&otilde;es de pagamento(s) o CONTRATANTE -->
-						<!-- 								pagar&aacute; pelo(s) curso(s) o valor descrito neste -->
-						<!-- 								instrumento de -->
-
-
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.valorTotalFmtExtenso}" /> -->
-						<!-- 								na forma e condi&ccedil;&otilde;es a seguir: <br /> -->
-
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.taxaInscricaoFmt}" /> -->
-
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.pagamentoListStr}" /> -->
-						<!-- 								. <br /> <br /> Par&aacute;grafo &uacute;nico - O pagamento da -->
-						<!-- 								parcela paga at&eacute; o dia do vencimento ter&aacute; um -->
-						<!-- 								desconto de -->
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.descontoAteVencimento}" /> -->
-						<!-- 								%. Ap&oacute;s a data do vencimento das parcelas pactuadas neste -->
-						<!-- 								instrumento, haver&aacute; incid&ecirc;ncia de multa de -->
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.multa}" /> -->
-						<!-- 								% mais -->
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.taxaAtrasoPorDiaFtm}" /> -->
-						<!-- 								por dia. -->
-						<!-- 							</p> -->
-
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA TERCEIRA</strong> - Da -->
-						<!-- 								transfer&ecirc;ncia. O (a) CONTRATANTE poder&aacute; transferir -->
-						<!-- 								os direitos e obriga&ccedil;&otilde;es contratados, -->
-						<!-- 								&agrave;&nbsp; pessoa id&ocirc;nea, devendo para tal, notificar -->
-						<!-- 								a CONTRATADA, com anteced&ecirc;ncia m&iacute;nima de 05 (cinco) -->
-						<!-- 								dias do in&iacute;cio do Curso. Par&aacute;grafo &uacute;nico: -->
-						<!-- 								Caso o cancelamento se da por parte da CONTRATADA, os valores -->
-						<!-- 								pagos pelo curso contratado, ser&atilde;o devolvidos -->
-						<!-- 								integralmente. -->
-						<!-- 							</p> -->
-
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA QUARTA</strong> Da desistência -->
-						<!-- 								pós-matrícula. Em caso de desistência do CONTRATANTE, uma vez -->
-						<!-- 								que o curso ou a carreira de cursos contratados já esteja em -->
-						<!-- 								andamento, não haverá devolução do valor pago. O não -->
-						<!-- 								comparecimento do CONTRATANTE as aulas não implicará na redução -->
-						<!-- 								do valor pago não havendo devolução das parcelas pagas e também -->
-						<!-- 								não isenta as parcelas em aberto a pagar em caso de venda -->
-						<!-- 								parcelada. O CONTRATANTE declara ter ciência de que o desconto -->
-						<!-- 								que lhe foi concedido tem por premissa sua permanência no curso -->
-						<!-- 								até o seu término. Na hipótese do CONTRATANTE não permancer no -->
-						<!-- 								curso até o final, sujeitar-se-á à política de cancelamento a -->
-						<!-- 								seguir: Solicitação de cancelamento - A solicitação de -->
-						<!-- 								cancelamento pode ser efetuada a qualquer momento. Reembolso e -->
-						<!-- 								quitação – Cancelamento possível mediante pagamento de 30% -->
-						<!-- 								incidente sobre o saldo total devedor vincendo, este calculado -->
-						<!-- 								conforme o tempo de cumprimento do contrato. -->
-						<!-- 							</p> -->
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA QUINTA</strong> - O n&atilde;o pagamento -->
-						<!-- 								acarretar&aacute; a inclus&atilde;o do d&eacute;bito no -->
-						<!-- 								SERVI&Ccedil;O DE PROTE&Ccedil;&Atilde;O AO CR&Eacute;DITO (SPC -->
-						<!-- 								e/ou SERASA) e suspensão nos acesso ao ambiente online da escola -->
-						<!-- 								e as aulas presenciais. -->
-						<!-- 							</p> -->
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA SEXTA</strong> - Do Material em -->
-						<!-- 								M&iacute;dia Digital. O material digital ser&aacute; entregue ao -->
-						<!-- 								CONTRATADO apenas em caso de reposi&ccedil;&otilde;es desde que -->
-						<!-- 								o mesmo tenha solicitado no m&iacute;nimo de 5 horas de -->
-						<!-- 								anteced&ecirc;ncia. O material Digital (V&iacute;deos Aulas) -->
-						<!-- 								feito em sala de aulas para as reposi&ccedil;&atilde;o -->
-						<!-- 								n&atilde;o poder&atilde;o ser publicadas na internet ou -->
-						<!-- 								comparilhada com terceiros, acarretando nas consequ&ecirc;ncias -->
-						<!-- 								da viola&ccedil;&atilde;o dos direitos autorais da CONTRATADA. -->
-						<!-- 							</p> -->
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA S&Eacute;TIMA </strong>- Fotos e Videos. -->
-						<!-- 								A CONTRATADA fica autorizada a retirar fotografias e a fazer -->
-						<!-- 								videos em sala de aula contendo a imagem do CONTRATANTE para -->
-						<!-- 								fins de publicidade na TV, tanto como publicar na internet tanto -->
-						<!-- 								no site como nas rede sociais. -->
-						<!-- 							</p> -->
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA OITAVA </strong>- Certificado. A -->
-						<!-- 								CONTRATADA exige 80 % (oitenta porcento) de presen&ccedil;a -->
-						<!-- 								al&eacute;m da aplica&ccedil;&atilde;o de testes que -->
-						<!-- 								ser&atilde;o aplicados pelo instrutor em sala de aula com -->
-						<!-- 								exigencia de 70 % (setenta porcento), ou seja, m&eacute;dia -->
-						<!-- 								7(sete) de acertos para emiss&atilde;o do certificado de -->
-						<!-- 								conclus&atilde;o de curso. O CONTRATANDE recebe o certificado de -->
-						<!-- 								conclus&atilde;o de curso somente ap&oacute;s a -->
-						<!-- 								quita&ccedil;&atilde;o do saldo devedor total do curso. -->
-						<!-- 							</p> -->
-						<!-- 							<p> -->
-						<!-- 								<strong>CL&Aacute;USULA NONA</strong> - -->
-						<!-- 								Disposi&ccedil;&otilde;es finais. E por estarem assim, justas e -->
-						<!-- 								contratadas, as partes assinarem o presente instrumento, em duas -->
-						<!-- 								vias e igual teor e forma, elegendo o F&oacute;rum da comarca de -->
-						<!-- 								Campo Grande MS para dirimir qualquer d&iacute;vida que dele -->
-						<!-- 								possa originar. -->
-						<!-- 							</p> -->
+							<p>Par&aacute;grafo segundo. A CONTRATADA se reserva ao
+								direito de mudar a data inicial do(s) curso(s) em caso de
+								n&atilde;o fechamento de turma, neste caso, os j&aacute;
+								matriculados ser&atilde;o avisados com anteced&ecirc;ncia
+								m&iacute;nima de um dia (24 horas).</p>
+							<p>
+								<strong>CL&Aacute;USULA SEGUNDA </strong>- Do pre&ccedil;o e
+								condi&ccedil;&otilde;es de pagamento(s) o CONTRATANTE
+								pagar&aacute; pelo(s) curso(s) o valor descrito neste
+								instrumento de
 
 
-						<!-- 							<p> -->
-						<!-- 								Campo Grande, -->
-						<!-- 								<h:outputText -->
-						<!-- 									value="#{matriculaController.matriculaContrato.dataFmt}" /> -->
-						<!-- 							</p> -->
-						<!-- 							<p> -->
-						<!-- 								___________________________________ -->
-						<!-- 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________________________ -->
-						<!-- 								<br></br> -->
-						<!-- 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-						<!-- 								CONTRATADA -->
-						<!-- 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-						<!-- 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-						<!-- 								CONTRATANTE&nbsp;( -->
-						<!-- 								<p:outputLabel -->
-						<!-- 									value="#{matriculaController.matriculaContrato.contratante.nome}" /> -->
-						<!-- 								) -->
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.valorTotalFmtExtenso}" />
+								na forma e condi&ccedil;&otilde;es a seguir: <br />
 
-						<!-- 							</p> -->
-						<!-- 							<p>Turno: Manh&atilde; [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] Tarde [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] -->
-						<!-- 								Noite [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</p> -->
-						<!-- 							<p></p> -->
-						<!-- 						</div> -->
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.taxaInscricaoFmt}" />
+
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.pagamentoListStr}" />
+								. <br /> <br /> Par&aacute;grafo &uacute;nico - O pagamento da
+								parcela paga at&eacute; o dia do vencimento ter&aacute; um
+								desconto de
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.descontoAteVencimento}" />
+								%. Ap&oacute;s a data do vencimento das parcelas pactuadas neste
+								instrumento, haver&aacute; incid&ecirc;ncia de multa de
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.multa}" />
+								% mais
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.taxaAtrasoPorDiaFtm}" />
+								por dia.
+							</p>
+
+							<p>
+								<strong>CL&Aacute;USULA TERCEIRA</strong> - Da
+								transfer&ecirc;ncia. O (a) CONTRATANTE poder&aacute; transferir
+								os direitos e obriga&ccedil;&otilde;es contratados,
+								&agrave;&nbsp; pessoa id&ocirc;nea, devendo para tal, notificar
+								a CONTRATADA, com anteced&ecirc;ncia m&iacute;nima de 05 (cinco)
+								dias do in&iacute;cio do Curso. Par&aacute;grafo &uacute;nico:
+								Caso o cancelamento se da por parte da CONTRATADA, os valores
+								pagos pelo curso contratado, ser&atilde;o devolvidos
+								integralmente.
+							</p>
+
+							<p>
+								<strong>CL&Aacute;USULA QUARTA</strong> Da desistência
+								pós-matrícula. Em caso de desistência do CONTRATANTE, uma vez
+								que o curso ou a carreira de cursos contratados já esteja em
+								andamento, não haverá devolução do valor pago. O não
+								comparecimento do CONTRATANTE as aulas não implicará na redução
+								do valor pago não havendo devolução das parcelas pagas e também
+								não isenta as parcelas em aberto a pagar em caso de venda
+								parcelada. O CONTRATANTE declara ter ciência de que o desconto
+								que lhe foi concedido tem por premissa sua permanência no curso
+								até o seu término. Na hipótese do CONTRATANTE não permancer no
+								curso até o final, sujeitar-se-á à política de cancelamento a
+								seguir: Solicitação de cancelamento - A solicitação de
+								cancelamento pode ser efetuada a qualquer momento. Reembolso e
+								quitação – Cancelamento possível mediante pagamento de 30%
+								incidente sobre o saldo total devedor vincendo, este calculado
+								conforme o tempo de cumprimento do contrato.
+							</p>
+							<p>
+								<strong>CL&Aacute;USULA QUINTA</strong> - O n&atilde;o pagamento
+								acarretar&aacute; a inclus&atilde;o do d&eacute;bito no
+								SERVI&Ccedil;O DE PROTE&Ccedil;&Atilde;O AO CR&Eacute;DITO (SPC
+								e/ou SERASA) e suspensão nos acesso ao ambiente online da escola
+								e as aulas presenciais.
+							</p>
+							<p>
+								<strong>CL&Aacute;USULA SEXTA</strong> - Do Material em
+								M&iacute;dia Digital. O material digital ser&aacute; entregue ao
+								CONTRATADO apenas em caso de reposi&ccedil;&otilde;es desde que
+								o mesmo tenha solicitado no m&iacute;nimo de 5 horas de
+								anteced&ecirc;ncia. O material Digital (V&iacute;deos Aulas)
+								feito em sala de aulas para as reposi&ccedil;&atilde;o
+								n&atilde;o poder&atilde;o ser publicadas na internet ou
+								comparilhada com terceiros, acarretando nas consequ&ecirc;ncias
+								da viola&ccedil;&atilde;o dos direitos autorais da CONTRATADA.
+							</p>
+							<p>
+								<strong>CL&Aacute;USULA S&Eacute;TIMA </strong>- Fotos e Videos.
+								A CONTRATADA fica autorizada a retirar fotografias e a fazer
+								videos em sala de aula contendo a imagem do CONTRATANTE para
+								fins de publicidade na TV, tanto como publicar na internet tanto
+								no site como nas rede sociais.
+							</p>
+							<p>
+								<strong>CL&Aacute;USULA OITAVA </strong>- Certificado. A
+								CONTRATADA exige 80 % (oitenta porcento) de presen&ccedil;a
+								al&eacute;m da aplica&ccedil;&atilde;o de testes que
+								ser&atilde;o aplicados pelo instrutor em sala de aula com
+								exigencia de 70 % (setenta porcento), ou seja, m&eacute;dia
+								7(sete) de acertos para emiss&atilde;o do certificado de
+								conclus&atilde;o de curso. O CONTRATANDE recebe o certificado de
+								conclus&atilde;o de curso somente ap&oacute;s a
+								quita&ccedil;&atilde;o do saldo devedor total do curso.
+							</p>
+							<p>
+								<strong>CL&Aacute;USULA NONA</strong> -
+								Disposi&ccedil;&otilde;es finais. E por estarem assim, justas e
+								contratadas, as partes assinarem o presente instrumento, em duas
+								vias e igual teor e forma, elegendo o F&oacute;rum da comarca de
+								Campo Grande MS para dirimir qualquer d&iacute;vida que dele
+								possa originar.
+							</p>
+
+
+							<p>
+								Campo Grande,
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.dataFmt}" />
+							</p>
+							<p>
+								___________________________________
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________________________
+								<br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								CONTRATADA
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								CONTRATANTE&nbsp;(
+								<p:outputLabel
+									value="#{matriculaController.matriculaContrato.contratante.nome}" />
+								)
+
+							</p>
+							<p>Turno: Manh&atilde; [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+								Tarde [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] Noite
+								[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</p>
+							<p></p>
+						</div>
 
 					</p:panel>
 

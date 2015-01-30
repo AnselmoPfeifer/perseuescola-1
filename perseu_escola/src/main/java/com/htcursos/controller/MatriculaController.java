@@ -190,6 +190,7 @@ public class MatriculaController implements Serializable {
 	}
 
 	public void adicionarCliente() {
+		System.out.println("Adicionando cliente");
 
 		if (!contem(clienteBuscado)) {
 			clienteMatricula.setCliente(clienteBuscado);
@@ -229,6 +230,8 @@ public class MatriculaController implements Serializable {
 	}
 
 	public void buscarMatricula() {
+		
+		System.out.println("Camando o método buscar matrícula");
 
 		matriculaList = clienteMatriculaService
 				.buscarMatriculas(clienteMatriculaBusca);
@@ -297,7 +300,7 @@ public class MatriculaController implements Serializable {
 
 			matriculaService.salvar(matricula);
 			matricula = new Matricula();
-			atualiza();
+			atualizaCurso();
 			JsfMessages.adicionaMensagemInfo("Matricula salvo");
 		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
