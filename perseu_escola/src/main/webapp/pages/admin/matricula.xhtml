@@ -18,793 +18,436 @@
 					cliente="#{matriculaController.clienteBuscado}"></perseu:ClienteCRUDComp>
 			</p:dialog>
 
+
 			<h:form id="formMat">
-				<p:messages id="msgForm" showDetail="false" />
 
-				<p:tabView id="tvMatricula">
-					<p:tab id="tab1" title="Cadastrar">
+				<p:spacer width="15"></p:spacer>
 
-						<p:growl id="mensagem" showDetail="true">
-						</p:growl>
+				<p:growl id="msg" showDetail="true" sticky="true"></p:growl>
 
-
-					
-
-
-						<p:panel header="1- Contrato" id="panelContrato">
-							<h:panelGrid columns="4">
-
-								<h:outputLabel for="idmatr" value="Id: " rendered="false" />
-								<p:inputText readonly="true" size="3" id="idmatr"
-									value="#{matriculaController.matricula.id}" rendered="false">
-									<f:converter converterId="javax.faces.Integer" />
-									<p:ajax event="blur" update="idMsg" />
-								</p:inputText>
-
-								<h:outputLabel for="datalan" value="Data Matricula:  " />
-								<p:calendar
-									value="#{matriculaController.matricula.dataContrato}"
-									id="datalan" pattern="dd/MM/yyyy" locale="pt_BR" />
-
-								<h:outputLabel for="dataprev" value="Data Prevista do Curso:  " />
-								<p:calendar
-									value="#{matriculaController.matricula.dataPrevista}"
-									id="dataprev" pattern="dd/MM/yyyy" locale="pt_BR" />
-
-								<h:outputLabel value="Desconto até o data vencimento (%) " />
-								<p:spinner size="4" max="100" min="0"
-									value="#{matriculaController.matricula.descontoAteVencimento}" />
-
-								<h:outputLabel
-									value="Após da data de Vencimento cobrar multa (%) " />
-								<p:spinner size="4" max="100" min="0"
-									value="#{matriculaController.matricula.multa}" />
-
-								<h:outputLabel value=" e por dia mais R$ " />
-								<p:spinner size="4" max="10" min="0"
-									value="#{matriculaController.matricula.taxaAtrasoPorDia}" />
-
-								<h:outputLabel value="Taxa de Inscrição de Matricula  R$ " />
-								<p:spinner size="4" min="0"
-									value="#{matriculaController.matricula.taxaInscricao}" />
-
-								<p:commandButton value="Salvar 4"
-							actionListener="#{matriculaController.salvar}"
-							process=":formMat:tvMatricula:panelContrato" update="tab1" oncomplete="script:location.reload()"/>
-							
-							</h:panelGrid>
-							
-							
-						</p:panel>
-
-						<p:spacer width="15"></p:spacer>
-
-						<p:growl id="msg" showDetail="true" sticky="true"></p:growl>
+				<p:commandButton value="Salvar 10"
+					actionListener="#{matriculaController.salvar}"
+					process="@this panelContrato" update="@form" />
 
 
 
-						<p:panel id="panelCliente" header="2- Cliente">
-							<h:panelGrid columns="12">
 
-								<perseu:BuscaClienteComp
-									cliente="#{matriculaController.clienteBuscado}">
-
-								</perseu:BuscaClienteComp>
-
-								<h:outputLabel for="tipoContrato" value="Tipo:  " />
-								<p:selectOneMenu id="tipoContrato"
-									value="#{matriculaController.clienteMatricula.tipoContratacao}">
-									<f:selectItems
-										value="#{matriculaController.tipoContratacaoValor}" var="c"
-										itemValue="#{c}" itemLabel="#{c.label}" />
-								</p:selectOneMenu>
-
-								<h:outputLabel value="Vai usar note?  " />
-								<p:selectBooleanCheckbox
-									value="#{matriculaController.clienteMatricula.vaiUsarNotebook}" />
+				<p:panel header="1- Contrato" id="panelContrato">
 
 
-								<p:commandButton value="Novo" process="panelCliente"
-									update="panelCliente" onclick="PF('crudCliente').show()">
+					<h:panelGrid columns="4">
+
+						<h:outputLabel for="idmatr" value="Id: " rendered="false" />
+						<p:inputText readonly="true" size="3" id="idmatr"
+							value="#{matriculaController.matricula.id}" rendered="false">
+
+						</p:inputText>
+
+						<h:outputLabel for="dataContrato" value="Data Matricula:  " />
+						<p:calendar value="#{matriculaController.matricula.dataContrato}"
+							id="dataContrato" pattern="dd/MM/yyyy" locale="pt_BR" />
+
+						<h:outputLabel for="dataPrevista" value="Data Prevista do Curso:  " />
+						<p:calendar value="#{matriculaController.matricula.dataPrevista}"
+							id="dataPrevista" pattern="dd/MM/yyyy" locale="pt_BR" />
+
+						<h:outputLabel value="Desconto até o data vencimento (%) " />
+						<p:spinner size="4" max="100" min="0" id="descontoAteVencimento"
+							value="#{matriculaController.matricula.descontoAteVencimento}" />
+
+						<h:outputLabel
+							value="Após da data de Vencimento cobrar multa (%) " />
+						<p:spinner size="4" max="100" min="0" id="multa"
+							value="#{matriculaController.matricula.multa}" />
+
+						<h:outputLabel value=" e por dia mais R$ " />
+						<p:spinner size="4" max="10" min="0" id="taxaAtrasoPorDia"
+							value="#{matriculaController.matricula.taxaAtrasoPorDia}" />
+
+						<h:outputLabel value="Taxa de Inscrição de Matricula  R$ " />
+						<p:spinner size="4" min="0" id="taxaInscricao"
+							value="#{matriculaController.matricula.taxaInscricao}" />
+
+					</h:panelGrid>
+
+
+				</p:panel>
+
+
+
+				<p:panel id="panelCliente" header="2- Cliente">
+					<h:panelGrid columns="12">
+
+						<perseu:BuscaClienteComp
+							cliente="#{matriculaController.clienteBuscado}">
+
+						</perseu:BuscaClienteComp>
+
+						<h:outputLabel for="tipoContrato" value="Tipo:  " />
+						<p:selectOneMenu id="tipoContrato"
+							value="#{matriculaController.clienteMatricula.tipoContratacao}">
+							<f:selectItems
+								value="#{matriculaController.tipoContratacaoValor}" var="c"
+								itemValue="#{c}" itemLabel="#{c.label}" />
+						</p:selectOneMenu>
+
+						<h:outputLabel value="Vai usar note?  " />
+						<p:selectBooleanCheckbox
+							value="#{matriculaController.clienteMatricula.vaiUsarNotebook}" />
+
+
+						<p:commandButton value="Novo" process="panelCliente"
+							update="panelCliente" onclick="PF('crudCliente').show()">
+						</p:commandButton>
+
+						<p:commandButton
+							actionListener="#{matriculaController.adicionarCliente}"
+							value="Adicionar" process="panelCliente" update="panelCliente" />
+
+					</h:panelGrid>
+
+					<p:separator></p:separator>
+
+					<p:dataTable id="tblCliente"
+						value="#{matriculaController.matricula.clienteMatriculaList}"
+						var="c" rows="3" style="width: 100%">
+
+						<p:column colspan="1" headerText="Cpf">
+							<h:outputText value="#{c.cliente.pfCpf}" />
+						</p:column>
+
+						<p:column colspan="1" headerText="Nome">
+							<h:outputText value="#{c.cliente.nome}" />
+						</p:column>
+
+						<p:column colspan="1" headerText="Tipo Contratação">
+							<h:outputText value="#{c.tipoContratacao}" />
+						</p:column>
+
+						<p:column colspan="1" headerText="Notebook">
+							<h:outputText value="#{c.vaiUsarNotebookFmt}" />
+						</p:column>
+
+						<p:column headerText="Ações" width="60">
+							<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
+								<p:commandButton icon="ui-icon-trash" alt="Excluir Cliente"
+									title="Excluir Cliente" oncomplete="PF('confirmacao').show()"
+									process="@this">
+									<f:setPropertyActionListener
+										target="#{matriculaController.clienteExcluir}" value="#{c}" />
 								</p:commandButton>
+							</p:panelGrid>
+						</p:column>
+					</p:dataTable>
 
-								<p:commandButton
-									actionListener="#{matriculaController.adicionarCliente}"
-									value="Adicionar" process="panelCliente" update="panelCliente" />
+				</p:panel>
 
-							</h:panelGrid>
+				<p:confirmDialog message="Deseja realmente remover este CLIENTE!!!?"
+					position="center" header="Aviso" id="confirmacaoId"
+					severity="alert" widgetVar="confirmacao" closable="true"
+					appendToBody="false">
 
-							<p:separator></p:separator>
-
-							<p:dataTable id="tblCliente"
-								value="#{matriculaController.matricula.clienteMatriculaList}"
-								var="c" rows="3" style="width: 100%">
-
-								<p:column colspan="1" headerText="Cpf">
-									<h:outputText value="#{c.cliente.pfCpf}" />
-								</p:column>
-
-								<p:column colspan="1" headerText="Nome">
-									<h:outputText value="#{c.cliente.nome}" />
-								</p:column>
-
-								<p:column colspan="1" headerText="Tipo Contratação">
-									<h:outputText value="#{c.tipoContratacao}" />
-								</p:column>
-
-								<p:column colspan="1" headerText="Notebook">
-									<h:outputText value="#{c.vaiUsarNotebookFmt}" />
-								</p:column>
-
-								<p:column headerText="Ações" width="60">
-									<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
-										<p:commandButton icon="ui-icon-trash" alt="Excluir Cliente"
-											title="Excluir Cliente" oncomplete="PF('confirmacao').show()"
-											process="@this">
-											<f:setPropertyActionListener
-												target="#{matriculaController.clienteExcluir}" value="#{c}" />
-										</p:commandButton>
-									</p:panelGrid>
-								</p:column>
-							</p:dataTable>
-
-						</p:panel>
-
-						<p:confirmDialog
-							message="Deseja realmente remover este CLIENTE!!!?"
-							position="center" header="Aviso" id="confirmacaoId"
-							severity="alert" widgetVar="confirmacao" closable="true"
-							appendToBody="false">
-
-							<p:commandButton id="btnSim1" value="Sim" process="@this"
-								actionListener="#{matriculaController.excluirCliente}"
-								oncomplete="PF('confirmacao').hide();" update="tblCliente" />
-							<p:commandButton id="btnNao1" value="Não"
-								onclick="PF('confirmacao').hide();" />
-						</p:confirmDialog>
+					<p:commandButton id="btnSim1" value="Sim" process="@this"
+						actionListener="#{matriculaController.excluirCliente}"
+						oncomplete="PF('confirmacao').hide();" update="tblCliente" />
+					<p:commandButton id="btnNao1" value="Não"
+						onclick="PF('confirmacao').hide();" />
+				</p:confirmDialog>
 
 
-						<p:spacer width="15"></p:spacer>
+				<p:spacer width="15"></p:spacer>
 
-						<p:panel id="panelCursos" header="3- Cursos">
-							<h:panelGrid columns="8">
-								<h:outputLabel for="cursoCad" value="Cursos:  " />
-								<p:selectOneMenu id="cursoCad"
-									value="#{matriculaController.cursoBuscado}"
-									converter="#{cursoConverter}">
-									<f:selectItem itemLabel="Selecione um Curso" itemValue="" />
-									<f:selectItems value="#{matriculaController.listaCursos}"
-										var="c" itemValue="#{c}" itemLabel="#{c.titulo}" />
-									<p:ajax event="change" update="panelCursos" />
-								</p:selectOneMenu>
+				<p:panel id="panelCursos" header="3- Cursos">
+					<h:panelGrid columns="8">
+						<h:outputLabel for="cursoCad" value="Cursos:  " />
+						<p:selectOneMenu id="cursoCad"
+							value="#{matriculaController.cursoBuscado}"
+							converter="#{cursoConverter}">
+							<f:selectItem itemLabel="Selecione um Curso" itemValue="" />
+							<f:selectItems value="#{matriculaController.listaCursos}" var="c"
+								itemValue="#{c}" itemLabel="#{c.titulo}" />
+							<p:ajax event="change" update="panelCursos" />
+						</p:selectOneMenu>
 
-								<p:spacer width="20" height="20" />
+						<p:spacer width="20" height="20" />
 
-								<h:outputLabel for="valorCurso" value="Valor:   " />
-								<p:inputText id="valorCurso"
-									value="#{matriculaController.cursoBuscado.valor}" size="10">
-								</p:inputText>
+						<h:outputLabel for="valorCurso" value="Valor:   " />
+						<p:inputText id="valorCurso"
+							value="#{matriculaController.cursoBuscado.valor}" size="10">
+						</p:inputText>
 
 
-								<p:spacer width="20" height="20" />
+						<p:spacer width="20" height="20" />
 
-								<p:commandButton value="Adicionar"
-									update="panelCursos,tabelaCurso,panelTotais,panelPagamento"
-									process="panelCursos"
-									actionListener="#{matriculaController.adicionarCursos}">
+						<p:commandButton value="Adicionar"
+							update="panelCursos,tabelaCurso,panelTotais,panelPagamento"
+							process="panelCursos"
+							actionListener="#{matriculaController.adicionarCursos}">
+						</p:commandButton>
+					</h:panelGrid>
+
+					<p:dataTable
+						value="#{matriculaController.matricula.cursoMatriculaList}"
+						var="cm" style="width: 100%" id="tabelaCurso">
+
+						<p:column colspan="1" headerText="Curso">
+							<h:outputText value="#{cm.curso.titulo}" />
+						</p:column>
+
+						<p:column colspan="1" headerText="Valor">
+							<h:outputText value="#{cm.valorFmt}" />
+						</p:column>
+
+						<p:column headerText="Ações" width="60">
+							<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
+								<p:commandButton icon="ui-icon-trash" alt="Excluir Curso"
+									title="Excluir Curso" oncomplete="PF('msgCurso').show()"
+									process="@this">
+									<f:setPropertyActionListener
+										target="#{matriculaController.cursoExcluir}" value="#{cm}" />
 								</p:commandButton>
-							</h:panelGrid>
+							</p:panelGrid>
+						</p:column>
 
-							<p:dataTable
-								value="#{matriculaController.matricula.cursoMatriculaList}"
-								var="cm" style="width: 100%" id="tabelaCurso">
+					</p:dataTable>
 
-								<p:column colspan="1" headerText="Curso">
-									<h:outputText value="#{cm.curso.titulo}" />
-								</p:column>
+					<p:confirmDialog message="Deseja realmente remover este CURSO!!!?"
+						position="center" header="Aviso" id="msgCursoid" severity="alert"
+						widgetVar="msgCurso" closable="true" appendToBody="false">
 
-								<p:column colspan="1" headerText="Valor">
-									<h:outputText value="#{cm.valorFmt}" />
-								</p:column>
+						<p:commandButton id="btnSim2" value="Sim" process="@this"
+							actionListener="#{matriculaController.excluirCurso}"
+							oncomplete="PF('msgCurso').hide();"
+							update="tabelaCurso,panelTotais" />
+						<p:commandButton id="btnNao2" value="Não"
+							onclick="PF('msgCurso').hide();" />
+					</p:confirmDialog>
+				</p:panel>
 
-								<p:column headerText="Ações" width="60">
-									<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
-										<p:commandButton icon="ui-icon-trash" alt="Excluir Curso"
-											title="Excluir Curso" oncomplete="PF('msgCurso').show()"
-											process="@this">
-											<f:setPropertyActionListener
-												target="#{matriculaController.cursoExcluir}" value="#{cm}" />
-										</p:commandButton>
-									</p:panelGrid>
-								</p:column>
+				<p:spacer width="15"></p:spacer>
 
-							</p:dataTable>
+				<p:panel id="panelPagamento" header="4- Pagamento">
+					<h:panelGrid columns="15">
+						<h:outputLabel for="formaPagamento" value="Pagamento:  " />
+						<p:selectOneMenu id="formaPagamento"
+							value="#{matriculaController.pagamentoNovo.formaPagamento}"
+							converter="#{formaPagamentoConverter}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItems
+								value="#{formaPagamentoController.formaPagamentoList}" var="c"
+								itemValue="#{c}" itemLabel="#{c.descricao}" />
+							<p:ajax event="change" update="panelPagamento" />
+						</p:selectOneMenu>
 
-							<p:confirmDialog
-								message="Deseja realmente remover este CURSO!!!?"
-								position="center" header="Aviso" id="msgCursoid"
-								severity="alert" widgetVar="msgCurso" closable="true"
-								appendToBody="false">
+						<p:spacer width="20" height="20" />
 
-								<p:commandButton id="btnSim2" value="Sim" process="@this"
-									actionListener="#{matriculaController.excluirCurso}"
-									oncomplete="PF('msgCurso').hide();" update="tabelaCurso,panelTotais" />
-								<p:commandButton id="btnNao2" value="Não"
-									onclick="PF('msgCurso').hide();" />
-							</p:confirmDialog>
-						</p:panel>
+						<h:outputLabel for="dataVenc" value="Data Vencimento:  " />
+						<p:calendar
+							value="#{matriculaController.pagamentoNovo.dataVencimento}"
+							id="dataVenc" pattern="dd/MM/yyyy" locale="pt_BR" />
 
-						<p:spacer width="15"></p:spacer>
+						<p:spacer width="20" height="20" />
 
-						<p:panel id="panelPagamento" header="4- Pagamento">
-							<h:panelGrid columns="15">
-								<h:outputLabel for="formaPagamento" value="Pagamento:  " />
-								<p:selectOneMenu id="formaPagamento"
-									value="#{matriculaController.pagamentoNovo.formaPagamento}"
-									converter="#{formaPagamentoConverter}">
-									<f:selectItem itemLabel="Selecione" itemValue="" />
-									<f:selectItems
-										value="#{formaPagamentoController.formaPagamentoList}" var="c"
-										itemValue="#{c}" itemLabel="#{c.descricao}" />
-									<p:ajax event="change" update="panelPagamento" />
-								</p:selectOneMenu>
-
-								<p:spacer width="20" height="20" />
-
-								<h:outputLabel for="dataVenc" value="Data Vencimento:  " />
-								<p:calendar
-									value="#{matriculaController.pagamentoNovo.dataVencimento}"
-									id="dataVenc" pattern="dd/MM/yyyy" locale="pt_BR" />
-
-								<p:spacer width="20" height="20" />
-
-								<h:outputLabel for="valorPagamento" value="Valor:   " />
-								<p:inputText id="valorPagamento"
-									value="#{matriculaController.pagamentoNovo.valor}" size="10">
-								</p:inputText>
+						<h:outputLabel for="valorPagamento" value="Valor:   " />
+						<p:inputText id="valorPagamento"
+							value="#{matriculaController.pagamentoNovo.valor}" size="10">
+						</p:inputText>
 
 
-								<p:spacer width="20" height="20" />
+						<p:spacer width="20" height="20" />
 
-								<h:outputLabel for="parcela" value="Quant. Parcelas:   " />
-								<p:selectOneMenu id="parcela"
-									value="#{matriculaController.pagamentoNovo.numeroParcelas}">
-									<f:selectItem itemLabel="1" itemValue="1" />
-									<f:selectItem itemLabel="2" itemValue="2" />
-									<f:selectItem itemLabel="3" itemValue="3" />
-									<f:selectItem itemLabel="4" itemValue="4" />
-									<f:selectItem itemLabel="5" itemValue="5" />
-									<f:selectItem itemLabel="6" itemValue="6" />
-									<f:selectItem itemLabel="7" itemValue="7" />
-									<f:selectItem itemLabel="8" itemValue="8" />
-									<f:selectItem itemLabel="9" itemValue="9" />
-									<f:selectItem itemLabel="10" itemValue="10" />
-									<f:selectItem itemLabel="11" itemValue="11" />
-									<f:selectItem itemLabel="12" itemValue="12" />
-									<f:selectItem itemLabel="13" itemValue="13" />
-									<f:selectItem itemLabel="14" itemValue="14" />
-									<f:selectItem itemLabel="15" itemValue="15" />
-									<f:selectItem itemLabel="16" itemValue="16" />
-									<f:selectItem itemLabel="17" itemValue="17" />
-									<f:selectItem itemLabel="18" itemValue="18" />
-									<f:selectItem itemLabel="19" itemValue="19" />
-									<f:selectItem itemLabel="20" itemValue="20" />
-									<f:selectItem itemLabel="21" itemValue="21" />
-									<f:selectItem itemLabel="22" itemValue="22" />
-									<f:selectItem itemLabel="23" itemValue="23" />
-									<f:selectItem itemLabel="24" itemValue="24" />
-								</p:selectOneMenu>
+						<h:outputLabel for="parcela" value="Quant. Parcelas:   " />
+						<p:selectOneMenu id="parcela"
+							value="#{matriculaController.pagamentoNovo.numeroParcelas}">
+							<f:selectItem itemLabel="1" itemValue="1" />
+							<f:selectItem itemLabel="2" itemValue="2" />
+							<f:selectItem itemLabel="3" itemValue="3" />
+							<f:selectItem itemLabel="4" itemValue="4" />
+							<f:selectItem itemLabel="5" itemValue="5" />
+							<f:selectItem itemLabel="6" itemValue="6" />
+							<f:selectItem itemLabel="7" itemValue="7" />
+							<f:selectItem itemLabel="8" itemValue="8" />
+							<f:selectItem itemLabel="9" itemValue="9" />
+							<f:selectItem itemLabel="10" itemValue="10" />
+							<f:selectItem itemLabel="11" itemValue="11" />
+							<f:selectItem itemLabel="12" itemValue="12" />
+							<f:selectItem itemLabel="13" itemValue="13" />
+							<f:selectItem itemLabel="14" itemValue="14" />
+							<f:selectItem itemLabel="15" itemValue="15" />
+							<f:selectItem itemLabel="16" itemValue="16" />
+							<f:selectItem itemLabel="17" itemValue="17" />
+							<f:selectItem itemLabel="18" itemValue="18" />
+							<f:selectItem itemLabel="19" itemValue="19" />
+							<f:selectItem itemLabel="20" itemValue="20" />
+							<f:selectItem itemLabel="21" itemValue="21" />
+							<f:selectItem itemLabel="22" itemValue="22" />
+							<f:selectItem itemLabel="23" itemValue="23" />
+							<f:selectItem itemLabel="24" itemValue="24" />
+						</p:selectOneMenu>
 
-								<p:spacer width="20" height="20" />
+						<p:spacer width="20" height="20" />
 
-								<p:commandButton
-									actionListener="#{matriculaController.adicionarPagamento}"
-									value="Adicionar" update="panelPagamento,panelTotais"
-									process="panelPagamento,panelTotais"></p:commandButton>
+						<p:commandButton
+							actionListener="#{matriculaController.adicionarPagamento}"
+							value="Adicionar" update="panelPagamento,panelTotais"
+							process="panelPagamento,panelTotais"></p:commandButton>
 
 
-							</h:panelGrid>
+					</h:panelGrid>
 
-							<p:dataTable
-								value="#{matriculaController.matricula.pagamentoList}" var="pag"
-								style="width: 100%" id="tabelaPagamento"
-								selection="#{matriculaController.pagamentoSelecionado}"
-								selectionMode="single" rowKey="#{pag}">
+					<p:dataTable value="#{matriculaController.matricula.pagamentoList}"
+						var="pag" style="width: 100%" id="tabelaPagamento"
+						selection="#{matriculaController.pagamentoSelecionado}"
+						selectionMode="single" rowKey="#{pag}">
 
 
 
-								<f:facet name="header">  
+						<f:facet name="header">  
 						          				Pagamentos  
 							    	 </f:facet>
 
-								<p:column colspan="1" headerText="Forma de Pagamento">
-									<h:outputText value="#{pag.formaPagamento.descricao}" />
-								</p:column>
-
-								<p:column colspan="1" headerText="Data">
-									<h:outputText value="#{pag.dataVencimentoFormatada}" />
-								</p:column>
-
-								<p:column colspan="1" headerText="Valor">
-									<h:outputText value="#{pag.valorFmt}" />
-
-								</p:column>
-
-								<p:column colspan="1" headerText="Num. Parcelas">
-									<h:outputText value="#{pag.numeroParcelas}" />
-								</p:column>
-
-								<p:column headerText="Ações" width="60">
-									<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
-										<p:commandButton icon="ui-icon-trash" alt="Excluir Pagamento"
-											title="Excluir Pagamento" oncomplete="PF('msgPagamento').show()"
-											process="@this" update="@form">
-											<f:setPropertyActionListener
-												target="#{matriculaController.pagamentoExcluir}"
-												value="#{pag}" />
-										</p:commandButton>
-									</p:panelGrid>
-								</p:column>
-
-							</p:dataTable>
-
-							<p:confirmDialog
-								message="Deseja realmente remover este PAGAMENTO!!!?"
-								position="center" header="Aviso" id="msgPagamentoid"
-								severity="alert" widgetVar="msgPagamento" closable="true"
-								appendToBody="false">
-
-								<p:commandButton id="btnSim3" value="Sim" process="@this"
-									actionListener="#{matriculaController.excluirPagamento}"
-									oncomplete="PF('msgPagamento').hide();" update="tabelaPagamento" />
-								<p:commandButton id="btnNao3" value="Não"
-									onclick="PF('msgPagamento').hide();" />
-							</p:confirmDialog>
-							<p:separator></p:separator>
-							<!-- 					<p:dataTable -->
-							<!-- 						value="#{matriculaController.pagamentoSelecionado.parcelaList}" -->
-							<!-- 						var="parc" style="width: 100%" id="tabelaParcela" editable="true" -->
-							<!-- 						widgetVar="p"> -->
-							<!-- 						<f:facet name="header">   -->
-							<!-- 						            			Parcelas   -->
-							<!-- 							   </f:facet> -->
-							<!-- 						<p:column headerText="Vencimento"> -->
-							<!-- 							<p:cellEditor> -->
-							<!-- 								<f:facet name="output"> -->
-							<!-- 									<h:outputText value="#{parc.datavencimentoFormatada}" /> -->
-							<!-- 								</f:facet> -->
-							<!-- 								<f:facet name="input"> -->
-							<!-- 									<p:calendar value="#{parc.datavencimento}" /> -->
-							<!-- 								</f:facet> -->
-							<!-- 							</p:cellEditor> -->
-							<!-- 						</p:column> -->
-
-							<!-- 						<p:column headerText="Valor"> -->
-							<!-- 							<p:cellEditor> -->
-							<!-- 								<f:facet name="output"> -->
-							<!-- 									<h:outputText value="#{parc.valor}" /> -->
-							<!-- 								</f:facet> -->
-							<!-- 								<f:facet name="input"> -->
-							<!-- 									<p:inputText value="#{parc.valor}" /> -->
-							<!-- 								</f:facet> -->
-							<!-- 							</p:cellEditor> -->
-							<!-- 						</p:column> -->
-
-							<!-- 											<p:column headerText="Ações" width="120"> -->
-							<!-- 												<p:panelGrid columns="1" styleClass="actions" cellpadding="2"> -->
-							<!-- 													<p:commandButton icon="ui-icon-trash" alt="Excluir Parcela" -->
-							<!-- 														title="Excluir Parcela" oncomplete="msgParcela.show()" -->
-							<!-- 														process="@this" id="excluiParcela" update="@parent"> -->
-							<!-- 														<f:setPropertyActionListener -->
-							<!-- 															target="#{matriculaController.parcelaExcluir}" value="#{parc}" /> -->
-							<!-- 													</p:commandButton> -->
-							<!-- 												</p:panelGrid> -->
-							<!-- 											</p:column> -->
-							<!-- 					</p:dataTable> -->
-
-							<!-- 					<p:confirmDialog -->
-							<!-- 						message="Deseja realmente remover esta Parcela!!!?" -->
-							<!-- 						position="center" header="Aviso" id="msgParcelaid" -->
-							<!-- 						severity="alert" widgetVar="msgParcela" closable="true" -->
-							<!-- 						appendToBody="false"> -->
-
-							<!-- 						<p:commandButton id="btnSim4" value="Sim" process="@this" -->
-							<!-- 							actionListener="#{matriculaController.excluirParcela}" -->
-							<!-- 							oncomplete="msgParcela.hide();" update="panelTotais" /> -->
-							<!-- 						<p:commandButton id="btnNao4" value="Não" -->
-							<!-- 							onclick="msgParcela.hide();" /> -->
-							<!-- 					</p:confirmDialog> -->
-
-
-							<p:separator></p:separator>
-
-							<p:panel id="panelTotais">
-								<h:panelGrid columns="9">
-									<p:outputLabel value="Total Venda:  " for="totalVenda"></p:outputLabel>
-									<p:outputLabel id="totalVenda" size="25"
-										value="#{matriculaController.totalCursosFmt}" />
-									<p:spacer width="20" />
-
-									<p:outputLabel value="Total Pagamentos:  "
-										for="totalPagamentos"></p:outputLabel>
-									<p:outputLabel id="totalPagamentos" size="25"
-										value="#{matriculaController.totalPagamentosFmt}" />
-									<p:spacer width="20" />
-
-									<p:outputLabel value="Diferença:  " for="dif"></p:outputLabel>
-									<p:outputLabel id="dif" size="25"
-										value="#{matriculaController.diferencaFmt}" />
-								</h:panelGrid>
-							</p:panel>
-
-
-
-						</p:panel>
-
-						<p:panel id="panelObs">
-							<h:panelGrid columns="3">
-								<p:outputLabel value="Obs:  " for="obs"></p:outputLabel>
-								<p:inputText id="obs" size="100"
-									value="#{matriculaController.matricula.observacao}"></p:inputText>
-							</h:panelGrid>
-						</p:panel>
-
-
-
-						<p:commandButton value="Cancelar"
-							action="#{matriculaController.cancelar()}" process="@this"
-							update="@form" />
-
-					</p:tab>
-
-					<p:tab title="Consultar" id="tab2">
-
-						<p:panel id="panel_buscar">
-
-							<p:outputLabel value="Nome do Aluno" />
-							<p:inputText
-								value="#{matriculaController.clienteMatriculaBusca.cliente.nome}" />
-
-							<p:outputLabel value="CPF do Aluno" />
-							<p:inputMask mask="999.999.999-99"
-								value="#{matriculaController.clienteMatriculaBusca.cliente.pfCpf}"></p:inputMask>
-
-							<p:commandButton value="Buscar"
-								actionListener="#{matriculaController.buscarMatricula}"
-								process="panel_buscar" />
-
-							<p:dataTable value="#{matriculaController.matriculaList}"
-								var="mat" resizableColumns="true" paginator="false"
-								liveResize="true" id="td_matriculas">
-
-								<p:column headerText="ID" style="width:5%">
-									<h:outputText value="#{mat.id}" />
-								</p:column>
-
-								<p:column headerText="Cliente" style="width:60%">
-									<h:outputText value="#{mat.clientes}" />
-								</p:column>
-
-								<p:column headerText="Data">
-									<h:outputText value="#{mat.dataFmt}" />
-								</p:column>
-
-								<p:column headerText="Valor">
-									<h:outputText value="#{mat.valorTotalFmtSemExtenso}" />
-								</p:column>
-
-								<p:column headerText="Ações">
-
-									<p:column style="width:5%">
-										<p:commandButton id="selectButtonImprimir"
-											icon="ui-icon-print" title="Imprimir Contrato"
-											oncomplete="PF('contrato').show()" process="@this"
-											update=":formMat:dialogContrato">
-											<f:setPropertyActionListener
-												target="#{matriculaController.matriculaContrato}"
-												value="#{mat}" />
-										</p:commandButton>
-									</p:column>
-
-									<!-- 								<p:column style="width:5%"> -->
-									<!-- 									<p:commandButton update="@form" icon="ui-icon-calculator" -->
-									<!-- 										title="Pacelas" process="@this"> -->
-
-									<!-- 									</p:commandButton> -->
-									<!-- 								</p:column> -->
-
-									<p:column style="width:5%">
-										<p:commandButton id="selectButton" update="@form"
-											icon="ui-icon-pencil" title="Editar" process="@this"
-											actionListener="#{matriculaController.editar(mat)}">
-											<!-- 										<f:setPropertyActionListener -->
-											<!-- 											target="#{matriculaController.matricula}" value="#{mat}" /> -->
-										</p:commandButton>
-									</p:column>
-
-									<p:column style="width:5%">
-										<p:commandButton id="deletButton"
-											oncomplete="PF('confirmacaoMat').show()" icon="ui-icon-trash"
-											title="Excluir" immediate="true" process="@this">
-											<f:setPropertyActionListener
-												target="#{matriculaController.matriculaExcluir}"
-												value="#{mat}" />
-										</p:commandButton>
-									</p:column>
-								</p:column>
-
-							</p:dataTable>
-
-						</p:panel>
-
-						<p:confirmDialog
-							message="Deseja realmente remover esta matrícula ?"
-							position="center" header="Aviso" id="confirmacaoMatId"
-							severity="alert" widgetVar="confirmacaoMat" closable="true"
-							appendToBody="true">
-
-							<p:commandButton id="btnSim" value="Sim"
-								onclick="PF('confirmacaoMat').hide();"
-								actionListener="#{matriculaController.excluir}" update="@form"
-								process="@this" />
-							<p:commandButton id="btnNao" value="Não"
-								onclick="PF('confirmacaoMat').hide();" />
-						</p:confirmDialog>
-
-
-
-
-					</p:tab>
-
-				</p:tabView>
-
-				<p:dialog id="dialogContrato" header="Contrato" widgetVar="contrato"
-					resizable="true" modal="true" width="800" height="400">
-
-					<p:panel id="textoContrato" style="border:none;">
-						<div align="center" id="cabeca">
-							<p>
-								<img src="#{request.contextPath}/images/logo.png" alt="Logo"
-									width="80" />
-							</p>
-							<p>
-								<strong>CONTRATO DE MATRICULA DE CURSO </strong>
-							</p>
-						</div>
-						<div style="font-size: 11px;">
-							A HIGHTECH ESCOLA DE INFORM&Aacute;TICA situada com sede matriz
-							na Av. Noroeste 10.624, Bairro Betaville - Campo Grande &ndash;
-							MS, CEP: 79060-095, Brasil, inscrito no CNPJ 10.797.626/0001-24,
-							daqui em diante denominado CONTRATADA, e o denominado
-							CONTRATANTE,
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.nome}" />
-							, CPF/CNPJ
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.CPFCNPJStr}" />
-							, endereço
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.tipo_logradouro}" />
-							&nbsp;
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.logradouro}" />
-							,
-
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.numero}" />
-							,
-
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.bairro}" />
-							,
-
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.cidade}" />
-							-
-
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.estado}" />
-							, CEP
-							<h:outputText
-								value="#{matriculaController.matriculaContrato.contratante.endereco.cep}" />
-							, resolvem firmar o presente CONTRATO DE PRESTA&Ccedil;&Atilde;O
-							DE SERVI&Ccedil;O EM CURSOS DE INFORMATICA, SEGUNDO AS
-							CL&Aacute;USULAS E CONDI&Ccedil;&Otilde;ES SEGUINTES:
-							<p>
-								<strong>CL&Aacute;USULA PRIMEIRA </strong>- Do objeto
-							</p>
-							<p>
-								A CONTRATADA ministrar&aacute; ao CONTRATANTE o(s) curso(s)
-								retro descrito(s) logo abaixo neste instrumento:
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.cursoMatriculaListStr}" />
-								que iniciará no dia
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" />
-								.
-							</p>
-							<p>
-								Par&aacute;grafo primeiro. A CONTRATADA compromete-se em
-								ministrar o(s) curso(s) acima, conforme conte&uacute;do
-								program&aacute;tico, carga hor&aacute;ria de
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.cargaHorariaTotal()}" />
-								horas , bem como, emitir apenas um certificado de
-								conclus&atilde;o no final do(s) curso(s).
-							</p>
-
-							<p>Par&aacute;grafo segundo. A CONTRATADA se reserva ao
-								direito de mudar a data inicial do(s) curso(s) em caso de
-								n&atilde;o fechamento de turma, neste caso, os j&aacute;
-								matriculados ser&atilde;o avisados com anteced&ecirc;ncia
-								m&iacute;nima de um dia (24 horas).</p>
-							<p>
-								<strong>CL&Aacute;USULA SEGUNDA </strong>- Do pre&ccedil;o e
-								condi&ccedil;&otilde;es de pagamento(s) o CONTRATANTE
-								pagar&aacute; pelo(s) curso(s) o valor descrito neste
-								instrumento de
-
-
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.valorTotalFmtExtenso}" />
-								na forma e condi&ccedil;&otilde;es a seguir: <br />
-
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.taxaInscricaoFmt}" />
-
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.pagamentoListStr}" />
-								. <br /> <br /> Par&aacute;grafo &uacute;nico - O pagamento da
-								parcela paga at&eacute; o dia do vencimento ter&aacute; um
-								desconto de
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.descontoAteVencimento}" />
-								%. Ap&oacute;s a data do vencimento das parcelas pactuadas neste
-								instrumento, haver&aacute; incid&ecirc;ncia de multa de
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.multa}" />
-								% mais
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.taxaAtrasoPorDiaFtm}" />
-								por dia.
-							</p>
-
-							<p>
-								<strong>CL&Aacute;USULA TERCEIRA</strong> - Da
-								transfer&ecirc;ncia. O (a) CONTRATANTE poder&aacute; transferir
-								os direitos e obriga&ccedil;&otilde;es contratados,
-								&agrave;&nbsp; pessoa id&ocirc;nea, devendo para tal, notificar
-								a CONTRATADA, com anteced&ecirc;ncia m&iacute;nima de 05 (cinco)
-								dias do in&iacute;cio do Curso. Par&aacute;grafo &uacute;nico:
-								Caso o cancelamento se da por parte da CONTRATADA, os valores
-								pagos pelo curso contratado, ser&atilde;o devolvidos
-								integralmente.
-							</p>
-
-							<p>
-								<strong>CL&Aacute;USULA QUARTA</strong> Da desistência
-								pós-matrícula. Em caso de desistência do CONTRATANTE, uma vez
-								que o curso ou a carreira de cursos contratados já esteja em
-								andamento, não haverá devolução do valor pago. O não
-								comparecimento do CONTRATANTE as aulas não implicará na redução
-								do valor pago não havendo devolução das parcelas pagas e também
-								não isenta as parcelas em aberto a pagar em caso de venda
-								parcelada. O CONTRATANTE declara ter ciência de que o desconto
-								que lhe foi concedido tem por premissa sua permanência no curso
-								até o seu término. Na hipótese do CONTRATANTE não permancer no
-								curso até o final, sujeitar-se-á à política de cancelamento a
-								seguir: Solicitação de cancelamento - A solicitação de
-								cancelamento pode ser efetuada a qualquer momento. Reembolso e
-								quitação – Cancelamento possível mediante pagamento de 30%
-								incidente sobre o saldo total devedor vincendo, este calculado
-								conforme o tempo de cumprimento do contrato.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA QUINTA</strong> - O n&atilde;o pagamento
-								acarretar&aacute; a inclus&atilde;o do d&eacute;bito no
-								SERVI&Ccedil;O DE PROTE&Ccedil;&Atilde;O AO CR&Eacute;DITO (SPC
-								e/ou SERASA) e suspensão nos acesso ao ambiente online da escola
-								e as aulas presenciais.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA SEXTA</strong> - Do Material em
-								M&iacute;dia Digital. O material digital ser&aacute; entregue ao
-								CONTRATADO apenas em caso de reposi&ccedil;&otilde;es desde que
-								o mesmo tenha solicitado no m&iacute;nimo de 5 horas de
-								anteced&ecirc;ncia. O material Digital (V&iacute;deos Aulas)
-								feito em sala de aulas para as reposi&ccedil;&atilde;o
-								n&atilde;o poder&atilde;o ser publicadas na internet ou
-								comparilhada com terceiros, acarretando nas consequ&ecirc;ncias
-								da viola&ccedil;&atilde;o dos direitos autorais da CONTRATADA.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA S&Eacute;TIMA </strong>- Fotos e Videos.
-								A CONTRATADA fica autorizada a retirar fotografias e a fazer
-								videos em sala de aula contendo a imagem do CONTRATANTE para
-								fins de publicidade na TV, tanto como publicar na internet tanto
-								no site como nas rede sociais.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA OITAVA </strong>- Certificado. A
-								CONTRATADA exige 80 % (oitenta porcento) de presen&ccedil;a
-								al&eacute;m da aplica&ccedil;&atilde;o de testes que
-								ser&atilde;o aplicados pelo instrutor em sala de aula com
-								exigencia de 70 % (setenta porcento), ou seja, m&eacute;dia
-								7(sete) de acertos para emiss&atilde;o do certificado de
-								conclus&atilde;o de curso. O CONTRATANDE recebe o certificado de
-								conclus&atilde;o de curso somente ap&oacute;s a
-								quita&ccedil;&atilde;o do saldo devedor total do curso.
-							</p>
-							<p>
-								<strong>CL&Aacute;USULA NONA</strong> -
-								Disposi&ccedil;&otilde;es finais. E por estarem assim, justas e
-								contratadas, as partes assinarem o presente instrumento, em duas
-								vias e igual teor e forma, elegendo o F&oacute;rum da comarca de
-								Campo Grande MS para dirimir qualquer d&iacute;vida que dele
-								possa originar.
-							</p>
-
-
-							<p>
-								Campo Grande,
-								<h:outputText
-									value="#{matriculaController.matriculaContrato.dataFmt}" />
-							</p>
-							<p>
-								___________________________________
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________________________
-								<br></br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								CONTRATADA
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								CONTRATANTE&nbsp;(
-								<p:outputLabel
-									value="#{matriculaController.matriculaContrato.contratante.nome}" />
-								)
-
-							</p>
-							<p>Turno: Manh&atilde; [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
-								Tarde [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] Noite
-								[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</p>
-							<p></p>
-						</div>
-
+						<p:column colspan="1" headerText="Forma de Pagamento">
+							<h:outputText value="#{pag.formaPagamento.descricao}" />
+						</p:column>
+
+						<p:column colspan="1" headerText="Data">
+							<h:outputText value="#{pag.dataVencimentoFormatada}" />
+						</p:column>
+
+						<p:column colspan="1" headerText="Valor">
+							<h:outputText value="#{pag.valorFmt}" />
+
+						</p:column>
+
+						<p:column colspan="1" headerText="Num. Parcelas">
+							<h:outputText value="#{pag.numeroParcelas}" />
+						</p:column>
+
+						<p:column headerText="Ações" width="60">
+							<p:panelGrid columns="2" styleClass="actions" cellpadding="2">
+								<p:commandButton icon="ui-icon-trash" alt="Excluir Pagamento"
+									title="Excluir Pagamento"
+									oncomplete="PF('msgPagamento').show()" process="@this"
+									update="@form">
+									<f:setPropertyActionListener
+										target="#{matriculaController.pagamentoExcluir}"
+										value="#{pag}" />
+								</p:commandButton>
+							</p:panelGrid>
+						</p:column>
+
+					</p:dataTable>
+
+					<p:confirmDialog
+						message="Deseja realmente remover este PAGAMENTO!!!?"
+						position="center" header="Aviso" id="msgPagamentoid"
+						severity="alert" widgetVar="msgPagamento" closable="true"
+						appendToBody="false">
+
+						<p:commandButton id="btnSim3" value="Sim" process="@this"
+							actionListener="#{matriculaController.excluirPagamento}"
+							oncomplete="PF('msgPagamento').hide();" update="tabelaPagamento" />
+						<p:commandButton id="btnNao3" value="Não"
+							onclick="PF('msgPagamento').hide();" />
+					</p:confirmDialog>
+					<p:separator></p:separator>
+					<!-- 					<p:dataTable -->
+					<!-- 						value="#{matriculaController.pagamentoSelecionado.parcelaList}" -->
+					<!-- 						var="parc" style="width: 100%" id="tabelaParcela" editable="true" -->
+					<!-- 						widgetVar="p"> -->
+					<!-- 						<f:facet name="header">   -->
+					<!-- 						            			Parcelas   -->
+					<!-- 							   </f:facet> -->
+					<!-- 						<p:column headerText="Vencimento"> -->
+					<!-- 							<p:cellEditor> -->
+					<!-- 								<f:facet name="output"> -->
+					<!-- 									<h:outputText value="#{parc.datavencimentoFormatada}" /> -->
+					<!-- 								</f:facet> -->
+					<!-- 								<f:facet name="input"> -->
+					<!-- 									<p:calendar value="#{parc.datavencimento}" /> -->
+					<!-- 								</f:facet> -->
+					<!-- 							</p:cellEditor> -->
+					<!-- 						</p:column> -->
+
+					<!-- 						<p:column headerText="Valor"> -->
+					<!-- 							<p:cellEditor> -->
+					<!-- 								<f:facet name="output"> -->
+					<!-- 									<h:outputText value="#{parc.valor}" /> -->
+					<!-- 								</f:facet> -->
+					<!-- 								<f:facet name="input"> -->
+					<!-- 									<p:inputText value="#{parc.valor}" /> -->
+					<!-- 								</f:facet> -->
+					<!-- 							</p:cellEditor> -->
+					<!-- 						</p:column> -->
+
+					<!-- 											<p:column headerText="Ações" width="120"> -->
+					<!-- 												<p:panelGrid columns="1" styleClass="actions" cellpadding="2"> -->
+					<!-- 													<p:commandButton icon="ui-icon-trash" alt="Excluir Parcela" -->
+					<!-- 														title="Excluir Parcela" oncomplete="msgParcela.show()" -->
+					<!-- 														process="@this" id="excluiParcela" update="@parent"> -->
+					<!-- 														<f:setPropertyActionListener -->
+					<!-- 															target="#{matriculaController.parcelaExcluir}" value="#{parc}" /> -->
+					<!-- 													</p:commandButton> -->
+					<!-- 												</p:panelGrid> -->
+					<!-- 											</p:column> -->
+					<!-- 					</p:dataTable> -->
+
+					<!-- 					<p:confirmDialog -->
+					<!-- 						message="Deseja realmente remover esta Parcela!!!?" -->
+					<!-- 						position="center" header="Aviso" id="msgParcelaid" -->
+					<!-- 						severity="alert" widgetVar="msgParcela" closable="true" -->
+					<!-- 						appendToBody="false"> -->
+
+					<!-- 						<p:commandButton id="btnSim4" value="Sim" process="@this" -->
+					<!-- 							actionListener="#{matriculaController.excluirParcela}" -->
+					<!-- 							oncomplete="msgParcela.hide();" update="panelTotais" /> -->
+					<!-- 						<p:commandButton id="btnNao4" value="Não" -->
+					<!-- 							onclick="msgParcela.hide();" /> -->
+					<!-- 					</p:confirmDialog> -->
+
+
+					<p:separator></p:separator>
+
+					<p:panel id="panelTotais">
+						<h:panelGrid columns="9">
+							<p:outputLabel value="Total Venda:  " for="totalVenda"></p:outputLabel>
+							<p:outputLabel id="totalVenda" size="25"
+								value="#{matriculaController.totalCursosFmt}" />
+							<p:spacer width="20" />
+
+							<p:outputLabel value="Total Pagamentos:  " for="totalPagamentos"></p:outputLabel>
+							<p:outputLabel id="totalPagamentos" size="25"
+								value="#{matriculaController.totalPagamentosFmt}" />
+							<p:spacer width="20" />
+
+							<p:outputLabel value="Diferença:  " for="dif"></p:outputLabel>
+							<p:outputLabel id="dif" size="25"
+								value="#{matriculaController.diferencaFmt}" />
+						</h:panelGrid>
 					</p:panel>
 
-					<h:commandButton value="Imprimir" type="button"
-						icon="ui-icon-print">
-						<p:printer target="textoContrato" />
-					</h:commandButton>
 
-				</p:dialog>
 
-				<h:commandButton value="Imprimir" type="button" icon="ui-icon-print">
-					<p:printer target="textoContrato" />
-				</h:commandButton>
+				</p:panel>
 
-				<p:dialog id="dialogRecibo" header="Recibo" widgetVar="recibo"
-					resizable="true" modal="true" width="600" height="200"
-					appendToBody="true">
-					<h:commandButton value="Imprimir" type="button"
-						icon="ui-icon-print">
-						<p:printer target="parcelas" />
-					</h:commandButton>
+				<p:panel id="panelObs">
+					<h:panelGrid columns="3">
+						<p:outputLabel value="Obs:  " for="obs"></p:outputLabel>
+						<p:inputText id="obs" size="100"
+							value="#{matriculaController.matricula.observacao}"></p:inputText>
+					</h:panelGrid>
+				</p:panel>
 
 
 
-					<p:scrollPanel id="parcelas">
+				<p:commandButton value="Cancelar"
+					action="#{matriculaController.cancelar()}" process="@this"
+					update="@form" />
 
-						<p>
-							<img src="#{request.contextPath}/images/logo.png" alt="Logo" />
-						</p>
-							
-					Recebemos de <h:outputText
-							value="#{matriculaController.matriculaContrato.contratante}" /> referente 
-					
-					</p:scrollPanel>
 
-				</p:dialog>
+
+
+
 			</h:form>
 
 		</h:body>

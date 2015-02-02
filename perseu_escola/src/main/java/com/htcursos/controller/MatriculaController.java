@@ -287,8 +287,8 @@ public class MatriculaController implements Serializable {
 				.buscarTodosIDDescrencente());
 	}
 
-	public void salvar() {
-		System.out.println(" Chamou salvar");
+	public String salvar() {
+		
 		// buscando clientes
 
 		for (ClienteMatricula cm : matricula.getClienteMatriculaList()) {
@@ -306,6 +306,7 @@ public class MatriculaController implements Serializable {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 			e.printStackTrace();
 		}
+		return null;
 
 	}
 
