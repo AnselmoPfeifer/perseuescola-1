@@ -26,16 +26,16 @@ public class ClienteMatriculaDAO extends GenericDAO<ClienteMatricula, Integer>
 	}
 
 	public List<Matricula> buscarMatriculas(
-			ClienteMatricula clienteMatriculaBusca) {
+			ClienteMatricula clienteMatriculaBusca) throws NoResultException{
 
 		StringBuilder jpql = new StringBuilder();
 		jpql.append("Select cm.matricula from ClienteMatricula cm where 1=1 ");
 
 		if (clienteMatriculaBusca.getCliente().getNome() != "") {
-			jpql.append(" or upper(cm.cliente.nome) like upper(:nome)");
+			jpql.append(" and upper(cm.cliente.nome) like upper(:nome)");
 		}
 		if (clienteMatriculaBusca.getCliente().getPfCpf() != "") {
-			jpql.append(" or cm.cliente.pfCpf = :cpf");
+			jpql.append(" and cm.cliente.pfCpf = :cpf");
 		}
 
 		Query query = em.createQuery(jpql.toString());
