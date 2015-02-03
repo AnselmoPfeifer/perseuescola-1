@@ -25,13 +25,6 @@
 
 				<p:growl id="msg" showDetail="true" sticky="true"></p:growl>
 
-				<p:commandButton value="Salvar 10"
-					actionListener="#{matriculaController.salvar}"
-					process="@this panelContrato" update="@form" />
-
-
-
-
 				<p:panel header="1- Contrato" id="panelContrato">
 
 
@@ -47,7 +40,8 @@
 						<p:calendar value="#{matriculaController.matricula.dataContrato}"
 							id="dataContrato" pattern="dd/MM/yyyy" locale="pt_BR" />
 
-						<h:outputLabel for="dataPrevista" value="Data Prevista do Curso:  " />
+						<h:outputLabel for="dataPrevista"
+							value="Data Prevista do Curso:  " />
 						<p:calendar value="#{matriculaController.matricula.dataPrevista}"
 							id="dataPrevista" pattern="dd/MM/yyyy" locale="pt_BR" />
 
@@ -438,15 +432,16 @@
 					</h:panelGrid>
 				</p:panel>
 
-
+				<p:commandButton value="Salvar 10"
+					actionListener="#{matriculaController.salvar}"
+					process="@this panelContrato" update="@form" />
 
 				<p:commandButton value="Cancelar"
 					action="#{matriculaController.cancelar()}" process="@this"
 					update="@form" />
 
-
-
-
+				<p:commandButton value="Buscar matrícula"
+					action="consultamatricula" process="@this" />
 
 			</h:form>
 
