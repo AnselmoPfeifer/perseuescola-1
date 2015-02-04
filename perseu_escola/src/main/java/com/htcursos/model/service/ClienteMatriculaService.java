@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.htcursos.model.dao.ClienteMatriculaDAO;
 import com.htcursos.model.dao.GenericDAO;
+import com.htcursos.model.entity.Cliente;
 import com.htcursos.model.entity.ClienteMatricula;
 import com.htcursos.model.entity.Matricula;
 @Service
@@ -27,9 +28,9 @@ public class ClienteMatriculaService extends GenericService<ClienteMatricula, In
 		return clienteMatriculaDAO;
 	}
 
-	public List<Matricula> buscarMatriculas(ClienteMatricula clienteMatriculaBusca) throws NoResultException{
+	public List<Matricula> buscarMatriculas(Cliente cliente) throws NoResultException{
 		
-		return clienteMatriculaDAO.buscarMatriculas(clienteMatriculaBusca);
+		return clienteMatriculaDAO.buscarMatriculas(cliente);
 
 	}
 

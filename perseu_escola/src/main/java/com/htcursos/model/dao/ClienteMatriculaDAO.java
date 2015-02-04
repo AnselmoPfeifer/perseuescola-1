@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.htcursos.model.entity.Cliente;
 import com.htcursos.model.entity.ClienteMatricula;
 import com.htcursos.model.entity.Matricula;
 
@@ -26,28 +27,12 @@ public class ClienteMatriculaDAO extends GenericDAO<ClienteMatricula, Integer>
 	}
 
 	public List<Matricula> buscarMatriculas(
-			ClienteMatricula clienteMatriculaBusca) throws NoResultException{
+			Cliente cliente) throws NoResultException{
 
 		StringBuilder jpql = new StringBuilder();
-		jpql.append("Select cm.matricula from ClienteMatricula cm where 1=1 ");
-
-		if (clienteMatriculaBusca.getCliente().getNome() != "") {
-			jpql.append(" and upper(cm.cliente.nome) like upper(:nome)");
-		}
-		if (clienteMatriculaBusca.getCliente().getPfCpf() != "") {
-			jpql.append(" and cm.cliente.pfCpf = :cpf");
-		}
-
+		jpql.append("Select cm.matricula from ClienteMatricula cm where cm.cliente=:cliente ");
 		Query query = em.createQuery(jpql.toString());
-
-		if (clienteMatriculaBusca.getCliente().getNome() != "") {
-			query.setParameter("nome", "%"+clienteMatriculaBusca.getCliente()
-					.getNome()+"%");
-		}
-		if (clienteMatriculaBusca.getCliente().getPfCpf() != "") {
-			query.setParameter("cpf", clienteMatriculaBusca.getCliente()
-					.getPfCpf());
-		}
+		query.setParameter("cliente", cliente);
 		
 		return query.getResultList();
 

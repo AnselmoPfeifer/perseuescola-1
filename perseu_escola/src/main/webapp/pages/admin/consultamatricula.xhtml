@@ -11,28 +11,19 @@
 		<h:body>
 
 
-			<p:dialog id="crudClienteId" header="Cadastro de Cliente"
-				widgetVar="crudCliente" resizable="true" modal="true" width="90%"
-				height="400">
-				<perseu:ClienteCRUDComp
-					cliente="#{matriculaController.clienteBuscado}"></perseu:ClienteCRUDComp>
-			</p:dialog>
+		
 
 			<h:form id="formMat">
 
 
 
 				<p:panel id="panel_buscar">
-
-					<p:outputLabel value="CPF do Aluno" />
-					<p:inputMask mask="999.999.999-99" id="cpf_buscar"
-						value="#{matriculaController.clienteMatriculaBusca.cliente.pfCpf}"></p:inputMask>
-						
-					<p:outputLabel value="Nome do Aluno" />
-					<p:inputText
-						value="#{matriculaController.clienteMatriculaBusca.cliente.nome}" />
-
-					<p:commandButton value="Buscar 2"
+				
+				
+					<perseu:BuscaClienteComp
+							cliente="#{matriculaController.clienteBuscado}"/>
+							&nbsp;
+					<p:commandButton value="Buscar"
 						action="#{matriculaController.buscarMatricula}"
 						process="@this panel_buscar" update="td_matriculas" />
 
@@ -75,24 +66,24 @@
 							<!-- 									</p:commandButton> -->
 							<!-- 								</p:column> -->
 
-							<p:column style="width:5%">
-								<p:commandButton id="selectButton" update="@form"
-									icon="ui-icon-pencil" title="Editar" process="@this"
-									actionListener="#{matriculaController.editar(mat)}">
+<!-- 							<p:column style="width:5%"> -->
+<!-- 								<p:commandButton id="selectButton" update="@form" -->
+<!-- 									icon="ui-icon-pencil" title="Editar" process="@this" -->
+<!-- 									actionListener="#{matriculaController.editar(mat)}"> -->
 									<!-- 										<f:setPropertyActionListener -->
 									<!-- 											target="#{matriculaController.matricula}" value="#{mat}" /> -->
-								</p:commandButton>
-							</p:column>
+<!-- 								</p:commandButton> -->
+<!-- 							</p:column> -->
 
-							<p:column style="width:5%">
-								<p:commandButton id="deletButton"
-									oncomplete="PF('confirmacaoMat').show()" icon="ui-icon-trash"
-									title="Excluir" immediate="true" process="@this">
-									<f:setPropertyActionListener
-										target="#{matriculaController.matriculaExcluir}"
-										value="#{mat}" />
-								</p:commandButton>
-							</p:column>
+<!-- 							<p:column style="width:5%"> -->
+<!-- 								<p:commandButton id="deletButton" -->
+<!-- 									oncomplete="PF('confirmacaoMat').show()" icon="ui-icon-trash" -->
+<!-- 									title="Excluir" immediate="true" process="@this"> -->
+<!-- 									<f:setPropertyActionListener -->
+<!-- 										target="#{matriculaController.matriculaExcluir}" -->
+<!-- 										value="#{mat}" /> -->
+<!-- 								</p:commandButton> -->
+<!-- 							</p:column> -->
 						</p:column>
 
 					</p:dataTable>

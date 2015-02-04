@@ -231,11 +231,9 @@ public class MatriculaController implements Serializable {
 
 	public void buscarMatricula() {
 		
-		System.out.println("Chamando o método buscar matrícula");
-
 		try {
 			matriculaList = clienteMatriculaService
-					.buscarMatriculas(clienteMatriculaBusca);
+					.buscarMatriculas(clienteBuscado);
 		} catch (Exception e) {
 			e.printStackTrace();
 			JsfMessages.adicionaMensagemErro("Nenhum registro foi encontrado");
