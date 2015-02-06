@@ -27,7 +27,7 @@ public class ClienteMatriculaDAO extends GenericDAO<ClienteMatricula, Integer>
 	}
 
 	public List<Matricula> buscarMatriculas(
-			Cliente cliente) throws NoResultException{
+			Cliente cliente){
 
 		StringBuilder jpql = new StringBuilder();
 		jpql.append("Select cm.matricula from ClienteMatricula cm where cm.cliente=:cliente ");

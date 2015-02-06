@@ -28,7 +28,7 @@ public class ClienteMatriculaService extends GenericService<ClienteMatricula, In
 		return clienteMatriculaDAO;
 	}
 
-	public List<Matricula> buscarMatriculas(Cliente cliente) throws NoResultException{
+	public List<Matricula> buscarMatriculas(Cliente cliente){
 		
 		return clienteMatriculaDAO.buscarMatriculas(cliente);
 
