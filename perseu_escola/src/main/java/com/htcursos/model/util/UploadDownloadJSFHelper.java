@@ -55,10 +55,10 @@ public class UploadDownloadJSFHelper implements Serializable {
 	 * 
 	 * @return
 	 */
-	public void enviarArquivo() {
+	public void enviarArquivo(String nomeGerado) {
 
 		String novoNomeArquivo = PASTA_RAIZ + File.separator + "uploads"
-				+ File.separator + getNomeArquivoGerado();
+				+ File.separator + nomeGerado;
 
 		try {
 			copiarArquivo(novoNomeArquivo, getArquivo().getInputstream());
@@ -150,8 +150,9 @@ public class UploadDownloadJSFHelper implements Serializable {
 
 	public String getNomeArquivoGerado() {
 		
-		String nomeArquivoGerado = System.currentTimeMillis() + "."
+		String nomeArquivoGerado = System.currentTimeMillis() + (Math.random()*100) + "."
 				+ getExtensao();
+		System.out.println("Executando o Math.random: "+(Math.random()*100));
 		
 		return nomeArquivoGerado;
 	}

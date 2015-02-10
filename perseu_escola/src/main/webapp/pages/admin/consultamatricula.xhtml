@@ -60,7 +60,7 @@
 
 								<p:commandButton id="buttomAnexar" icon="ui-icon-document"
 									title="Anexar arquivos" oncomplete="PF('dlgAnexar').show()"
-									process="@this">
+									process="@this" update=":formMat:dlgAnexar">
 									<f:setPropertyActionListener
 										target="#{matriculaController.matriculaContrato}"
 										value="#{mat}" />
@@ -115,15 +115,17 @@
 							value="#{matriculaController.arquivo}" style="text-align:center"
 							fileUploadListener="#{matriculaController.enviarArquivoAnexoMatricula}"
 							dragDropSupport="false" update="messages"
-							cancelLabel="Cancelar Anexos" uploadLabel="Confirmar anexos"
+							cancelLabel="Cancelar Anexos" uploadLabel="Salvar anexos"
 							label="Anexar" sizeLimit="5000000"
 							invalidSizeMessage="Tamanho de Arquivo Inválido" fileLimit="3"
 							invalidFileMessage="Tipo de Arquivo Inválido"
 							fileLimitMessage="Tamanho muito grande. Limite: 5 MB"
 							allowTypes="/(\.|\/)(gif|jpe?g|png|doc|pdf|xls|docx|odt)$/"
-							multiple="true" auto="false" oncomplete="PF('dlgAnexar').hide()">
+							multiple="true" auto="false" oncomplete="anexou()">
 							<p:growl id="messages" showDetail="true" />
 						</p:fileUpload>
+						
+						<p:remoteCommand name="anexou" update=":formMat:td_matriculas" oncomplete="PF('dlgAnexar').hide()"/>
 
 					</h:form>
 
