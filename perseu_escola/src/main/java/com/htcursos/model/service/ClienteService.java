@@ -37,6 +37,8 @@ public class ClienteService extends GenericService<Cliente, Integer> implements 
 	@Override
 	public Cliente salvar(Cliente cliente) throws ServiceException {
 		
+		
+		
 		if(cliente.getContatoList()==null||cliente.getContatoList().size()==0){
 			throw new ServiceException("Adicione pelo menos um contato");
 			

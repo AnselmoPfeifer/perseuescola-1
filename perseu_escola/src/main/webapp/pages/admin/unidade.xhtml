@@ -36,7 +36,7 @@
 
 
 						<p:commandButton id="modalDialogButton" value="Endereco"
-							onclick="cepDialog.show();" type="button" update=":frmUnidade"
+							onclick="PF('cepDialog').show();" type="button" update=":frmUnidade"
 							process="@this"
 							
 							 >
@@ -94,7 +94,7 @@
 
 				<p:commandButton id="btnSim" value="Sim"
 					actionListener="#{unidadeController.excluir}"
-					oncomplete="confirmacao.hide();" update="@form" />
+					oncomplete="PF('confirmacao').hide();" update="@form" />
 				<p:commandButton id="btnNao" value="Não"
 					onclick="confirmacao.hide();" />
 			</p:confirmDialog>

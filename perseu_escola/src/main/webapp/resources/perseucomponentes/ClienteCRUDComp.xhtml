@@ -33,12 +33,23 @@
 
 
 							<p:panelGrid columns="2" id="panelCliente">
+							
+							
 
 								<h:outputLabel for="id" value="Id:" />
 								<p:inputText readonly="true" size="5" id="id" disabled="true"
 									value="#{clienteController.cliente.id}">
 									<f:converter converterId="javax.faces.Integer" />
 								</p:inputText>
+								
+								<p:outputLabel for="tipoClienteEnum" value="Tipo:" />
+
+								<p:selectOneRadio id="tipoClienteEnum"
+									value="#{clienteController.cliente.tipo}">
+									<f:selectItems value="#{clienteController.tipoClienteValor}"
+										var="t" itemValue="#{t}" itemLabel="#{t.label}" />
+									<p:ajax update="panelCliente" event="change" />
+								</p:selectOneRadio>
 
 								<h:outputLabel for="nome" value="Nome:" />
 								<p:inputText id="nome" value="#{clienteController.cliente.nome}"
@@ -70,14 +81,7 @@
 									value="#{clienteController.cliente.pfDatanascimento}"
 									id="popupButtonCal" pattern="dd/MM/yyyy" locale="pt_BR" />
 
-								<p:outputLabel for="tipoClienteEnum" value="Tipo:" />
-
-								<p:selectOneRadio id="tipoClienteEnum"
-									value="#{clienteController.cliente.tipo}">
-									<f:selectItems value="#{clienteController.tipoClienteValor}"
-										var="t" itemValue="#{t}" itemLabel="#{t.label}" />
-									<p:ajax update="panelCliente" event="change" />
-								</p:selectOneRadio>
+								
 
 								<!-- 							Dados caso seja Pessoa Física -->
 
@@ -94,7 +98,7 @@
 									onblur="validarCPF(this.value)"
 									onkeypress="mascara(this, cpf_mask)"
 									value="#{clienteController.cliente.pfCpf}" size="14">
-									<f:validateLength minimum="1" />
+								
 
 								</p:inputMask>
 
@@ -103,8 +107,7 @@
 								<p:inputText id="pfRg" value="#{clienteController.cliente.pfRg}"
 									rendered="#{clienteController.cliente.tipo == 'PF' ? true : false}"
 									size="18">
-									<f:validateLength minimum="1" />
-									<p:ajax event="blur" />
+								
 								</p:inputText>
 
 
@@ -171,7 +174,7 @@
 									value="#{clienteController.cliente.endereco.cep}" />
 
 								<p:commandButton value="Pesquisar CEP" icon="ui-icon-pencil"
-									action="#{clienteController.encontraCEP}" update="pnEndereco" />
+									action="#{clienteController.encontraCEP}" update="pnEndereco" process="@this pnCEP" />
 							</h:panelGrid>
 
 							<br />

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 @Embeddable
 public class Endereco implements Serializable{
@@ -12,13 +14,18 @@ public class Endereco implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -6469084389749038853L;
-	
+	@NotEmpty(message="Estado Obrigatório")
 	private String estado="";
+	@NotEmpty(message="Cidade Obrigatório")
 	private String  cidade="";
+	@NotEmpty(message="Logradouro Obrigatório")
     private String logradouro="";
+	@NotEmpty(message="Bairro Obrigatório")
     private String bairro="";
     private String complemento="";
+    @NotEmpty(message="Número Obrigatório")
     private String numero="";
+    @NotEmpty(message="Cep Obrigatório")
     private String cep="";
     private String tipo_logradouro="";
     

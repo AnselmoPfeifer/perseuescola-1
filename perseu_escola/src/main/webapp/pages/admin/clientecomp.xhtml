@@ -25,7 +25,15 @@
 						value="#{clienteController.cliente.id}">
 						<f:converter converterId="javax.faces.Integer" />
 						<p:ajax event="blur" />
-					</p:inputText>
+					</p:inputText> 
+					
+						<h:outputLabel for="tipoClienteEnum" value="Tipo:" />
+					<h:selectOneMenu id="tipoClienteEnum"
+						value="#{clienteController.cliente.tipo}">
+						<f:selectItems value="#{clienteController.tipoClienteValor}"
+							var="t" itemValue="#{t}" itemLabel="#{t.label}" />
+					</h:selectOneMenu>
+					
 
 					<h:outputLabel for="nome" value="Nome:" />
 					<p:inputText id="nome" value="#{clienteController.cliente.nome}"
@@ -49,13 +57,7 @@
 					<p:calendar value="#{clienteController.cliente.pfDatanascimento}"
 						id="popupButtonCal" pattern="dd/MM/yyyy" locale="pt_BR" />
 
-					<h:outputLabel for="tipoClienteEnum" value="Tipo:" />
-					<h:selectOneMenu id="tipoClienteEnum"
-						value="#{clienteController.cliente.tipo}">
-						<f:selectItems value="#{clienteController.tipoClienteValor}"
-							var="t" itemValue="#{t}" itemLabel="#{t.label}" />
-					</h:selectOneMenu>
-
+				
 					<h:outputLabel for="pfCpf" value="Cpf:" />
 					<p:inputMask id="pfCpf" mask="999.999.999-99"
 						value="#{clienteController.cliente.pfCpf}" size="14">
