@@ -334,5 +334,14 @@ public class Cliente implements Serializable, Modelo<Integer> {
 	public void setCamiseta(String camiseta) {
 		this.camiseta = camiseta;
 	}
-
+	
+	//Util na Lógica de Tela
+	
+	public boolean isPF(){
+		return this.tipo == TipoClienteEnum.PF;
+	}
+	
+	public boolean isPJ(){
+		return this.tipo == TipoClienteEnum.PJ;
+	}
 }

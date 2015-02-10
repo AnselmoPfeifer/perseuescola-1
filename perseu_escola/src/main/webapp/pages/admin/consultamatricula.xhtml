@@ -20,12 +20,12 @@
 				<p:panel id="panel_buscar">
 				
 				
-					<perseu:BuscaClienteComp
+					<perseu:BuscaClienteComp id="clienteBuscado"
 							cliente="#{matriculaController.clienteBuscado}"/>
 							&nbsp;
 					<p:commandButton value="Buscar"
 						action="#{matriculaController.buscarMatricula}"
-						process="@this panel_buscar" update="td_matriculas" />
+						process="@this clienteBuscado" update="td_matriculas" />
 
 					<p:dataTable value="#{matriculaController.matriculaList}" var="mat"
 						resizableColumns="true" paginator="false" liveResize="true"
