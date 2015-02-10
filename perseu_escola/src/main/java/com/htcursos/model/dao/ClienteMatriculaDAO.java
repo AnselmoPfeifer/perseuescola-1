@@ -3,7 +3,6 @@ package com.htcursos.model.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -26,8 +25,9 @@ public class ClienteMatriculaDAO extends GenericDAO<ClienteMatricula, Integer>
 		super(ClienteMatricula.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Matricula> buscarMatriculas(
-			Cliente cliente) throws NoResultException{
+			Cliente cliente){
 
 		StringBuilder jpql = new StringBuilder();
 		jpql.append("Select cm.matricula from ClienteMatricula cm where cm.cliente=:cliente ");

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -40,6 +42,10 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	@SequenceGenerator(name = "seq_matricula", sequenceName = "seq_matricula", initialValue = 1, allocationSize = 10)
 	@GeneratedValue(generator = "seq_matricula", strategy = GenerationType.AUTO)
 	private Integer id;
+
+	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "matricula", fetch = FetchType.EAGER)
+	@org.hibernate.annotations.Fetch(FetchMode.SUBSELECT)
+	private List<Anexo> anexos = new ArrayList<>();
 
 	@JoinColumn
 	@ManyToOne
@@ -78,6 +84,14 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	// Taxa de Inscricao
 	private Double taxaInscricao;
 
+	public void adicionarAnexo(Anexo anexo) {
+		if (this.getAnexos() == null){
+			setAnexos(new ArrayList<Anexo>());
+		}
+		this.getAnexos().add(anexo);
+
+	}
+
 	public Double getMulta() {
 		return multa;
 	}
@@ -93,7 +107,8 @@ public class Matricula implements Serializable, Modelo<Integer> {
 
 	public String getTaxaAtrasoPorDiaFtm() {
 
-		String valorFtm = getTaxaAtrasoPorDia() + "(" + Um.valorPorExtenso(taxaAtrasoPorDia) + ")";
+		String valorFtm = getTaxaAtrasoPorDia() + "("
+				+ Um.valorPorExtenso(taxaAtrasoPorDia) + ")";
 
 		return valorFtm;
 	}
@@ -103,14 +118,17 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	}
 
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "matricula", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(mappedBy = "matricula", cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE })
 	private List<Pagamento> pagamentoList = new ArrayList<Pagamento>();
 
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "matricula", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(mappedBy = "matricula", cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE })
 	private List<ClienteMatricula> clienteMatriculaList = new ArrayList<ClienteMatricula>();
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "matricula", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(mappedBy = "matricula", cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE })
 	private List<CursoMatricula> cursoMatriculaList = new ArrayList<CursoMatricula>();
 	/** nao vai existir no banco, apenas para ser singleton no getContratante */
 	@Transient
@@ -256,7 +274,8 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	}
 
 	public String getValorTotalFmtExtenso() {
-		String valorFtm = getValorTotalFmtSemExtenso() + "(" + Um.valorPorExtenso(getValorTotal().doubleValue()) + ")";
+		String valorFtm = getValorTotalFmtSemExtenso() + "("
+				+ Um.valorPorExtenso(getValorTotal().doubleValue()) + ")";
 		return valorFtm;
 	}
 
@@ -277,7 +296,8 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		return clientes.toString();
 	}
 
-	public void setClienteMatriculaList(List<ClienteMatricula> clienteMatriculaList) {
+	public void setClienteMatriculaList(
+			List<ClienteMatricula> clienteMatriculaList) {
 		this.clienteMatriculaList = clienteMatriculaList;
 	}
 
@@ -333,17 +353,17 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	}
 
 	public Cliente getContratante() {
-		//Procura a primeira vez
-		if (this.contratante==null){
+		// Procura a primeira vez
+		if (this.contratante == null) {
 			for (ClienteMatricula cm : this.getClienteMatriculaList()) {
 				if (cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTE
 						|| cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTECONSUMIDOR) {
-					//seta quando encontrar
-					return contratante = cm.getCliente() ;
+					// seta quando encontrar
+					return contratante = cm.getCliente();
 				}
 			}
-		}else{
-			
+		} else {
+
 			return this.contratante;
 		}
 		return null;
@@ -377,11 +397,15 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		for (int i = 0; i < qtd; i++) {
 			p = pagamentoList.get(i);
 
-			strPagamentos.append(FormataUtil.formataMoedaBrasil(p.getValor()) + "("
-					+ Um.valorPorExtenso(p.getValor().doubleValue()) + ")" + " parcelado em " + p.getNumeroParcelas()
-					+ " parcela(s)  de " + FormataUtil.formataMoedaBrasil(p.getValorParcela()) + "("
-					+ Um.valorPorExtenso(p.getValorParcela().doubleValue()) + ")" + " na forma de pagamento "
-					+ p.getFormaPagamento().getDescricao().toUpperCase() + " com vencimento a partir de "
+			strPagamentos.append(FormataUtil.formataMoedaBrasil(p.getValor())
+					+ "(" + Um.valorPorExtenso(p.getValor().doubleValue())
+					+ ")" + " parcelado em " + p.getNumeroParcelas()
+					+ " parcela(s)  de "
+					+ FormataUtil.formataMoedaBrasil(p.getValorParcela()) + "("
+					+ Um.valorPorExtenso(p.getValorParcela().doubleValue())
+					+ ")" + " na forma de pagamento "
+					+ p.getFormaPagamento().getDescricao().toUpperCase()
+					+ " com vencimento a partir de "
 					+ FormataUtil.formataDataBrasil(p.getDataVencimento()));
 
 			// for (Parcela parcela : p.getParcelaList()){
@@ -443,8 +467,8 @@ public class Matricula implements Serializable, Modelo<Integer> {
 
 	public boolean validaPagamentos() {
 		for (Pagamento p : this.getPagamentoList()) {
-			if (p.getFormaPagamento() == null || p.getDataVencimento() == null || p.getValor() == null
-					|| p.getNumeroParcelas() == null) {
+			if (p.getFormaPagamento() == null || p.getDataVencimento() == null
+					|| p.getValor() == null || p.getNumeroParcelas() == null) {
 				return false;
 			}
 		}
@@ -493,14 +517,25 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		try {
 
 			str.append("Taxa de matricula no valor de ");
-			str.append(FormataUtil.formataMoedaBrasil(new BigDecimal(taxaInscricao)) + "("
-					+ Um.valorPorExtenso(taxaInscricao) + ") com pagamento em " + getDataFmt() + " .");
+			str.append(FormataUtil.formataMoedaBrasil(new BigDecimal(
+					taxaInscricao))
+					+ "("
+					+ Um.valorPorExtenso(taxaInscricao)
+					+ ") com pagamento em " + getDataFmt() + " .");
 			return str.toString();
 		} catch (Exception e) {
 
 			e.printStackTrace();
 			return "";
 		}
+	}
+
+	public List<Anexo> getAnexos() {
+		return anexos;
+	}
+
+	public void setAnexos(List<Anexo> anexos) {
+		this.anexos = anexos;
 	}
 
 }

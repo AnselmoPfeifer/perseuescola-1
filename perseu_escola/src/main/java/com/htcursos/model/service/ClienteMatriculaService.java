@@ -3,7 +3,6 @@ package com.htcursos.model.service;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class ClienteMatriculaService extends GenericService<ClienteMatricula, In
 		return clienteMatriculaDAO;
 	}
 
-	public List<Matricula> buscarMatriculas(Cliente cliente) throws NoResultException{
+	public List<Matricula> buscarMatriculas(Cliente cliente){
 		
 		return clienteMatriculaDAO.buscarMatriculas(cliente);
 

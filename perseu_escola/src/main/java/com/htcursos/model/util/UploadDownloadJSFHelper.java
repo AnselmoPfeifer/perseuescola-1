@@ -23,6 +23,11 @@ import org.primefaces.model.UploadedFile;
  */
 public class UploadDownloadJSFHelper implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private UploadedFile arquivo;
 	public final static String PASTA_RAIZ;
 	/**
@@ -36,8 +41,8 @@ public class UploadDownloadJSFHelper implements Serializable {
 		String realPath = ctx.getRealPath("/");
 		
 		//Setando na mao o caminho
-		PASTA_RAIZ = "/Users/mac/Documents/dev/git/perseu_os/perseu_os/src/main/webapp/";
-		//PASTA_RAIZ = "/Users/alisonmoura/git/perseu_os/perseu_os/src/main/webapp//";
+		//PASTA_RAIZ = "/Users/mac/Documents/dev/git/perseu_os/perseu_os/src/main/webapp/";
+		PASTA_RAIZ = "/Library/STS Bundle/projects/maven.1422999252121/perseu_escola/src/main/webapp";
 	}
 
 	public UploadDownloadJSFHelper() {
@@ -50,10 +55,10 @@ public class UploadDownloadJSFHelper implements Serializable {
 	 * 
 	 * @return
 	 */
-	public void enviarArquivo() {
+	public void enviarArquivo(String nomeGerado) {
 
 		String novoNomeArquivo = PASTA_RAIZ + File.separator + "uploads"
-				+ File.separator + getNomeArquivoGerado();
+				+ File.separator + nomeGerado;
 
 		try {
 			copiarArquivo(novoNomeArquivo, getArquivo().getInputstream());
@@ -145,8 +150,9 @@ public class UploadDownloadJSFHelper implements Serializable {
 
 	public String getNomeArquivoGerado() {
 		
-		String nomeArquivoGerado = System.currentTimeMillis() + "."
+		String nomeArquivoGerado = System.currentTimeMillis() + (Math.random()*100) + "."
 				+ getExtensao();
+		System.out.println("Executando o Math.random: "+(Math.random()*100));
 		
 		return nomeArquivoGerado;
 	}
