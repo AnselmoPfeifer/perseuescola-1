@@ -1,6 +1,5 @@
 package com.htcursos.controller;
 
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,15 +13,12 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.NoResultException;
 
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.htcursos.controller.util.faces.JsfMessages;
-import com.htcursos.model.entity.Anexo;
 import com.htcursos.model.entity.Cliente;
 import com.htcursos.model.entity.ClienteMatricula;
 import com.htcursos.model.entity.Curso;
@@ -33,7 +29,6 @@ import com.htcursos.model.entity.Parcela;
 import com.htcursos.model.entity.Unidade;
 import com.htcursos.model.entity.Usuario;
 import com.htcursos.model.enums.TipoContratacaoEnum;
-import com.htcursos.model.service.AnexoService;
 import com.htcursos.model.service.ClienteMatriculaService;
 import com.htcursos.model.service.ClienteService;
 import com.htcursos.model.service.CursoMatriculaService;
@@ -46,7 +41,6 @@ import com.htcursos.model.service.UnidadeService;
 import com.htcursos.model.service.UsuarioService;
 import com.htcursos.model.util.FormataUtil;
 import com.htcursos.model.util.SessaoUtil;
-import com.htcursos.model.util.UploadDownloadJSFHelper;
 
 @Controller("matriculaController")
 @Scope("view")
@@ -56,8 +50,6 @@ public class MatriculaController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// objetos pra acesso ao DAO instanciados automaticamente pelo hibernate
-	@Autowired
-	private AnexoService anexoService;
 	@Autowired
 	private MatriculaService matriculaService;
 	@Autowired
@@ -77,8 +69,6 @@ public class MatriculaController implements Serializable {
 	@Autowired
 	private UsuarioService usuarioService;
 	// Objetos de manipulacao de dados
-	private UploadDownloadJSFHelper uploadHelper;
-	private UploadedFile arquivo;
 	private Matricula matricula = new Matricula();
 	private Matricula matriculaContrato = new Matricula();
 	// OBJETO UTILIZADO SOMENTE PARA BUSCAS DE MATRICULAS
@@ -240,11 +230,14 @@ public class MatriculaController implements Serializable {
 	}
 
 	public void buscarMatricula() {
-
-		matriculaList = clienteMatriculaService
-				.buscarMatriculas(clienteBuscado);
 		
-		System.out.println("Chamou o buscar matrículas");
+		try {
+			matriculaList = clienteMatriculaService
+					.buscarMatriculas(clienteBuscado);
+		} catch (Exception e) {
+			e.printStackTrace();
+			JsfMessages.adicionaMensagemErro("Nenhum registro foi encontrado");
+		}
 	}
 
 	/**
@@ -297,7 +290,7 @@ public class MatriculaController implements Serializable {
 	}
 
 	public String salvar() {
-
+		
 		// buscando clientes
 
 		for (ClienteMatricula cm : matricula.getClienteMatriculaList()) {
@@ -316,39 +309,6 @@ public class MatriculaController implements Serializable {
 			e.printStackTrace();
 		}
 		return null;
-
-	}
-
-	public void enviarArquivoAnexoMatricula(FileUploadEvent event) {
-		
-		setUploadHelper(new UploadDownloadJSFHelper());
-		getUploadHelper().setArquivo(event.getFile());
-
-		// Gravar no banco
-		Anexo anexo = new Anexo();
-
-		anexo.setNomeGerado(getUploadHelper().getNomeArquivoGerado());
-		anexo.setNomeOriginal(getUploadHelper().getNomeArquivo());
-		anexo.setCaminho("/uploads/" + getUploadHelper().getNomeArquivoGerado());
-		anexo.setMatricula(matriculaContrato);
-		// Enviar arquivo
-		getUploadHelper().enviarArquivo(anexo.getNomeGerado());
-		//SALVA O ANEXO
-		try {
-			anexoService.salvar(anexo);
-		} catch (ServiceException e1) {
-			e1.printStackTrace();
-			JsfMessages.adicionaMensagemErro("Não foi possível salvar o anexo: "+e1);
-		}
-
-		matriculaContrato.adicionarAnexo(anexo);
-		//SALVA A MATRICULA JA COM O ANEXO
-		try {
-			matriculaService.salvar(matriculaContrato);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			JsfMessages.adicionaMensagemErro("Não foi possível salvar o anexo na matrícula: "+e);
-		}
 
 	}
 
@@ -748,22 +708,6 @@ public class MatriculaController implements Serializable {
 
 	public void setClienteMatriculaBusca(ClienteMatricula clienteMatriculaBusca) {
 		this.clienteMatriculaBusca = clienteMatriculaBusca;
-	}
-
-	public UploadedFile getArquivo() {
-		return arquivo;
-	}
-
-	public void setArquivo(UploadedFile arquivo) {
-		this.arquivo = arquivo;
-	}
-
-	public UploadDownloadJSFHelper getUploadHelper() {
-		return uploadHelper;
-	}
-
-	public void setUploadHelper(UploadDownloadJSFHelper uploadHelper) {
-		this.uploadHelper = uploadHelper;
 	}
 
 }
