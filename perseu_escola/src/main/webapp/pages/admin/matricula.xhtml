@@ -45,22 +45,36 @@
 						<p:calendar value="#{matriculaController.matricula.dataPrevista}"
 							id="dataPrevista" pattern="dd/MM/yyyy" locale="pt_BR" />
 
-						<h:outputLabel value="Desconto até o data vencimento (%) " />
+
+						<h:outputLabel value="Desconto até o data vencimento (%) "
+							for="descontoAteVencimento" />
 						<p:spinner size="4" max="100" min="0" id="descontoAteVencimento"
 							value="#{matriculaController.matricula.descontoAteVencimento}" />
 
+						<h:outputLabel value="Horas extras " for="horasExtras" />
+						<p:spinner size="4" min="0" id="horasExtras"
+							value="#{matriculaController.matricula.horasExtras}" />
+
 						<h:outputLabel
-							value="Após da data de Vencimento cobrar multa (%) " />
+							value="Após da data de Vencimento cobrar multa (%) " for="multa" />
 						<p:spinner size="4" max="100" min="0" id="multa"
 							value="#{matriculaController.matricula.multa}" />
 
-						<h:outputLabel value=" e por dia mais R$ " />
+						<h:outputLabel value=" e por dia mais R$ " for="taxaAtrasoPorDia" />
 						<p:spinner size="4" max="10" min="0" id="taxaAtrasoPorDia"
 							value="#{matriculaController.matricula.taxaAtrasoPorDia}" />
 
-						<h:outputLabel value="Taxa de Inscrição de Matricula  R$ " />
+						<h:outputLabel value="Taxa de Inscrição de Matricula  R$ "
+							for="taxaInscricao" />
 						<p:spinner size="4" min="0" id="taxaInscricao"
 							value="#{matriculaController.matricula.taxaInscricao}" />
+
+						<h:outputLabel value="Desconto promocional (%) "
+							for="descontoPromocionalOut" />
+						<p:spinner size="4" max="100" min="0" id="descontoPromocionalOut"
+							value="#{matriculaController.matricula.descontoPromocional}" />
+
+
 
 					</h:panelGrid>
 
@@ -440,8 +454,8 @@
 					action="#{matriculaController.cancelar()}" process="@this"
 					update="@form" />
 
-				<p:commandButton value="Buscar matrícula"
-					action="consultamatricula" process="@this" />
+				<p:commandButton value="Buscar matrícula" action="consultamatricula"
+					process="@this" />
 
 			</h:form>
 

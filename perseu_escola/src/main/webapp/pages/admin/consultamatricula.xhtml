@@ -11,17 +11,17 @@
 		<h:body>
 
 
-		
+
 
 			<h:form id="formMat">
 
 
 
 				<p:panel id="panel_buscar">
-				
-				
+
+
 					<perseu:BuscaClienteComp id="clienteBuscado"
-							cliente="#{matriculaController.clienteBuscado}"/>
+						cliente="#{matriculaController.clienteBuscado}" />
 							&nbsp;
 					<p:commandButton value="Buscar"
 						action="#{matriculaController.buscarMatricula}"
@@ -66,24 +66,24 @@
 							<!-- 									</p:commandButton> -->
 							<!-- 								</p:column> -->
 
-<!-- 							<p:column style="width:5%"> -->
-<!-- 								<p:commandButton id="selectButton" update="@form" -->
-<!-- 									icon="ui-icon-pencil" title="Editar" process="@this" -->
-<!-- 									actionListener="#{matriculaController.editar(mat)}"> -->
-									<!-- 										<f:setPropertyActionListener -->
-									<!-- 											target="#{matriculaController.matricula}" value="#{mat}" /> -->
-<!-- 								</p:commandButton> -->
-<!-- 							</p:column> -->
+							<!-- 							<p:column style="width:5%"> -->
+							<!-- 								<p:commandButton id="selectButton" update="@form" -->
+							<!-- 									icon="ui-icon-pencil" title="Editar" process="@this" -->
+							<!-- 									actionListener="#{matriculaController.editar(mat)}"> -->
+							<!-- 										<f:setPropertyActionListener -->
+							<!-- 											target="#{matriculaController.matricula}" value="#{mat}" /> -->
+							<!-- 								</p:commandButton> -->
+							<!-- 							</p:column> -->
 
-<!-- 							<p:column style="width:5%"> -->
-<!-- 								<p:commandButton id="deletButton" -->
-<!-- 									oncomplete="PF('confirmacaoMat').show()" icon="ui-icon-trash" -->
-<!-- 									title="Excluir" immediate="true" process="@this"> -->
-<!-- 									<f:setPropertyActionListener -->
-<!-- 										target="#{matriculaController.matriculaExcluir}" -->
-<!-- 										value="#{mat}" /> -->
-<!-- 								</p:commandButton> -->
-<!-- 							</p:column> -->
+							<!-- 							<p:column style="width:5%"> -->
+							<!-- 								<p:commandButton id="deletButton" -->
+							<!-- 									oncomplete="PF('confirmacaoMat').show()" icon="ui-icon-trash" -->
+							<!-- 									title="Excluir" immediate="true" process="@this"> -->
+							<!-- 									<f:setPropertyActionListener -->
+							<!-- 										target="#{matriculaController.matriculaExcluir}" -->
+							<!-- 										value="#{mat}" /> -->
+							<!-- 								</p:commandButton> -->
+							<!-- 							</p:column> -->
 						</p:column>
 
 					</p:dataTable>
@@ -167,6 +167,13 @@
 								que iniciará no dia
 								<h:outputText
 									value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" />
+								e totalizará
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.calculoTotalHorasCursos}" />
+								horas
+								<h:outputText
+									value=", mais #{matriculaController.matriculaContrato.horasExtras} horas complementares"
+									rendered="#{matriculaController.matriculaContrato.horasExtras > 0 ?true:false}" />
 								.
 							</p>
 							<p>
@@ -325,7 +332,7 @@
 
 				</p:dialog>
 
-				
+
 				<p:dialog id="dialogRecibo" header="Recibo" widgetVar="recibo"
 					resizable="true" modal="true" width="600" height="200"
 					appendToBody="true">
