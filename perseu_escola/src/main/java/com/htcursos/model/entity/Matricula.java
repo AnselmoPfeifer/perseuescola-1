@@ -351,6 +351,16 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		}
 		return qtd;
 	}
+	
+	public int getQuantidadeConsumidores() {
+		int qtd = 0;
+		for (ClienteMatricula cm : this.getClienteMatriculaList()) {
+			if (cm.getTipoContratacao() == TipoContratacaoEnum.CONSUMIDOR) {
+				qtd++;
+			}
+		}
+		return qtd;
+	}
 
 	public Cliente getContratante() {
 		// Procura a primeira vez
