@@ -30,7 +30,7 @@ public class TestCadastroUsuario {
 		Usuario usuario =  new Usuario();
 		usuario.setNome("Administrador");
 		usuario.setUsername("admin");
-		usuario.setPassword("123");
+		usuario.setPassword("adminht@2015");
 		usuario.setEnable(true);
 		
 		Autorizacao autorizacao = new Autorizacao();

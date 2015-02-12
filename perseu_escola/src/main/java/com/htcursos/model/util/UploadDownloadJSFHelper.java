@@ -41,8 +41,9 @@ public class UploadDownloadJSFHelper implements Serializable {
 		String realPath = ctx.getRealPath("/");
 		
 		//Setando na mao o caminho
-		//PASTA_RAIZ = "/Users/mac/Documents/dev/git/perseu_os/perseu_os/src/main/webapp/";
-		PASTA_RAIZ = "/Library/STS Bundle/projects/maven.1422999252121/perseu_escola/src/main/webapp";
+		PASTA_RAIZ = "/var/lib/tomcat7/webapps/perseu_escola/";
+		//PASTA_RAIZ = "/Users/mac/Documents/dev/git/perseu_escola/perseu_escola/src/main/webapp/";
+		//PASTA_RAIZ = "/Library/STS Bundle/projects/maven.1422999252121/perseu_escola/src/main/webapp";
 	}
 
 	public UploadDownloadJSFHelper() {
