@@ -85,7 +85,7 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	private Double taxaInscricao;
 
 	public void adicionarAnexo(Anexo anexo) {
-		if (this.getAnexos() == null){
+		if (this.getAnexos() == null) {
 			setAnexos(new ArrayList<Anexo>());
 		}
 		this.getAnexos().add(anexo);
@@ -351,11 +351,12 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		}
 		return qtd;
 	}
-	
+
 	public int getQuantidadeConsumidores() {
 		int qtd = 0;
 		for (ClienteMatricula cm : this.getClienteMatriculaList()) {
-			if (cm.getTipoContratacao() == TipoContratacaoEnum.CONSUMIDOR) {
+			if (cm.getTipoContratacao() == TipoContratacaoEnum.CONSUMIDOR
+					|| cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTECONSUMIDOR) {
 				qtd++;
 			}
 		}
