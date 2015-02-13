@@ -54,6 +54,8 @@ public class MatriculaService extends GenericService<Matricula, Integer> impleme
 	 */
 	public Matricula salvar(Matricula matricula) throws ServiceException {
 		int qtdContratante = matricula.getQuantidadeContratantes();
+		int qtdConsumidores = matricula.getQuantidadeConsumidores();
+		
 
 		 if(qtdContratante>0 &&!matricula.getContratante().possuiDadosCompletos()){
 		 throw new ServiceException(
@@ -67,6 +69,10 @@ public class MatriculaService extends GenericService<Matricula, Integer> impleme
 		if (qtdContratante > 1) {
 			throw new ServiceException(
 					"Insira apenas uma cliente contratante na matrícula.");
+		}
+		if (qtdConsumidores < 1||qtdConsumidores == 0) {
+			throw new ServiceException(
+					"Insira pelo menos um cliente consumidor na matrícula.");
 		}
 
 		if (matricula.getTotalCursos().doubleValue() == 0.0) {

@@ -73,6 +73,9 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	@ManyToOne
 	private Usuario usuario;
 	private String observacao;
+	private Integer horasExtras = 0;
+	private Double descontoPromocional = 0.0;
+	private Integer calculoTotalHorasCursos;
 
 	// Contrato
 	private Double descontoAteVencimento = 10.0;
@@ -85,7 +88,7 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	private Double taxaInscricao;
 
 	public void adicionarAnexo(Anexo anexo) {
-		if (this.getAnexos() == null){
+		if (this.getAnexos() == null) {
 			setAnexos(new ArrayList<Anexo>());
 		}
 		this.getAnexos().add(anexo);
@@ -279,6 +282,16 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		return valorFtm;
 	}
 
+	public Integer getCalculoTotalHorasCursos() {
+		// TODO
+		Integer calculo = 0;
+		for (CursoMatricula c : this.getCursoMatriculaList()) {
+			calculo = calculo + c.getCurso().getCargahoraria();
+		}
+
+		return calculo;
+	}
+
 	public String getValorTotalFmtSemExtenso() {
 
 		return FormataUtil.formataMoedaBrasil(getValorTotal());
@@ -345,6 +358,17 @@ public class Matricula implements Serializable, Modelo<Integer> {
 		int qtd = 0;
 		for (ClienteMatricula cm : this.getClienteMatriculaList()) {
 			if (cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTE
+					|| cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTECONSUMIDOR) {
+				qtd++;
+			}
+		}
+		return qtd;
+	}
+
+	public int getQuantidadeConsumidores() {
+		int qtd = 0;
+		for (ClienteMatricula cm : this.getClienteMatriculaList()) {
+			if (cm.getTipoContratacao() == TipoContratacaoEnum.CONSUMIDOR
 					|| cm.getTipoContratacao() == TipoContratacaoEnum.CONTRATANTECONSUMIDOR) {
 				qtd++;
 			}
@@ -536,6 +560,26 @@ public class Matricula implements Serializable, Modelo<Integer> {
 
 	public void setAnexos(List<Anexo> anexos) {
 		this.anexos = anexos;
+	}
+
+	public Double getDescontoPromocional() {
+		return descontoPromocional;
+	}
+
+	public void setDescontoPromocional(Double descontoPromocional) {
+		this.descontoPromocional = descontoPromocional;
+	}
+
+	public Integer getHorasExtras() {
+		return horasExtras;
+	}
+
+	public void setHorasExtras(Integer horasExtras) {
+		this.horasExtras = horasExtras;
+	}
+
+	public void setCalculoTotalHorasCursos(Integer calculoTotalHorasCursos) {
+		this.calculoTotalHorasCursos = calculoTotalHorasCursos;
 	}
 
 }

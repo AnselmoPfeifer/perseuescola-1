@@ -20,12 +20,12 @@
 				<p:panel id="panel_buscar">
 
 
-					<perseu:BuscaClienteComp
+					<perseu:BuscaClienteComp id="clienteBuscado"
 						cliente="#{matriculaController.clienteBuscado}" />
 							&nbsp;
 					<p:commandButton value="Buscar"
 						action="#{matriculaController.buscarMatricula}"
-						process="@this panel_buscar" update="td_matriculas" />
+						process="@this clienteBuscado" update="td_matriculas" />
 
 					<p:dataTable value="#{matriculaController.matriculaList}" var="mat"
 						resizableColumns="true" paginator="false" liveResize="true"
@@ -49,20 +49,10 @@
 
 						<p:column headerText="Ações">
 
-							<p:column style="width:5%; margin:auto;">
+							<p:column style="width:5%">
 								<p:commandButton id="selectButtonImprimir" icon="ui-icon-print"
 									title="Imprimir Contrato" oncomplete="PF('contrato').show()"
 									process="@this" update=":formMat:dialogContrato">
-									<f:setPropertyActionListener
-										target="#{matriculaController.matriculaContrato}"
-										value="#{mat}" />
-								</p:commandButton>
-								
-								<!-- BOTAO QUE LEVA PARA O UPLOAD DE ARQUIVOS -->
-
-								<p:commandButton id="buttomAnexar" icon="ui-icon-document"
-									title="Anexar arquivos" oncomplete="PF('dlgAnexar').show()"
-									process="@this" update=":formMat:dlgAnexar">
 									<f:setPropertyActionListener
 										target="#{matriculaController.matriculaContrato}"
 										value="#{mat}" />
@@ -99,39 +89,6 @@
 					</p:dataTable>
 
 				</p:panel>
-
-				<p:dialog id="dlgAnexar" widgetVar="dlgAnexar"
-					message="Anexar arquivos na matrícula" severity="alert"
-					closable="true" styleClass="order-table-header; disable-scroll"
-					draggable="true" modal="true" width="600px">
-
-						<div style="text-align: center; margin: auto;">
-							<ui:include src="anexosMatricula.xhtml" />
-						</div>
-
-					<p:separator />
-
-					<h:form id="formUpload" enctype="multipart/form-data">
-
-						<p:fileUpload prependId="true" id="fUCliente"
-							value="#{matriculaController.arquivo}" style="text-align:center"
-							fileUploadListener="#{matriculaController.enviarArquivoAnexoMatricula}"
-							dragDropSupport="false" update="messages"
-							cancelLabel="Cancelar Anexos" uploadLabel="Salvar anexos"
-							label="Anexar" sizeLimit="5000000"
-							invalidSizeMessage="Tamanho de Arquivo Inválido" fileLimit="3"
-							invalidFileMessage="Tipo de Arquivo Inválido"
-							fileLimitMessage="Tamanho muito grande. Limite: 5 MB"
-							allowTypes="/(\.|\/)(gif|jpe?g|png|doc|pdf|xls|docx|odt)$/"
-							multiple="true" auto="false" oncomplete="anexou()">
-							<p:growl id="messages" showDetail="true" />
-						</p:fileUpload>
-						
-						<p:remoteCommand name="anexou" update=":formMat:td_matriculas" oncomplete="PF('dlgAnexar').hide()"/>
-
-					</h:form>
-
-				</p:dialog>
 
 				<p:confirmDialog message="Deseja realmente remover esta matrícula ?"
 					position="center" header="Aviso" id="confirmacaoMatId"
@@ -210,6 +167,13 @@
 								que iniciará no dia
 								<h:outputText
 									value="#{matriculaController.matriculaContrato.dataPrevistaFmt}" />
+								e totalizará
+								<h:outputText
+									value="#{matriculaController.matriculaContrato.calculoTotalHorasCursos}" />
+								horas
+								<h:outputText
+									value=", mais #{matriculaController.matriculaContrato.horasExtras} horas complementares"
+									rendered="#{matriculaController.matriculaContrato.horasExtras > 0 ?true:false}" />
 								.
 							</p>
 							<p>
@@ -368,9 +332,6 @@
 
 				</p:dialog>
 
-				<h:commandButton value="Imprimir" type="button" icon="ui-icon-print">
-					<p:printer target="textoContrato" />
-				</h:commandButton>
 
 				<p:dialog id="dialogRecibo" header="Recibo" widgetVar="recibo"
 					resizable="true" modal="true" width="600" height="200"
