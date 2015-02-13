@@ -418,19 +418,25 @@
 
 					<p:panel id="panelTotais">
 						<h:panelGrid columns="9">
-							<p:outputLabel value="Total Venda:  " for="totalVenda"></p:outputLabel>
+							<p:outputLabel value="Total Venda:  " for="totalVenda"
+								style="font-size:larger;font-weight:bolder;color:red;"></p:outputLabel>
 							<p:outputLabel id="totalVenda" size="25"
-								value="#{matriculaController.totalCursosFmt}" />
+								value="#{matriculaController.totalCursosFmt}"
+								style="font-size:larger;font-weight:bolder;" />
 							<p:spacer width="20" />
 
-							<p:outputLabel value="Total Pagamentos:  " for="totalPagamentos"></p:outputLabel>
+							<p:outputLabel value="Total Pagamentos:  " for="totalPagamentos"
+								style="font-size:larger;font-weight:bolder;color:red;"></p:outputLabel>
 							<p:outputLabel id="totalPagamentos" size="25"
-								value="#{matriculaController.totalPagamentosFmt}" />
+								value="#{matriculaController.totalPagamentosFmt}"
+								style="font-size:larger;font-weight:bolder;" />
 							<p:spacer width="20" />
 
-							<p:outputLabel value="Diferença:  " for="dif"></p:outputLabel>
+							<p:outputLabel value="Diferença:  " for="dif"
+								style="font-size:larger;font-weight:bolder;color:red;"></p:outputLabel>
 							<p:outputLabel id="dif" size="25"
-								value="#{matriculaController.diferencaFmt}" />
+								value="#{matriculaController.diferencaFmt}"
+								style="font-size:larger;font-weight:bolder;" />
 						</h:panelGrid>
 					</p:panel>
 
