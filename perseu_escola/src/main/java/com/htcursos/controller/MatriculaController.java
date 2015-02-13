@@ -13,12 +13,15 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.NoResultException;
 
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.htcursos.controller.util.faces.JsfMessages;
+import com.htcursos.model.entity.Anexo;
 import com.htcursos.model.entity.Cliente;
 import com.htcursos.model.entity.ClienteMatricula;
 import com.htcursos.model.entity.Curso;
@@ -29,6 +32,7 @@ import com.htcursos.model.entity.Parcela;
 import com.htcursos.model.entity.Unidade;
 import com.htcursos.model.entity.Usuario;
 import com.htcursos.model.enums.TipoContratacaoEnum;
+import com.htcursos.model.service.AnexoService;
 import com.htcursos.model.service.ClienteMatriculaService;
 import com.htcursos.model.service.ClienteService;
 import com.htcursos.model.service.CursoMatriculaService;
@@ -41,6 +45,7 @@ import com.htcursos.model.service.UnidadeService;
 import com.htcursos.model.service.UsuarioService;
 import com.htcursos.model.util.FormataUtil;
 import com.htcursos.model.util.SessaoUtil;
+import com.htcursos.model.util.UploadDownloadJSFHelper;
 
 @Controller("matriculaController")
 @Scope("view")
@@ -102,9 +107,12 @@ public class MatriculaController implements Serializable {
 	private List<Curso> listaCursos;
 	private List<Parcela> parcelaList;
 	private List<ClienteMatricula> clienteMatriculaList = new ArrayList<ClienteMatricula>();
-
+	private UploadDownloadJSFHelper uploadHelper;
+	private UploadedFile arquivo;
 	@Autowired
 	private SessaoUtil sessaoUtil;
+	@Autowired
+	private AnexoService anexoService;
 
 	public MatriculaController() {
 
@@ -162,6 +170,44 @@ public class MatriculaController implements Serializable {
 			pagamento.setValor(diferenca);
 			cursoMatricula = new CursoMatricula();
 		}
+	}
+
+	public void enviarArquivoAnexoMatricula(FileUploadEvent event) {
+
+		setUploadHelper(new UploadDownloadJSFHelper());
+		getUploadHelper().setArquivo(event.getFile());
+
+		// Gravar no banco
+		Anexo anexo = new Anexo();
+
+		anexo.setNomeGerado(getUploadHelper().getNomeArquivoGerado());
+		anexo.setNomeOriginal(getUploadHelper().getNomeArquivo());
+		anexo.setCaminho("/uploads/" + getUploadHelper().getNomeArquivoGerado());
+		anexo.setMatricula(matriculaContrato);
+		// SALVA O ANEXO
+		try {
+			anexoService.salvar(anexo);
+		} catch (ServiceException e1) {
+			e1.printStackTrace();
+			JsfMessages
+					.adicionaMensagemErro("Não foi possível salvar o anexo: "
+							+ e1);
+		}
+
+		matriculaContrato.adicionarAnexo(anexo);
+		// SALVA A MATRICULA JA COM O ANEXO
+		try {
+			matriculaService.salvar(matriculaContrato);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			JsfMessages
+					.adicionaMensagemErro("Não foi possível salvar o anexo na matrícula: "
+							+ e);
+		}
+
+		// Enviar arquivo
+		getUploadHelper().enviarArquivo(anexo.getNomeGerado());
+
 	}
 
 	private boolean contemCurso(Curso cursoBuscado) {
@@ -230,7 +276,7 @@ public class MatriculaController implements Serializable {
 	}
 
 	public void buscarMatricula() {
-		
+
 		try {
 			matriculaList = clienteMatriculaService
 					.buscarMatriculas(clienteBuscado);
@@ -290,7 +336,7 @@ public class MatriculaController implements Serializable {
 	}
 
 	public String salvar() {
-		
+
 		// buscando clientes
 
 		for (ClienteMatricula cm : matricula.getClienteMatriculaList()) {
@@ -708,6 +754,22 @@ public class MatriculaController implements Serializable {
 
 	public void setClienteMatriculaBusca(ClienteMatricula clienteMatriculaBusca) {
 		this.clienteMatriculaBusca = clienteMatriculaBusca;
+	}
+
+	public UploadDownloadJSFHelper getUploadHelper() {
+		return uploadHelper;
+	}
+
+	public void setUploadHelper(UploadDownloadJSFHelper uploadHelper) {
+		this.uploadHelper = uploadHelper;
+	}
+
+	public UploadedFile getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(UploadedFile arquivo) {
+		this.arquivo = arquivo;
 	}
 
 }
