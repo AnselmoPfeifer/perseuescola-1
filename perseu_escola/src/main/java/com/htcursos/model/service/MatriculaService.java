@@ -70,6 +70,7 @@ public class MatriculaService extends GenericService<Matricula, Integer> impleme
 			throw new ServiceException(
 					"Insira apenas uma cliente contratante na matrícula.");
 		}
+		//MERGE FEITO
 		if (qtdConsumidores < 1||qtdConsumidores == 0) {
 			throw new ServiceException(
 					"Insira pelo menos um cliente consumidor na matrícula.");
