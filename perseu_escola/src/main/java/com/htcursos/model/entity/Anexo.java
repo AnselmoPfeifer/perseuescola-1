@@ -26,6 +26,11 @@ public class Anexo implements Serializable, Modelo<Integer> {
 	@ManyToOne
 	@JoinColumn
 	private Matricula matricula;
+	
+	@ManyToOne
+	@JoinColumn
+	private Funcionario funcionario;
+	
 	// CAMINHO DA PASTA UPLOAD
 	private String caminho;
 	// NOME GERADO
