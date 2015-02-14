@@ -184,6 +184,8 @@ public class MatriculaController implements Serializable {
 		anexo.setNomeOriginal(getUploadHelper().getNomeArquivo());
 		anexo.setCaminho("/uploads/" + getUploadHelper().getNomeArquivoGerado());
 		anexo.setMatricula(matriculaContrato);
+		// Enviar arquivo
+		getUploadHelper().enviarArquivo(anexo.getNomeGerado());
 		// SALVA O ANEXO
 		try {
 			anexoService.salvar(anexo);
@@ -204,9 +206,6 @@ public class MatriculaController implements Serializable {
 					.adicionaMensagemErro("Não foi possível salvar o anexo na matrícula: "
 							+ e);
 		}
-
-		// Enviar arquivo
-		getUploadHelper().enviarArquivo(anexo.getNomeGerado());
 
 	}
 
