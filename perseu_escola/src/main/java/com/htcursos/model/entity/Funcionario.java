@@ -44,14 +44,19 @@ public class Funcionario implements Modelo<Integer> {
 	@NotEmpty(message="Campo Nome Mãe obrigatório!")
 	private String nomeMae;
 	
+	private Date dataNascimento;
+	
+	private String cidadeNascimento;
+	
 	@JoinColumn
 	@ManyToOne
-	private Cidade cidadeNascimento;
+	private Uf ufNascimento;
 	
 	@NotEmpty(message="Campo Número Carteira de Trabalho obrigatório!")
 	private String numeroCarteiraTrabalho;
 
 	private String serieCarteiraTrabalho;
+	
 	@NotEmpty(message="Campo CPF obrigatório!")
 	private String cpf;
 	
@@ -65,13 +70,13 @@ public class Funcionario implements Modelo<Integer> {
 	private String secaoTituloEleitor;
 	
 	@NotEmpty(message="Campo UF obrigatório!")
-	private String ufTituloEleitor;
+	private Uf ufTituloEleitor;
 	
 	@NotEmpty(message="Campo RG obrigatório!")
 	private String numeroRG;
 	
 	@NotEmpty(message="Campo Órgão Emissor obrigatório!")
-	private String  OrgaoEmissorRG;
+	private String  orgaoEmissorRG;
 	
 	private Date  dataRG;
 	
@@ -177,13 +182,7 @@ public class Funcionario implements Modelo<Integer> {
 		this.nomeMae = nomeMae;
 	}
 
-	public Cidade getCidadeNascimento() {
-		return cidadeNascimento;
-	}
 
-	public void setCidadeNascimento(Cidade cidadeNascimento) {
-		this.cidadeNascimento = cidadeNascimento;
-	}
 
 	public String getNumeroCarteiraTrabalho() {
 		return numeroCarteiraTrabalho;
@@ -233,13 +232,7 @@ public class Funcionario implements Modelo<Integer> {
 		this.secaoTituloEleitor = secaoTituloEleitor;
 	}
 
-	public String getUfTituloEleitor() {
-		return ufTituloEleitor;
-	}
 
-	public void setUfTituloEleitor(String ufTituloEleitor) {
-		this.ufTituloEleitor = ufTituloEleitor;
-	}
 
 	public String getNumeroRG() {
 		return numeroRG;
@@ -249,13 +242,7 @@ public class Funcionario implements Modelo<Integer> {
 		this.numeroRG = numeroRG;
 	}
 
-	public String getOrgaoEmissorRG() {
-		return OrgaoEmissorRG;
-	}
-
-	public void setOrgaoEmissorRG(String orgaoEmissorRG) {
-		OrgaoEmissorRG = orgaoEmissorRG;
-	}
+	
 
 	public Date getDataRG() {
 		return dataRG;
@@ -425,6 +412,46 @@ public class Funcionario implements Modelo<Integer> {
 
 	public void setAnexos(List<Anexo> anexos) {
 		this.anexos = anexos;
+	}
+
+
+	public Uf getUfNascimento() {
+		return ufNascimento;
+	}
+
+
+	public void setUfNascimento(Uf ufNascimento) {
+		this.ufNascimento = ufNascimento;
+	}
+
+
+	public String getCidadeNascimento() {
+		return cidadeNascimento;
+	}
+
+
+	public void setCidadeNascimento(String cidadeNascimento) {
+		this.cidadeNascimento = cidadeNascimento;
+	}
+
+
+	public String getOrgaoEmissorRG() {
+		return orgaoEmissorRG;
+	}
+
+
+	public void setOrgaoEmissorRG(String orgaoEmissorRG) {
+		this.orgaoEmissorRG = orgaoEmissorRG;
+	}
+
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	

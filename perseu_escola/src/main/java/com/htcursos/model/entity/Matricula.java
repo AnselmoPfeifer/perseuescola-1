@@ -75,6 +75,7 @@ public class Matricula implements Serializable, Modelo<Integer> {
 	private String observacao;
 	private Integer horasExtras = 0;
 	private Double descontoPromocional = 0.0;
+	@Transient 
 	private Integer calculoTotalHorasCursos;
 
 	// Contrato
