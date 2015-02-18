@@ -57,6 +57,14 @@
 										target="#{matriculaController.matriculaContrato}"
 										value="#{mat}" />
 								</p:commandButton>
+
+								<p:commandButton id="buttomAnexar" icon="ui-icon-document"
+									title="Anexar arquivos" oncomplete="PF('dlgAnexar').show()"
+									process="@this" update=":formMat:dlgAnexar">
+									<f:setPropertyActionListener
+										target="#{matriculaController.matriculaContrato}"
+										value="#{mat}" />
+								</p:commandButton>
 							</p:column>
 
 							<!-- 								<p:column style="width:5%"> -->
@@ -89,6 +97,40 @@
 					</p:dataTable>
 
 				</p:panel>
+
+				<p:dialog id="dlgAnexar" widgetVar="dlgAnexar"
+					message="Anexar arquivos na matrícula" severity="alert"
+					closable="true" styleClass="order-table-header; disable-scroll"
+					draggable="true" modal="true" width="600px">
+
+					<div style="text-align: center; margin: auto;">
+						<ui:include src="anexosMatricula.xhtml" />
+					</div>
+
+					<p:separator />
+
+					<h:form id="formUpload" enctype="multipart/form-data">
+
+						<p:fileUpload prependId="true" id="fUCliente"
+							value="#{matriculaController.arquivo}" style="text-align:center"
+							fileUploadListener="#{matriculaController.enviarArquivoAnexoMatricula}"
+							dragDropSupport="false" update="messages"
+							cancelLabel="Cancelar Anexos" uploadLabel="Salvar anexos"
+							label="Anexar" sizeLimit="5000000"
+							invalidSizeMessage="Tamanho de Arquivo Inválido" fileLimit="3"
+							invalidFileMessage="Tipo de Arquivo Inválido"
+							fileLimitMessage="Tamanho muito grande. Limite: 5 MB"
+							allowTypes="/(\.|\/)(gif|jpe?g|png|doc|pdf|xls|docx|odt)$/"
+							multiple="true" auto="false" oncomplete="anexou()">
+							<p:growl id="messages" showDetail="true" />
+						</p:fileUpload>
+
+						<p:remoteCommand name="anexou" update=":formMat:td_matriculas"
+							oncomplete="PF('dlgAnexar').hide()" />
+
+					</h:form>
+
+				</p:dialog>
 
 				<p:confirmDialog message="Deseja realmente remover esta matrícula ?"
 					position="center" header="Aviso" id="confirmacaoMatId"
