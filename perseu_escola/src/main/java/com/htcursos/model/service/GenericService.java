@@ -23,6 +23,7 @@ public abstract class GenericService<T extends Modelo<ID> ,ID extends Serializab
 		try{
 			return getDao().salvar(o);
 		}catch(Exception e){
+			e.printStackTrace();
 			throw new ServiceException (e);
 		}
 	}

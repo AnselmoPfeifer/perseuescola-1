@@ -48,9 +48,7 @@ public class Funcionario implements Modelo<Integer> {
 	
 	private String cidadeNascimento;
 	
-	@JoinColumn
-	@ManyToOne
-	private Uf ufNascimento;
+	private String ufNascimento;
 	
 	@NotEmpty(message="Campo Número Carteira de Trabalho obrigatório!")
 	private String numeroCarteiraTrabalho;
@@ -69,8 +67,8 @@ public class Funcionario implements Modelo<Integer> {
 	@NotEmpty(message="Campo Seção obrigatório!")
 	private String secaoTituloEleitor;
 	
-	@NotEmpty(message="Campo UF obrigatório!")
-	private Uf ufTituloEleitor;
+	@NotEmpty(message="Campo UF Título de Eleitor obrigatório!")
+	private String ufTituloEleitor;
 	
 	@NotEmpty(message="Campo RG obrigatório!")
 	private String numeroRG;
@@ -94,7 +92,10 @@ public class Funcionario implements Modelo<Integer> {
 	
 	private String numeroPis;
 
+	@Enumerated(EnumType.ORDINAL)
 	private GrauInstrucaoEnum grauInstrucao;
+	
+	private String casado = "false";
 	
 	private String nomeConjugue;
 	
@@ -415,12 +416,12 @@ public class Funcionario implements Modelo<Integer> {
 	}
 
 
-	public Uf getUfNascimento() {
+	public String getUfNascimento() {
 		return ufNascimento;
 	}
 
 
-	public void setUfNascimento(Uf ufNascimento) {
+	public void setUfNascimento(String ufNascimento) {
 		this.ufNascimento = ufNascimento;
 	}
 
@@ -452,6 +453,68 @@ public class Funcionario implements Modelo<Integer> {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+
+	public Endereco getEndereco() {
+		if (endereco == null)
+			endereco = new Endereco();
+		return endereco;
+	}
+
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+
+	public Unidade getUnidade() {
+		return unidade;
+	}
+
+
+	public void setUnidade(Unidade unidade) {
+		this.unidade = unidade;
+	}
+
+
+	public String getUfTituloEleitor() {
+		return ufTituloEleitor;
+	}
+
+
+	public void setUfTituloEleitor(String ufTituloEleitor) {
+		this.ufTituloEleitor = ufTituloEleitor;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public TipoSexoEnum getSexo() {
+		return sexo;
+	}
+
+
+	public void setSexo(TipoSexoEnum sexo) {
+		this.sexo = sexo;
+	}
+
+
+	public String getCasado() {
+		return casado;
+	}
+
+
+	public void setCasado(String casado) {
+		this.casado = casado;
 	}
 
 	
