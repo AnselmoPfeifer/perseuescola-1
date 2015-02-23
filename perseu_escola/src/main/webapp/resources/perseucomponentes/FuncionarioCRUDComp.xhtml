@@ -86,6 +86,14 @@
 								<p:inputText
 									value="#{funcionarioController.funcionario.ufNascimento}" />
 
+								<h:outputLabel value="Grau de instrução " />
+								<p:selectOneMenu id="grauInstrucao"
+									value="#{funcionarioController.funcionario.grauInstrucao}">
+									<f:selectItems
+										value="#{funcionarioController.grauInstrucaoValues}" var="g"
+										itemValue="#{g}" itemLabel="#{g.label}" />
+								</p:selectOneMenu>
+
 								<h:outputLabel for="nomePai" value="Nome Pai:" />
 								<p:inputText id="nomePai"
 									value="#{funcionarioController.funcionario.nomePai}" size="50">
@@ -109,6 +117,20 @@
 									value="#{funcionarioController.funcionario.nomeConjugue}"
 									size="50">
 								</p:inputText>
+
+								<h:outputLabel value="Residência própria" />
+								<p:selectOneRadio id="selectRadioResidenciaPropria"
+									value="#{funcionarioController.funcionario.residenciaPropria}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</p:selectOneRadio>
+
+								<h:outputLabel value="Imóvel adiquirido pelo FGTS" />
+								<p:selectOneRadio id="selectRadioImovelAdquiridoFGTS"
+									value="#{funcionarioController.funcionario.imovelAdquiridoFGTS}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</p:selectOneRadio>
 
 								<!-- 								<h:outputLabel value="Residência própria:" /> -->
 								<!-- 								<p:selectOneRadio id="selectRadioResidenciaPropria" -->
@@ -314,6 +336,24 @@
 								<p:inputText size="30"
 									value="#{funcionarioController.funcionario.funcao}" />
 
+								<h:outputLabel value="Dias de experiência: " />
+								<p:selectOneMenu id="diasExperiencia"
+									value="#{funcionarioController.funcionario.diasExperiencia}">
+									<f:selectItems
+										value="#{funcionarioController.diasExperienciaValues}" var="d"
+										itemValue="#{d}" itemLabel="#{d.label}" />
+								</p:selectOneMenu>
+
+								<h:outputLabel value="Admissao por contrato de experiência" />
+								<p:selectOneRadio id="selectRadioAdmissaoPorContratoExperiencia"
+									value="#{funcionarioController.funcionario.admissaoPorContratoExperiencia}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</p:selectOneRadio>
+								
+								<h:outputLabel value="Class. Bra. de Ocupação" />
+								<p:inputText size="30" type="number"
+									value="#{funcionarioController.funcionario.cbo}" />
 
 								<h:outputLabel value="Data de Adimissão:" size="4" />
 								<p:calendar

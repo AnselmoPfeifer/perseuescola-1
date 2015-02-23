@@ -13,8 +13,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.htcursos.controller.util.faces.JsfMessages;
+import com.htcursos.model.entity.DiasExperienciaEnum;
 import com.htcursos.model.entity.Funcionario;
 import com.htcursos.model.entity.EnumCamisetas;
+import com.htcursos.model.entity.GrauInstrucaoEnum;
 import com.htcursos.model.enums.TipoSexoEnum;
 import com.htcursos.model.service.FuncionarioService;
 import com.htcursos.model.service.ServiceException;
@@ -102,6 +104,14 @@ public class FuncionarioController implements Serializable {
 	// Enums
 	public TipoSexoEnum[] getTipoSexoValues() {
 		return TipoSexoEnum.values();
+	}
+	
+	public DiasExperienciaEnum[] getDiasExperienciaValues() {
+		return DiasExperienciaEnum.values();
+	}
+	
+	public GrauInstrucaoEnum[] getGrauInstrucaoValues() {
+		return GrauInstrucaoEnum.values();
 	}
 
 	public EnumCamisetas[] getCamisetas() {
