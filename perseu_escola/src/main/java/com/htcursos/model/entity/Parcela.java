@@ -47,7 +47,11 @@ public class Parcela implements Serializable, Modelo<Integer> {
 	@Column(name="STATUS")
 	private StatusParcelaEnum status = StatusParcelaEnum.ABERTO;
 	
-	private Double valorpago;
+	
+	private BigDecimal valorAtualizado;
+	private BigDecimal valorpago;
+	
+	
 	@Temporal(TemporalType.DATE)
 	private Date dtEmissao;
 	
@@ -108,11 +112,11 @@ public class Parcela implements Serializable, Modelo<Integer> {
 	}
 
 
-	public Double getValorpago() {
+	public BigDecimal getValorpago() {
 		return valorpago;
 	}
 
-	public void setValorpago(Double valorpago) {
+	public void setValorpago(BigDecimal valorpago) {
 		this.valorpago = valorpago;
 	}
 
@@ -187,6 +191,14 @@ public class Parcela implements Serializable, Modelo<Integer> {
 		} else if (!valor.equals(other.valor))
 			return false;
 		return true;
+	}
+
+	public BigDecimal getValorAtualizado() {
+		return valorAtualizado;
+	}
+
+	public void setValorAtualizado(BigDecimal valorAtualizado) {
+		this.valorAtualizado = valorAtualizado;
 	}
 
 	

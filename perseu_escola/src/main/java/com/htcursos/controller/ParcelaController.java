@@ -1,23 +1,25 @@
 package com.htcursos.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.view.ViewScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.htcursos.controller.util.faces.JsfMessages;
 import com.htcursos.model.entity.Parcela;
+import com.htcursos.model.entity.StatusParcelaEnum;
+import com.htcursos.model.entity.TipoParcelaBaixaEnum;
 import com.htcursos.model.service.ParcelaService;
 import com.htcursos.model.service.ServiceException;
 
 @Controller("parcelaController")
-@Scope("view")
+@ViewScoped
 @ManagedBean
 public class ParcelaController implements Serializable {
 
@@ -26,37 +28,81 @@ public class ParcelaController implements Serializable {
 	@Autowired
 	private ParcelaService parcelaService;
 	private Parcela parcela = new Parcela();
-
-	// dados da tela
-	private Parcela parcelaExcluir;
+	private Parcela parcelaSelecionada = new Parcela();
+	private boolean colunaValorAtualizado = false;
 
 	private List<Parcela> parcelaList;
+	private List<Parcela> parcelaRecebidaList;
 
 	@PostConstruct
 	protected void init() {
-		atualiza();
+		atualizaListas();
 	}
 
 	public void salvar() {
 		try {
+			JsfMessages.adicionaMensagemInfo("Parcela Paga");
 			parcelaService.salvar(parcela);
-			atualiza();
+			atualizaListas();
 			parcela = new Parcela();
-			JsfMessages.adicionaMensagemInfo("Parcela salvo");
 		} catch (ServiceException e) {
 			JsfMessages.adicionaMensagemErro(e.getMessage());
 		}
 
 	}
 
-	public void excluir() {
-		// remove do banco
-		getParcelaService().excluir(parcelaExcluir.getId());
+	/** Salva a nova parcela parcial gerada no banco
+	 * @param parcela
+	 */
+	public void salvarNovaParcela(Parcela parcela) {
+		try {
+			parcelaService.salvar(parcela);
+			JsfMessages.adicionaMensagemInfo("Nova Parcela Gerada");
+		} catch (ServiceException e) {
+			JsfMessages.adicionaMensagemErro(e.getMessage());
+		}
+
+	}
+
+	public void excluir(Parcela parcela) {
 		// removendo da ArrayLista para evitar uma nova consulta
-		parcelaList.remove(parcelaExcluir);
-		parcelaExcluir = null;
+		parcelaService.excluir(parcela);
+		atualizaListas();
 		JsfMessages.adicionaMensagemInfo("Parcela removido");
 
+	}
+
+
+	/** Faz a baixa da parcela
+	 * 
+	 */
+	public void baixarParcela() {
+		setColunaValorAtualizado(false);
+		if (parcelaService.verificaPagamentoNoVencimento(parcela)) {
+			if (parcelaService.verificaValorPagoInteiro(parcela)) {
+				salvar();
+			} else {
+				salvarNovaParcela(parcelaService.geraNovaParcela(parcela));
+				salvar();
+			}
+		} else {
+			if (parcelaService.verificaValorPagoInteiro(parcela)) {
+				salvar();
+			} else {
+				JsfMessages.adicionaMensagemErro("Parcela não foi Paga");
+			}
+		}
+	}
+
+
+	/**
+	 * Atualiza o valor atualizado da parcela
+	 * */
+	public void atualizaValorAPagar() {
+		if (parcela.getDatabaixa() != null) {
+			parcelaService.insereValorAtualizadoNaParcela(parcela);
+			setColunaValorAtualizado(true);
+		}
 	}
 
 	public void cancelar() {
@@ -67,15 +113,25 @@ public class ParcelaController implements Serializable {
 		this.parcela = parcela;
 	}
 
-	public List<Parcela> getParcelaList() {
-		return getParcelaService().buscarTodos();
+	/**
+	 * Atualiza lista de parcelas
+	 * */
+	public void atualizaListas() {
+		List<Parcela> parcelaListTemp = getParcelaService().buscarTodos();
+		parcelaRecebidaList = new ArrayList<Parcela>();
+		setParcelaList(new ArrayList<Parcela>());
+		for (int i = 0; i < parcelaListTemp.size(); i++) {
+			if (parcelaListTemp.get(i).getStatus()
+					.equals(StatusParcelaEnum.LIQUIDADO) || parcelaListTemp.get(i).getStatus()
+					.equals(StatusParcelaEnum.RECEBIMENTO_PARCIAL) ) {
+				parcelaRecebidaList.add(parcelaListTemp.get(i));
+				continue;
+			} else {
+				getParcelaList().add(parcelaListTemp.get(i));
+			}
+		}
 	}
 
-	public void atualiza() {
-		parcelaList = getParcelaService().buscarTodos();
-	}
-
-	// getter and setters
 	public ParcelaService getParcelaService() {
 		return parcelaService;
 	}
@@ -92,15 +148,35 @@ public class ParcelaController implements Serializable {
 		this.parcela = parcela;
 	}
 
-	public Parcela getParcelaExcluir() {
-		return parcelaExcluir;
+	public List<Parcela> getParcelaRecebidaList() {
+		return parcelaRecebidaList;
 	}
 
-	public void setParcelaExcluir(Parcela parcelaExcluir) {
-		this.parcelaExcluir = parcelaExcluir;
+	public void setParcelaRecebidaList(List<Parcela> parcelaRecebidaList) {
+		this.parcelaRecebidaList = parcelaRecebidaList;
+	}
+
+	public List<Parcela> getParcelaList() {
+		return parcelaList;
 	}
 
 	public void setParcelaList(List<Parcela> parcelaList) {
 		this.parcelaList = parcelaList;
+	}
+
+	public boolean isColunaValorAtualizado() {
+		return colunaValorAtualizado;
+	}
+
+	public void setColunaValorAtualizado(boolean colunaValorAtualizado) {
+		this.colunaValorAtualizado = colunaValorAtualizado;
+	}
+
+	public Parcela getParcelaSelecionada() {
+		return parcelaSelecionada;
+	}
+
+	public void setParcelaSelecionada(Parcela parcelaSelecionada) {
+		this.parcelaSelecionada = parcelaSelecionada;
 	}
 }

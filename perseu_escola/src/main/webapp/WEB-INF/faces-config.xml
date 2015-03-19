@@ -23,4 +23,9 @@
   <converter-class>javax.faces.convert.EnumConverter</converter-class>
 </converter>
 
+<converter>
+	<converter-id>moedaConverter</converter-id>
+	<converter-class>com.htcursos.model.util.MoedaConverter</converter-class>
+</converter>
+
 </faces-config>

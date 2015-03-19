@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,7 +92,12 @@ public abstract class GenericDAO<T extends Modelo<ID> ,ID extends Serializable> 
 	
 	@Transactional
 	public void excluir(T obj){
-		em.remove(obj);
+		try {
+			em.remove(get(obj.getId()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Transactional

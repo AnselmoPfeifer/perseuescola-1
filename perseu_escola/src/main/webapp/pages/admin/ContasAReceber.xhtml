@@ -7,21 +7,21 @@
 
 <ui:composition template="/comum/templates.xhtml">
 	<ui:define name="content">
-	
-	<p:growl id="mensagens" />
+
+		<p:growl id="mensagens" />
 		<p:accordionPanel multiple="true">
 			<p:tab title="Opcoes de busca">
-			<h:form id="Busca">
-				
-					<h:panelGrid columns="6" cellpadding="5" >
+				<h:form id="Busca">
+
+					<h:panelGrid columns="6" cellpadding="5">
 						<h:outputLabel for="tipoCli" value="TipoCli:" />
 						<h:outputLabel for="descTipo" value="DescTipo:" />
 						<h:outputLabel for="cliente" value="Cliente:" />
-						
+
 						<h:outputLabel for="dtInicial" value="Data Inicial:" />
 						<h:outputLabel for="dtFinal" value="Data Final:" />
 						<h:outputLabel for="buscar" value="Buscar:" />
-					
+
 						<p:selectOneMenu value="#{salaController.sala.unidade}"
 							effect="fade" converter="#{unidadeConverter}" required="true">
 							<f:selectItem itemLabel="Selecione uma opcao" itemValue=""
@@ -32,84 +32,170 @@
 						</p:selectOneMenu>
 						<p:inputText size="3" id="cpfCnpj" value="" />
 						<p:inputText size="3" id="cliente" value="" />
-						
-					
-						<p:calendar id="popupButtonCalInicial" showOn="button" validator="#{ValidarDatas.validateBeginDate}" locale="pt"  navigator="true" showButtonPanel="true" >
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+
+
+						<p:calendar id="popupButtonCalInicial" showOn="button"
+							validator="#{ValidarDatas.validateBeginDate}" locale="pt"
+							navigator="true" showButtonPanel="true">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 						</p:calendar>
-						<p:calendar id="popupButtonCalFinal" showOn="button" validator="#{ValidarDatas.validateEndDate}" locale="pt"  navigator="true" showButtonPanel="true" >
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+						<p:calendar id="popupButtonCalFinal" showOn="button"
+							validator="#{ValidarDatas.validateEndDate}" locale="pt"
+							navigator="true" showButtonPanel="true">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 						</p:calendar>
 						<p:commandButton value="Buscar" icon="ui-icon-pencil"
 							update="@form" />
 					</h:panelGrid>
-			</h:form>
-				</p:tab>
+				</h:form>
+			</p:tab>
 
-			<p:tab title="Lista Conta a Receber">
-				<h:form>
+			<p:tab title="Lista Conta a Receber" id="tab1">
+				<h:form id="formLista">
 
 					<h:outputText value="Parcelas"></h:outputText>
-					<p:dataTable id="dtParcelas" var="u" rows="13"
+					<p:dataTable id="dtParcelas" var="u" rows="10"
 						paginatorAlwaysVisible="false"
 						value="#{parcelaController.parcelaList}" style="width: 10%"
-						paginator="true">
+						paginator="true" rowKey="#{u.id}" selectionMode="single">
 
 						<p:column sortBy="#{u.dtEmissao}" headerText="Dt Emissao">
 							<h:outputText value="#{u.dtEmissao}" />
 						</p:column>
 
-						<p:column sortBy="#{u.datavencimento}" headerText="dt.Vencimento" width="100">
-							<h:outputText value="#{u.datavencimento}" />
+						<p:column sortBy="#{u.datavencimento}" headerText="dt.Vencimento"
+							width="100">
+							<h:outputText value="#{u.datavencimento}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</h:outputText>
 						</p:column>
 
 						<p:column headerText="Cliente Contratante" width="100">
-							<h:outputText value="#{u.clienteContratante.nome}" />
+							<h:outputText value="#{u.pagamento.matricula.contratante.nome}" />
 						</p:column>
 
 						<p:column headerText="Forma Pgto" width="100">
-							<h:outputText value="#{u.formapagamento.descricao}" />
+							<h:outputText value="#{u.pagamento.formaPagamento.descricao}" />
 						</p:column>
 
 						<p:column headerText="Valor" width="100">
-							<h:outputText value="#{u.valor}" />
-						</p:column>
-
-						<p:column headerText="Valor Juros" width="100">
-							<h:outputText value="#{u.valor}" />
-						</p:column>
-
-						<p:column headerText="Valor a receber" width="100">
-							<h:outputText value="#{u.valor}" />
+							<h:outputText value="R$ #{u.valor}" />
 						</p:column>
 
 						<p:column headerText="Status" width="100">
 							<h:outputText value="#{u.status}" />
 						</p:column>
 
-						<p:column headerText="Dt Pagamento" width="100">
-							<h:outputText value="#{u.databaixa}" />
-						</p:column>
-
 						<p:column headerText="Ações" width="100">
 							<p:commandButton icon="ui-icon-pencil" alt="Detalhes"
-								title="Excluir cartao" oncomplete="confirmacao.show()">
-
+								title="Excluir cartao" onclick="#{parcelaController.excluir(u)}"
+								update="@form">
 							</p:commandButton>
 
 							<p:commandButton icon="ui-icon-cart" alt="Cobranca"
 								title="Cobranca" action="#{cartaoController.editar(u)}"
 								update="@form">
 							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-circle-arrow-s" alt="baixaParcela"
+								id="botaoBaixa" oncomplete="PF('baixaParcelaDialog').show()"
+								title="Baixa Parcela"
+								action="#{parcelaController.setParcela(u)}" update="@form">
+
+
+							</p:commandButton>
+
 						</p:column>
+
 					</p:dataTable>
 
+
+					<p:dialog id="baixaParcelaID" header="Baixar Parcela"
+						widgetVar="baixaParcelaDialog" resizable="true" modal="true"
+						width="40%" height="100">
+
+
+						<p:panelGrid columns="2" id="gridParcDet">
+
+
+							<p:outputLabel
+								value="#{parcelaController.parcela.datavencimento}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</p:outputLabel>
+
+							<p:calendar showOn="button" navigator="true"
+								showButtonPanel="true"
+								value="#{parcelaController.parcela.databaixa}" size="8">
+								<p:ajax event="dateSelect"
+									listener="#{parcelaController.atualizaValorAPagar()}"
+									update="gridParcDet" />
+
+							</p:calendar>
+						</p:panelGrid>
+
+					</p:dialog>
+
+				</h:form>
+			</p:tab>
+
+			<p:tab title="Lista Conta(s) recebida(s)" id="tapParcelaRecebidaID">
+				<h:form id="formListaContaRecebidas">
+
+					<h:outputText value="Parcelas"></h:outputText>
+
+					<p:dataTable id="dtParcelasRecebidas" var="u" rows="13"
+						paginatorAlwaysVisible="false"
+						value="#{parcelaController.parcelaRecebidaList}"
+						style="width: 10%" paginator="true">
+
+						<p:column sortBy="#{u.dtEmissao}" headerText="Dt Emissao">
+							<h:outputText value="#{u.dtEmissao}" />
+						</p:column>
+
+						<p:column sortBy="#{u.datavencimento}" headerText="dt.Vencimento"
+							width="100">
+							<h:outputText value="#{u.datavencimento}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Cliente Contratante" width="100">
+							<h:outputText value="#{u.pagamento.matricula.contratante.nome}" />
+						</p:column>
+
+						<p:column headerText="Forma Pgto" width="100">
+							<h:outputText value="#{u.pagamento.formaPagamento.descricao}" />
+						</p:column>
+
+						<p:column headerText="Valor" width="100">
+							<h:outputText value="R$ #{u.valor}" />
+						</p:column>
+
+						<p:column headerText="Valor Atualizado" width="100">
+							<h:outputText value="R$ #{u.valorAtualizado}" />
+						</p:column>
+
+						<p:column headerText="Valor Pago" width="100">
+							<p:outputLabel value="R$ #{u.valorpago}" />
+						</p:column>
+
+						<p:column headerText="Status" width="100">
+							<h:outputText value="#{u.status}" />
+						</p:column>
+
+						<p:column sortBy="#{u.databaixa}" headerText="Dt Pagamento"
+							width="100">
+							<h:outputText value="#{u.databaixa}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
 
 				</h:form>
 			</p:tab>
 		</p:accordionPanel>
 
-
 	</ui:define>
 </ui:composition>
+
 </html>
