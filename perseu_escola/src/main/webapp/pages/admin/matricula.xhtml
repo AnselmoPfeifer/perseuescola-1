@@ -121,7 +121,8 @@
 						var="c" rows="3" style="width: 100%">
 
 						<p:column colspan="1" headerText="Cpf">
-							<h:outputText value="#{c.cliente.pfCpf}" />
+							<!--  <h:outputText value="#{c.cliente.pfCpf}" /> -->
+							<h:outputText value="#{c.cliente.CPFCNPJStr}" />
 						</p:column>
 
 						<p:column colspan="1" headerText="Nome">
