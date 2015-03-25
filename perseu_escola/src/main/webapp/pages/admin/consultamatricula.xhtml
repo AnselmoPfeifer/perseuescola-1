@@ -103,6 +103,24 @@
 					closable="true" styleClass="order-table-header; disable-scroll"
 					draggable="true" modal="true" width="600px">
 
+					<p:panel header="Vizualizar">
+
+						<!-- 						<p:contentFlow value="#{matriculaController.matriculaContrato.anexos}" var="anexo"> -->
+						<!-- 							<p:graphicImage name="#{anexo.caminho}" -->
+						<!-- 								styleClass="content" /> -->
+						<!-- 							<div class="caption">#{anexo.nomeGerado}</div> -->
+						<!-- 						</p:contentFlow> -->
+
+						<!-- 						<p:galleria value="#{matriculaController.matriculaContrato.anexos}" var="anexo" -->
+						<!-- 							panelWidth="500" panelHeight="313" showCaption="true" style="margin:auto;"> -->
+						<!-- 							<p:graphicImage name="#{anexo.caminho}" -->
+						<!-- 								alt="" title="#{anexo.nomeOriginal}" /> -->
+						<!-- 						</p:galleria> -->
+
+					</p:panel>
+
+					<p:separator />
+
 					<div style="text-align: center; margin: auto;">
 						<ui:include src="anexosMatricula.xhtml" />
 					</div>
@@ -116,7 +134,7 @@
 							fileUploadListener="#{matriculaController.enviarArquivoAnexoMatricula}"
 							dragDropSupport="false" update="messages"
 							cancelLabel="Cancelar Anexos" uploadLabel="Salvar anexos"
-							label="Anexar" sizeLimit="5000000"
+							label="Anexar" sizeLimit="10000000"
 							invalidSizeMessage="Tamanho de Arquivo Inválido" fileLimit="3"
 							invalidFileMessage="Tipo de Arquivo Inválido"
 							fileLimitMessage="Tamanho muito grande. Limite: 5 MB"

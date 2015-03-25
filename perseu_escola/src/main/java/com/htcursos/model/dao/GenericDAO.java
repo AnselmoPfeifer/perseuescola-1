@@ -51,6 +51,8 @@ public abstract class GenericDAO<T extends Modelo<ID> ,ID extends Serializable> 
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<T> buscarTodos() {
+		
+		//TODO colocar "select"?
 
 		List list = (List) em.createQuery("from " + tipo.getName() + " t order by t.id ").getResultList();
 		if (list == null || list.size() == 0) {

@@ -25,6 +25,11 @@
 			url="#{request.contextPath}/../pages/admin/unidade.xhtml"></p:menuitem>
 		<p:menuitem value="Cliente"
 			url="#{request.contextPath}/../pages/admin/cliente.xhtml"></p:menuitem>
+
+		<p:menuitem value="Funcionário"
+			url="#{request.contextPath}/../pages/admin/funcionario.xhtml"></p:menuitem>
+
+
 		<p:menuitem value="Curso"
 			url="#{request.contextPath}/../pages/admin/curso.xhtml"></p:menuitem>
 		<p:menuitem value="Contato"
@@ -43,22 +48,22 @@
 	<p:submenu label="Matrícula">
 		<p:menuitem value="Nova"
 			url="#{request.contextPath}/../pages/admin/matricula.xhtml"></p:menuitem>
-			<p:menuitem value="Consultar"
+		<p:menuitem value="Consultar"
 			url="#{request.contextPath}/../pages/admin/consultamatricula.xhtml"></p:menuitem>
 	</p:submenu>
 	<p:submenu label="Financeiro">
-	
-	<p:menuitem value="Contas a Receber"
+
+		<p:menuitem value="Contas a Receber"
 			url="#{request.contextPath}/../pages/admin/ContasAReceber.xhtml"></p:menuitem>
-	
+
 	</p:submenu>
-	
-		<p:menuitem value="Sair"
-					url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" />
-			
-			
-			
-	
+
+	<p:menuitem value="Sair"
+		url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" />
+
+
+
+
 </p:menubar>
 
 </html>

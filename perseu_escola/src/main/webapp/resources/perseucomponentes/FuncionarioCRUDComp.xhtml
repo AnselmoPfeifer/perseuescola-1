@@ -20,7 +20,7 @@
 
 
 
-		<h:form id="frmFuncionario">
+		<h:form id="frmFuncionario" style="margin:auto;">
 
 			<p:growl id="mensagens" />
 			<p:tabView id="tabView">
@@ -28,41 +28,15 @@
 
 
 
-					<p:panelGrid columns="2">
-						<p:panel header="Dados do Funcionario">
+					<p:panelGrid columns="1" style="margin:auto;">
+						<p:panel header="Dados do Funcionario" style="margin:auto;">
 
 
 							<p:panelGrid columns="2" id="panelFuncionario">
-							 
-							
-
 								<h:outputLabel for="id" value="Id:" />
 								<p:inputText readonly="true" size="5" id="id" disabled="true"
 									value="#{funcionarioController.funcionario.id}">
 									<f:converter converterId="javax.faces.Integer" />
-								</p:inputText>
-								
-								<p:outputLabel for="tipoFuncionarioEnum" value="Tipo:" />
-
-								<p:selectOneRadio id="tipoFuncionarioEnum"
-									value="#{funcionarioController.funcionario.tipo}">
-									<f:selectItems value="#{funcionarioController.tipoFuncionarioValor}"
-										var="t" itemValue="#{t}" itemLabel="#{t.label}" />
-									<p:ajax update="panelFuncionario" event="change" />
-								</p:selectOneRadio>
-
-								<h:outputLabel for="nome" value="Nome:" />
-								<p:inputText id="nome" value="#{funcionarioController.funcionario.nome}"
-									size="50" >
-									
-
-								</p:inputText>
-
-
-								<h:outputLabel for="email" value="E-mail:" />
-								<p:inputText id="email"
-									value="#{funcionarioController.funcionario.email}" size="50" >
-
 								</p:inputText>
 
 								<h:outputLabel value="Unidade:" />
@@ -76,97 +50,225 @@
 										itemValue="#{unidade}" />
 								</p:selectOneMenu>
 
-								<h:outputLabel value="Data Nasc:" size="4" />
-								<p:calendar
-									value="#{funcionarioController.funcionario.pfDatanascimento}"
-									id="popupButtonCal" pattern="dd/MM/yyyy" locale="pt_BR" />
+								<!-- Informações pessoais -->
 
-								
-
-								<!-- 							Dados caso seja Pessoa Física -->
-
-
-
-								<!-- 						</p:panelGrid> -->
-
-								<!--                              <p:panelGrid id="panelPFFuncionario" columns="4" > -->
-								<h:outputLabel id="cpfLabel" for="pfCpf" value="CPF: "
-									rendered="#{funcionarioController.funcionario.tipo == 'PF' ? true : false}" />
-								<p:inputMask id="pfCpf" mask="999.999.999-99"
-									rendered="#{funcionarioController.funcionario.tipo == 'PF' ? true : false}"
-									required="true" requiredMessage="É Necessário Informar o CPF"
-									onblur="validarCPF(this.value)"
-									onkeypress="mascara(this, cpf_mask)"
-									value="#{funcionarioController.funcionario.pfCpf}" size="14">
-								
-
-								</p:inputMask>
-
-								<h:outputLabel id="rgLabel" for="pfRg" value="Rg:"
-									rendered="#{funcionarioController.funcionario.tipo == 'PF' ? true : false}" />
-								<p:inputText id="pfRg" value="#{funcionarioController.funcionario.pfRg}"
-									rendered="#{funcionarioController.funcionario.tipo == 'PF' ? true : false}"
-									size="18">
-								
+								<h:outputLabel for="nome" value="Nome:" />
+								<p:inputText id="nome"
+									value="#{funcionarioController.funcionario.nome}" size="50">
 								</p:inputText>
 
-
-
-								<h:outputLabel value="Sexo:"
-									rendered="#{funcionarioController.funcionario.tipo == 'PF' ? true : false}" />
+								<h:outputLabel value="Sexo:" />
 								<p:selectOneMenu id="tipoSexoEnum"
-									rendered="#{funcionarioController.funcionario.tipo == 'PF' ? true : false}"
 									value="#{funcionarioController.funcionario.sexo}">
 									<f:selectItems value="#{funcionarioController.tipoSexoValues}"
 										var="s" itemValue="#{s}" itemLabel="#{s.label}" />
 								</p:selectOneMenu>
 
-								<h:outputLabel value="Camiseta"
-									rendered="#{funcionarioController.funcionario.tipo == 'PF' ? true : false}" />
-								<p:selectOneMenu id="camiseta"
-									rendered="#{funcionarioController.funcionario.tipo == 'PF' ? true : false}"
-									value="#{funcionarioController.funcionario.camiseta}">
-									<f:selectItems value="#{funcionarioController.camisetas}" />
-								</p:selectOneMenu>
-								<!--                             </p:panelGrid> -->
+								<h:outputLabel for="email" value="E-mail:" />
+								<p:inputText id="email"
+									value="#{funcionarioController.funcionario.email}" size="50">
+								</p:inputText>
 
-								<!--                         Pessoa Juridica -->
-								<!--                          <p:panelGrid id="panelPJFuncionario" columns="4"> -->
-								<h:outputLabel id="cnpjLabel" for="pjCnpj" value="CNPJ: "
-									rendered="#{funcionarioController.funcionario.tipo == 'PJ' ? true : false}" />
-								<p:inputMask id="pjCnpj" mask="99.999.999/9999-99"
-									rendered="#{funcionarioController.funcionario.tipo == 'PJ' ? true : false}"
+								<h:outputLabel value="Data Nasc:" size="4" />
+								<p:calendar
+									value="#{funcionarioController.funcionario.dataNascimento}"
+									id="dataNascimento" pattern="dd/MM/yyyy" locale="pt_BR" />
+
+
+								<h:outputLabel for="cidadeNasc" value="Cidade Nascimento:" />
+								<p:inputText id="cidadeNasc"
+									value="#{funcionarioController.funcionario.cidadeNascimento}"
+									size="50">
+
+								</p:inputText>
+
+								<h:outputLabel for="ufNasc" value="UF Nascimento:" />
+								<p:inputText
+									value="#{funcionarioController.funcionario.ufNascimento}" />
+
+								<h:outputLabel value="Grau de instrução " />
+								<p:selectOneMenu id="grauInstrucao"
+									value="#{funcionarioController.funcionario.grauInstrucao}">
+									<f:selectItems
+										value="#{funcionarioController.grauInstrucaoValues}" var="g"
+										itemValue="#{g}" itemLabel="#{g.label}" />
+								</p:selectOneMenu>
+
+								<h:outputLabel for="nomePai" value="Nome Pai:" />
+								<p:inputText id="nomePai"
+									value="#{funcionarioController.funcionario.nomePai}" size="50">
+								</p:inputText>
+
+								<h:outputLabel for="nomeMae" value="Nome Mãe:" />
+								<p:inputText id="nomeMae"
+									value="#{funcionarioController.funcionario.nomeMae}" size="50">
+								</p:inputText>
+
+								<h:outputLabel value="Casado:" />
+								<p:selectOneRadio id="selectRadioCasado"
+									value="#{funcionarioController.funcionario.casado}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</p:selectOneRadio>
+
+								<h:outputLabel for="nomeConjugue" value="Nome do cônjuge:"
+									id="outLabelNomeConjugue" />
+								<p:inputText id="nomeConjugue"
+									value="#{funcionarioController.funcionario.nomeConjugue}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel value="Residência própria" />
+								<p:selectOneRadio id="selectRadioResidenciaPropria"
+									value="#{funcionarioController.funcionario.residenciaPropria}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</p:selectOneRadio>
+
+								<h:outputLabel value="Imóvel adiquirido pelo FGTS" />
+								<p:selectOneRadio id="selectRadioImovelAdquiridoFGTS"
+									value="#{funcionarioController.funcionario.imovelAdquiridoFGTS}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</p:selectOneRadio>
+
+								<!-- 								<h:outputLabel value="Residência própria:" /> -->
+								<!-- 								<p:selectOneRadio id="selectRadioResidenciaPropria" -->
+								<!-- 									value="#{funcionarioController.funcionario.residenciaPropria}"> -->
+								<!-- 									<f:selectItem itemLabel="SIM" itemValue="true" /> -->
+								<!-- 									<f:selectItem itemLabel="NÃO" itemValue="false" /> -->
+								<!-- 								</p:selectOneRadio> -->
+
+								<!-- 								<h:outputLabel value="Imóvel adiquirido do FGTS:" /> -->
+								<!-- 								<p:selectOneRadio id="selecImovelFgts" -->
+								<!-- 									value="#{funcionarioController.funcionario.imovelAdquiridoFGTS}"> -->
+								<!-- 									<f:selectItem itemLabel="SIM" itemValue="true" /> -->
+								<!-- 									<f:selectItem itemLabel="NÃO" itemValue="false" /> -->
+								<!-- 								</p:selectOneRadio> -->
+
+								<!-- Documentos Pessoais -->
+
+								<h:outputLabel id="cpfLabel" for="pfCpf" value="CPF: " />
+								<p:inputMask id="pfCpf" mask="999.999.999-99" required="true"
+									requiredMessage="É Necessário Informar o CPF"
 									onblur="validarCPF(this.value)"
 									onkeypress="mascara(this, cpf_mask)"
-									value="#{funcionarioController.funcionario.pjCnpj}" size="18">
-									<f:validateLength minimum="1" />
+									value="#{funcionarioController.funcionario.cpf}" size="14">
 
 								</p:inputMask>
 
-								<h:outputLabel id="rsLabel" for="pjRs" value="Razão Social:"
-									rendered="#{funcionarioController.funcionario.tipo == 'PJ' ? true : false}" />
-								<p:inputText id="pjRs"
-									value="#{funcionarioController.funcionario.pjRazaoSocial}"
-									rendered="#{funcionarioController.funcionario.tipo == 'PJ' ? true : false}"
-									size="40">
+								<h:outputLabel id="rgLabel" for="pfRg" value="Rg:" />
+								<p:inputText id="pfRg" type="number"
+									value="#{funcionarioController.funcionario.numeroRG}" size="18">
 
 								</p:inputText>
 
-
-								<h:outputLabel for="origem"
-									value="Origem (Como fico sabendo de nós?):" size="18" />
-								<p:inputText id="origem"
-									value="#{funcionarioController.funcionario.origem}" size="18">
-
+								<h:outputLabel for="orgaoEmissorRG" value="Órgao Emissor RG" />
+								<p:inputText id="orgaoEmissorRG"
+									value="#{funcionarioController.funcionario.orgaoEmissorRG}"
+									size="50">
 								</p:inputText>
 
+								<h:outputLabel value="Data Emissão RG" size="4" />
+								<p:calendar value="#{funcionarioController.funcionario.dataRG}"
+									id="popupButtonCal" pattern="dd/MM/yyyy" locale="pt_BR" />
+
+								<!--   Carteira de Trabalho -->
+								<h:outputLabel for="numeroCT" value="Número Carteira Trabalho:" />
+								<p:inputText id="numeroCT"
+									value="#{funcionarioController.funcionario.numeroCarteiraTrabalho}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel for="serieCT" value="Série Carteira Trabalho:" />
+								<p:inputText id="serieCT"
+									value="#{funcionarioController.funcionario.serieCarteiraTrabalho}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel for="numeroPis" value="Númro do PIS:" />
+								<p:inputText id="numeroPis"
+									value="#{funcionarioController.funcionario.numeroPis}"
+									size="50">
+								</p:inputText>
+
+
+								<!--  Titulo Eleitor -->
+
+								<h:outputLabel for="numeroTituloEleitor"
+									value="Número Titulo Eleitor:" />
+								<p:inputText id="numeroTituloEleitor"
+									value="#{funcionarioController.funcionario.numeroTituloEleitor}"
+									size="50">
+								</p:inputText>
+
+
+								<h:outputLabel for="zonaTituloEleitor"
+									value="Zona Título Eleitor:" />
+								<p:inputText id="zonaTituloEleitor"
+									value="#{funcionarioController.funcionario.zonaTituloEleitor}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel for="secaoTituloEleitor"
+									value="Seção Título Eleitor:" />
+								<p:inputText id="secaoTituloEleitor"
+									value="#{funcionarioController.funcionario.secaoTituloEleitor}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel for="ufTituloEleitor"
+									value="UF Título do Eleitor:" />
+								<p:inputText
+									value="#{funcionarioController.funcionario.ufTituloEleitor}" />
+
+								<!--  Reservista  -->
+								<h:outputLabel for="numeroCertificadoReservista"
+									value="Número Certificado Reservista:" />
+								<p:inputText id="numeroCertificadoReservista"
+									value="#{funcionarioController.funcionario.numeroCertificadoReservista}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel for="serieCertificadoReservista"
+									value="Série Certificado Reservista:" />
+								<p:inputText id="serieCertificadoReservista"
+									value="#{funcionarioController.funcionario.serieCertificadoReservista}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel for="categoriaCertificadoReservista"
+									value="Cetegoria Certificado Reservista:" />
+								<p:inputText id="categoriaCertificadoReservista"
+									value="#{funcionarioController.funcionario.categoriaCertificadoReservista}"
+									size="50">
+								</p:inputText>
+
+								<!-- CNH -->
+
+								<h:outputLabel for="numeroCNH" value="numero do CNH:" />
+								<p:inputText id="numeroCNH"
+									value="#{funcionarioController.funcionario.numeroCNH}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel for="categoriaCNH" value="categoria do CNH:" />
+								<p:inputText id="categoriaCNH"
+									value="#{funcionarioController.funcionario.categoriaCNH}"
+									size="50">
+								</p:inputText>
+
+								<h:outputLabel value="Data de vencimento do CNH" size="4" />
+								<p:calendar
+									value="#{funcionarioController.funcionario.dataVencimentoCNH}"
+									id="calendarDataVenciCnh" pattern="dd/MM/yyyy" locale="pt_BR" />
 							</p:panelGrid>
 
 						</p:panel>
 
 
 
-						<p:panel header="Dados de Endereco">
+						<p:panel header="Dados de Endereco" style="margin:auto;">
 
 							<h:panelGrid id="pnCEP" columns="3">
 								<h:outputText value="CEP: " />
@@ -174,7 +276,8 @@
 									value="#{funcionarioController.funcionario.endereco.cep}" />
 
 								<p:commandButton value="Pesquisar CEP" icon="ui-icon-pencil"
-									action="#{funcionarioController.encontraCEP}" update="pnEndereco" process="@this pnCEP" />
+									action="#{funcionarioController.encontraCEP}"
+									update="pnEndereco" process="@this pnCEP" />
 							</h:panelGrid>
 
 							<br />
@@ -213,6 +316,58 @@
 									value="#{funcionarioController.funcionario.endereco.complemento}" />
 
 							</p:panelGrid>
+
+							<br />
+
+						</p:panel>
+
+						<p:panel header="Dados Empregatícios" style="margin:auto;">
+
+							<br />
+
+							<p:panelGrid id="pgDadosEmpregaticios" columns="2">
+
+								<h:outputLabel value="Cargo:" />
+								<p:inputText size="30"
+									value="#{funcionarioController.funcionario.cargo}" />
+
+
+								<h:outputLabel value="Função " />
+								<p:inputText size="30"
+									value="#{funcionarioController.funcionario.funcao}" />
+
+								<h:outputLabel value="Dias de experiência: " />
+								<p:selectOneMenu id="diasExperiencia"
+									value="#{funcionarioController.funcionario.diasExperiencia}">
+									<f:selectItems
+										value="#{funcionarioController.diasExperienciaValues}" var="d"
+										itemValue="#{d}" itemLabel="#{d.label}" />
+								</p:selectOneMenu>
+
+								<h:outputLabel value="Admissao por contrato de experiência" />
+								<p:selectOneRadio id="selectRadioAdmissaoPorContratoExperiencia"
+									value="#{funcionarioController.funcionario.admissaoPorContratoExperiencia}">
+									<f:selectItem itemLabel="SIM" itemValue="true" />
+									<f:selectItem itemLabel="NÃO" itemValue="false" />
+								</p:selectOneRadio>
+								
+								<h:outputLabel value="Class. Bra. de Ocupação" />
+								<p:inputText size="30" type="number"
+									value="#{funcionarioController.funcionario.cbo}" />
+
+								<h:outputLabel value="Data de Adimissão:" size="4" />
+								<p:calendar
+									value="#{funcionarioController.funcionario.dataAdmimissao}"
+									id="dataAdmimissao" pattern="dd/MM/yyyy" locale="pt_BR" />
+
+								<h:outputLabel value="Data do Exame de Adimissão:" size="4" />
+								<p:calendar
+									value="#{funcionarioController.funcionario.dataExameMedicoAdmissao}"
+									id="dataExameMedicoAdmissao" pattern="dd/MM/yyyy"
+									locale="pt_BR" />
+
+							</p:panelGrid>
+
 							<br />
 
 						</p:panel>
@@ -221,94 +376,22 @@
 
 					<br />
 
-					<p:panel header="Dados de Contato">
+					<div class="botoes" align="center" style="margin: auto;">
 
-						<p:panelGrid columns="2">
+						<p:commandButton value="Salvar"
+							action="#{funcionarioController.salvar}" update="@form">
+						</p:commandButton>
 
+						<p:commandButton value="Cancelar"
+							action="#{funcionarioController.cancelar}" update="@form"
+							process="@this" />
 
-							<p:panelGrid columns="25" id="panelContato">
-
-
-
-								<h:outputLabel value="Tipo:" />
-								<p:selectOneMenu
-									value="#{funcionarioController.contato.tipoContato}"
-									converter="#{tipoContatoConverter}" effect="fade">
-									<f:selectItem itemLabel="Selecione" itemValue=""
-										noSelectionOption="true" />
-									<f:selectItems value="#{tipoContatoController.tipoContatoList}"
-										var="tipoContato" itemLabel="#{tipoContato.descricao}"
-										itemValue="#{TipoContato}" />
-								</p:selectOneMenu>
-
-
-								<p:inputText id="dado" value="#{funcionarioController.contato.dado}"
-									size="25">
-								</p:inputText>
-
-
-								<p:commandButton value="Adicionar Contato"
-									action="#{funcionarioController.adicionarContato}"
-									update="dtContatos" process="@form" />
-
-							</p:panelGrid>
-
-							<p:dataTable id="dtContatos" var="c" rows="13"
-								paginatorAlwaysVisible="false"
-								value="#{funcionarioController.funcionario.contatoList}"
-								style="width: 10%" paginator="true">
-
-								<p:column headerText="Dado" width="100">
-									<h:outputText value="#{c.dado}" />
-								</p:column>
-
-								<p:column headerText="Tipo">
-									<h:outputText value="#{c.tipoContato.descricao}" />
-								</p:column>
-
-
-								<p:column headerText="Ações" width="60">
-									<p:commandButton icon="ui-icon-trash" alt="Excluir contato"
-										title="Excluir contato" oncomplete="confirmacaoContato.show()">
-										<f:setPropertyActionListener
-											target="#{funcionarioController.contato}" value="#{c}" />
-									</p:commandButton>
-
-									<!-- 								<p:commandButton icon="ui-icon-pencil" alt="Editar contato" -->
-									<!-- 									title="Editar contato" -->
-									<!-- 									action="#{funcionarioController.editarContato(c)}" update="@form"> -->
-									<!-- 								</p:commandButton> -->
-								</p:column>
-							</p:dataTable>
-
-						</p:panelGrid>
-
-						<p:confirmDialog message="Deseja realmente remover este Contato?"
-							position="center" header="Aviso" id="confirmacaoContatoId"
-							severity="alert" widgetVar="confirmacaoContato" closablez="true"
-							appendToBody="false">
-
-							<p:commandButton id="btnSim" value="Sim"
-								actionListener="#{funcionarioController.excluirContato}"
-								oncomplete="confirmacaoContato.hide();" update="@form" />
-							<p:commandButton id="btnNao" value="Não"
-								onclick="confirmacaoContato.hide();" />
-						</p:confirmDialog>
-
-					</p:panel>
-
-					<p:commandButton value="Salvar"
-						action="#{funcionarioController.salvar}" update="@form">
-					</p:commandButton>
-
-					<p:commandButton value="Cancelar"
-						action="#{funcionarioController.cancelar}" update="@form"
-						process="@this" />
+					</div>
 
 					<p:dialog header="Selected Dates" widgetVar="dialog"
 						showEffect="fade" hideEffect="fade">
 						<h:outputText
-							value="#{funcionarioController.funcionario.pfDatanascimento}"
+							value="#{funcionarioController.funcionario.dataNascimento}"
 							id="pfDatanascimento">
 						</h:outputText>
 					</p:dialog>
@@ -330,12 +413,12 @@
 							<h:outputText value="#{c.nome}" />
 						</p:column>
 
-						<p:column headerText="CPF/CNPJ" width="100">
-							<h:outputText value="#{c.CPFCNPJStr}" />
+						<p:column headerText="CPF" width="100">
+							<h:outputText value="#{c.cpf}" />
 						</p:column>
 
 						<p:column headerText="Data Nasc." width="100">
-							<h:outputText value="#{c.pfDatanascimentoFmt}" />
+							<h:outputText value="#{c.dataNascimento}" />
 						</p:column>
 
 						<p:column headerText="Ações" width="60">
@@ -351,19 +434,22 @@
 								title="Excluir funcionario" oncomplete="confirmacao.show()"
 								process="@this">
 								<f:setPropertyActionListener
-									target="#{funcionarioController.funcionarioExcluir}" value="#{c}" />
+									target="#{funcionarioController.funcionarioExcluir}"
+									value="#{c}" />
 							</p:commandButton>
 
 							<p:commandButton icon="ui-icon-pencil" alt="Editar funcionario"
-								title="Editar funcionario" action="#{funcionarioController.editar(c)}"
-								process="@this" update="@form">
+								title="Editar funcionario"
+								action="#{funcionarioController.editar(c)}" process="@this"
+								update="@form">
 							</p:commandButton>
 
 						</p:column>
 					</p:dataTable>
 				</p:tab>
 			</p:tabView>
-			<p:confirmDialog message="Deseja realmente remover este Funcionario ?"
+			<p:confirmDialog
+				message="Deseja realmente remover este Funcionario ?"
 				position="center" header="Aviso" id="confirmacaoId" severity="alert"
 				widgetVar="confirmacao" closable="true" appendToBody="false">
 

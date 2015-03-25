@@ -44,14 +44,17 @@ public class Funcionario implements Modelo<Integer> {
 	@NotEmpty(message="Campo Nome Mãe obrigatório!")
 	private String nomeMae;
 	
-	@JoinColumn
-	@ManyToOne
-	private Cidade cidadeNascimento;
+	private Date dataNascimento;
+	
+	private String cidadeNascimento;
+	
+	private String ufNascimento;
 	
 	@NotEmpty(message="Campo Número Carteira de Trabalho obrigatório!")
 	private String numeroCarteiraTrabalho;
 
 	private String serieCarteiraTrabalho;
+	
 	@NotEmpty(message="Campo CPF obrigatório!")
 	private String cpf;
 	
@@ -64,14 +67,14 @@ public class Funcionario implements Modelo<Integer> {
 	@NotEmpty(message="Campo Seção obrigatório!")
 	private String secaoTituloEleitor;
 	
-	@NotEmpty(message="Campo UF obrigatório!")
+	@NotEmpty(message="Campo UF Título de Eleitor obrigatório!")
 	private String ufTituloEleitor;
 	
 	@NotEmpty(message="Campo RG obrigatório!")
 	private String numeroRG;
 	
 	@NotEmpty(message="Campo Órgão Emissor obrigatório!")
-	private String  OrgaoEmissorRG;
+	private String  orgaoEmissorRG;
 	
 	private Date  dataRG;
 	
@@ -89,7 +92,10 @@ public class Funcionario implements Modelo<Integer> {
 	
 	private String numeroPis;
 
+	@Enumerated(EnumType.ORDINAL)
 	private GrauInstrucaoEnum grauInstrucao;
+	
+	private String casado = "false";
 	
 	private String nomeConjugue;
 	
@@ -177,13 +183,7 @@ public class Funcionario implements Modelo<Integer> {
 		this.nomeMae = nomeMae;
 	}
 
-	public Cidade getCidadeNascimento() {
-		return cidadeNascimento;
-	}
 
-	public void setCidadeNascimento(Cidade cidadeNascimento) {
-		this.cidadeNascimento = cidadeNascimento;
-	}
 
 	public String getNumeroCarteiraTrabalho() {
 		return numeroCarteiraTrabalho;
@@ -233,13 +233,7 @@ public class Funcionario implements Modelo<Integer> {
 		this.secaoTituloEleitor = secaoTituloEleitor;
 	}
 
-	public String getUfTituloEleitor() {
-		return ufTituloEleitor;
-	}
 
-	public void setUfTituloEleitor(String ufTituloEleitor) {
-		this.ufTituloEleitor = ufTituloEleitor;
-	}
 
 	public String getNumeroRG() {
 		return numeroRG;
@@ -249,13 +243,7 @@ public class Funcionario implements Modelo<Integer> {
 		this.numeroRG = numeroRG;
 	}
 
-	public String getOrgaoEmissorRG() {
-		return OrgaoEmissorRG;
-	}
-
-	public void setOrgaoEmissorRG(String orgaoEmissorRG) {
-		OrgaoEmissorRG = orgaoEmissorRG;
-	}
+	
 
 	public Date getDataRG() {
 		return dataRG;
@@ -425,6 +413,108 @@ public class Funcionario implements Modelo<Integer> {
 
 	public void setAnexos(List<Anexo> anexos) {
 		this.anexos = anexos;
+	}
+
+
+	public String getUfNascimento() {
+		return ufNascimento;
+	}
+
+
+	public void setUfNascimento(String ufNascimento) {
+		this.ufNascimento = ufNascimento;
+	}
+
+
+	public String getCidadeNascimento() {
+		return cidadeNascimento;
+	}
+
+
+	public void setCidadeNascimento(String cidadeNascimento) {
+		this.cidadeNascimento = cidadeNascimento;
+	}
+
+
+	public String getOrgaoEmissorRG() {
+		return orgaoEmissorRG;
+	}
+
+
+	public void setOrgaoEmissorRG(String orgaoEmissorRG) {
+		this.orgaoEmissorRG = orgaoEmissorRG;
+	}
+
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+
+	public Endereco getEndereco() {
+		if (endereco == null)
+			endereco = new Endereco();
+		return endereco;
+	}
+
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+
+	public Unidade getUnidade() {
+		return unidade;
+	}
+
+
+	public void setUnidade(Unidade unidade) {
+		this.unidade = unidade;
+	}
+
+
+	public String getUfTituloEleitor() {
+		return ufTituloEleitor;
+	}
+
+
+	public void setUfTituloEleitor(String ufTituloEleitor) {
+		this.ufTituloEleitor = ufTituloEleitor;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public TipoSexoEnum getSexo() {
+		return sexo;
+	}
+
+
+	public void setSexo(TipoSexoEnum sexo) {
+		this.sexo = sexo;
+	}
+
+
+	public String getCasado() {
+		return casado;
+	}
+
+
+	public void setCasado(String casado) {
+		this.casado = casado;
 	}
 
 	
